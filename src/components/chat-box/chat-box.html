@@ -76,7 +76,7 @@
                         </p>
                     </div>
                 </el-row>
-                <el-row class="middle-text bb1 mt1 mb3 mx7"><span class="text-bold">Mensagens Antigas</span></el-row>
+                <el-row class="middle-text bb1 mt1 mb3 mx7"><span class="text-bold">{{ $t('chatbox.oldMessagesLabel') }}</span></el-row>
             </el-row>
 
             <el-row v-for="(message, key) in activeConversation.list" :key="key">

@@ -44,6 +44,7 @@ export const LocaleService = {
           loadOldMessages: 'Load old messages...',
           loadingOldMessages: 'Loading old messages...',
           oldMessagesLimit: 'You have reached the old message search limit',
+          oldMessagesLabel: 'Mensagens Antigas...'
         },
         profile: {
           changePhoto: 'Change',

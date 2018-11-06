@@ -31,7 +31,8 @@
         "typingLabel": "Typing...",
         "loadOldMessages": "Load old messages...",
         "loadingOldMessages": "Loading old messages...",
-        "oldMessagesLimit": "You have reached the old message search limit"
+        "oldMessagesLimit": "You have reached the old message search limit",
+        "oldMessagesLabel": "Old Messages..."
     },
     "profile": {
         "changePhoto": "Change",
