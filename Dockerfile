@@ -1,4 +1,4 @@
-FROM credija/nginx
+FROM credija/nginx:lts
 MAINTAINER kevinfaveridev@gmail.com
 
 COPY . /usr/opa-build
