@@ -9,9 +9,10 @@ RUN apt-get update && apt-get install -y \
 	curl \
 	python \
 	make \
+  gnupg \
 	g++
   
-RUN apt-get update \
+RUN ls \
  && curl -sL https://deb.nodesource.com/setup_11.x | bash - \
  && apt-get install -y nodejs \
  && npm install \
@@ -21,6 +22,6 @@ COPY dist/. /usr/share/nginx/html
 
 WORKDIR /usr
 
-RUN rm -rf opa-build
+RUN ls && rm -rf opa-build
 
 EXPOSE 80/tcp
