@@ -1,9 +1,9 @@
 FROM credija/nginx:lts
 MAINTAINER kevinfaveridev@gmail.com
 
-COPY . /usr/opa-build
+COPY . /opt/opa-build
 
-WORKDIR /usr/opa-build
+WORKDIR /opt/opa-build
 
 RUN apt-get update && apt-get install -y \
 	curl \
@@ -12,16 +12,15 @@ RUN apt-get update && apt-get install -y \
   gnupg \
 	g++
   
-RUN ls \
- && curl -sL https://deb.nodesource.com/setup_11.x | bash - \
+RUN curl -sL https://deb.nodesource.com/setup_11.x | bash - \
  && apt-get install -y nodejs \
  && npm install \
  && npm run build \
- && cp /usr/opa-build/dist/. /usr/share/nginx/html \
- && ls /usr/share/nginx/html
+ && cp -r /opt/opa-build/dist/* /usr/share/nginx/html/ \
+ && ls /usr/share/nginx/html/
 
-WORKDIR /usr
+WORKDIR /opt
 
-RUN ls && rm -rf opa-build
+RUN rm -rf opa-build
 
 EXPOSE 80/tcp

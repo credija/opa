@@ -6,7 +6,6 @@
   - [Installation](#installation)
   - [Configuration](#configuration)
   - [Localization](#localization)
-  - [Logs](#logs)
 - [Credits](#credits)
 
 # Introduction
@@ -30,27 +29,36 @@ A demo is available here: opa.github.io
 # Features
 
 Features Opa already has:
-- [x] Multi language support (basic en-US | pt-BR for the time being, but you can add your own language by following the [Localization](#localization) section of this README)
-- [x] Responsive up to 1366x768 (below that the layout will be broken)
+- [x] Multi language support 
+  - Basic en-US | pt-BR for the time being, but you can add your own language by following the [Localization](#localization) section instructions of this README.
+- [x] Responsive up to 1366x768 
+  - Below that the layout will be broken.
 - [x] One-to-one chat
-- [x] Basic emoji using keywords (Credits to Tweemoji for the emoji arts)
-- [x] Profile presence change option (Online, Busy and Away)
-- [x] Automatic presence change when away (20 minutes)
-- [x] Profile avatar change and delete option. Your XMPP server must support V-Card.
+- [x] Basic emoji using keywords
+  - Credits to Tweemoji for the emoji arts
+- [x] Profile presence change option
+- [x] Automatic presence change when away
+  - After 20 minutes without performing any action in the app
+- [x] Profile avatar change and delete option. 
+  - Your XMPP server must support V-Card.
 
 - [x] Contacts organized by group (Like Pidgin)
-- [x] Contacts details. Your XMPP server must support V-Card.
+- [x] Contacts details. 
+  - Your XMPP server must support V-Card.
 - [x] Contacts search
 
-- [x] Browser tab icon change when has new message
-- [x] Browser desktop notification (1 minute interval)
-- [x] Sound desktop notification (1 minute interval)
+- [x] Browser tab icon change when has a new message
+- [x] Browser desktop notification 
+  - 1 minute interval.
+- [x] Sound desktop notification 
+  - 1 minute interval.
 - [x] Option to show/hide offline contacts
 - [x] Option to enable Night/Day mode
-- [x] Conversation history from server. Your XMPP server must support these protocols:
-  ---> [MSM](https://xmpp.org/extensions/xep-0313.html)
-  ---> [RSM](https://xmpp.org/extensions/xep-0059.html)
-  Note: The client always searches the history on the server, meaning the conversation history is not cached locally.
+- [x] Conversation history from server. 
+  - Your XMPP server must support these protocols:
+  - [MSM](https://xmpp.org/extensions/xep-0313.html)
+  - [RSM](https://xmpp.org/extensions/xep-0059.html)
+  - Note: The client always searches the history on the server, meaning the conversation history is not cached locally.
 
 ___
 
@@ -119,8 +127,6 @@ Note: If you want to use a XMPP server in Docker we recommend our Openfire build
 ## Configuration
 
 ## Localization
-
-## Logs
 
 # Credits
 
