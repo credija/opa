@@ -19,9 +19,7 @@ RUN ls \
  && npm run build \
  && ls
 
-WORKDIR /usr/opa-build
-
-COPY dist/ /usr/share/nginx/html
+COPY /usr/opa-build/dist/. /usr/share/nginx/html
 
 WORKDIR /usr
 
