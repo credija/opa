@@ -69,9 +69,6 @@ export const LocaleService = {
           enableDarkMode: 'Enable Night Mode',
           disableDarkMode: 'Disable Night Mode'
         },
-        credits: {
-          twemoji: 'The emojis used in this app comes from a Twitter project and are licensed under CC-BY 4.0.'
-        }
       }
     };
   },

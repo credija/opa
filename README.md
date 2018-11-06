@@ -6,6 +6,7 @@
   - [Installation](#installation)
   - [Configuration](#configuration)
   - [Localization](#localization)
+  - [Compatibility](#compatibility)
 - [Credits](#credits)
 
 # Introduction
@@ -25,10 +26,12 @@ _**Trivia**_: "Opa", among many meanings in Brazil, is also used informally as a
 ![alt text](https://i.imgur.com/Etj88t9.png "Opa Chat 2")
 
 A demo is available here: opa.github.io
+Has some feature in mind, suggestion or come across a bug? Open an [Issue](https://github.com/credija/opa/issues) so we can discuss 👍
 
 # Features
 
 Features Opa already has:
+- [x] BOSH support
 - [x] Multi language support 
   - Basic en-US | pt-BR for the time being, but you can add your own language by following the [Localization](#localization) section instructions of this README.
 - [x] Responsive up to 1366x768 
@@ -77,6 +80,7 @@ Features Opa that are under development (not necessarily in that order):
 - [ ] Notification interval configurable by the user
 - [ ] Presence change interval configurable by the user
 - [ ] Better responsive layout
+- [ ] WebSocket support
 
 ___
 
@@ -96,15 +100,7 @@ Following this you have two ways of running this app:
 ## Installation
 ![alt text](https://www.docker.com/sites/default/files/social/docker_twitter_share_new.png "Docker Logo")
 
-The installation with Docker is very straightforward:
-```bash
-docker run --name opa -d --restart=always \
-  --publish 8080:80 \
-  -m 256MB \
-  credija/opa:lts
-```
-
-You will, of course, need to connect to your XMPP server. To do that you need to overwrite the /config/app-config.json (explanation of each option in the config file is in the next section) file:
+The installation with Docker is very straightforward. You will, however, need to connect to your XMPP server. To do that you need to overwrite the /config/app-config.json (explanation of each option in the config file is in [Configuration](#configuration)) file:
 ```bash
 docker run --name opa -d --restart=always \
   --publish 8080:80 \
@@ -113,7 +109,7 @@ docker run --name opa -d --restart=always \
   credija/opa:lts
 ```
 
-Also, if you need to overwrite the HTTP server config (which is an NGINX), you will need to overwrite the nginx.conf file:
+Also, if you need to overwrite the HTTP server config (which is an NGINX), you will need to overwrite the nginx.conf like:
 ```bash
 docker run --name opa -d --restart=always \
   --publish 8080:80 \
@@ -126,7 +122,47 @@ Note: If you want to use a XMPP server in Docker we recommend our Openfire build
 
 ## Configuration
 
+To connect to a XMPP server you will need to overwrite the [app-config.json](public/config/app-config.json). The options are these:
+- **VUE_APP_XMPP_SERVER_ADDRESS**: The address for the HTTP/S BOSH or WSS WebSocket connection.
+- **VUE_APP_XMPP_SERVER_DOMAIN**: Your chat domain.
+- **VUE_APP_EMOJI_SERVER**: The server where the emoji arts will be downloaded from:
+  - This app already has the emojis it uses on its static folder so you only need to append "emoji/" to the domain where the app will be hosted, like: `opa.credija.com.br/emoji/`
+- **VUE_APP_LOCALE**: The locale need to be set in the format "language-country", like "en-us", "pt-br", etc since this value will be used to format date through the app.
+
 ## Localization
 
+Opa has a plug-n-play structure for localizations, who are get from 'i18n' folder in /public/config. 
+
+If you want to test Opa but it doesn't has your language you can develop your own translation to the app following the example provided by [en-us.json](public/config/i18n/en-us.json). 
+
+Once finished just put the translation on the 'i18n' folder and change your app-config.json **VUE_APP_LOCALE** option to the language code you choose. 
+
+**Note:** It's important to remember that the file needs to follow the 'language-country.json' format which is the same used in the **VUE_APP_LOCALE** option.
+
+**Important:** If you develop a translation don't be afraid and send a pull request on the 'public/config/i18n' folder so it can be added by default on the next updates of Opa!
+
+## Compatibility
+
+Tested Browsers:
+- Google Chrome
+- Firefox
+- Opera
+- Microsoft Edge
+
+Not Tested:
+- IE
+- Safari
+
+____
+
+Tested XMPP Servers:
+- Ignite Realtime: Openfire Server
+
 # Credits
+
+- Thanks to the IT team of [Sicoob Credija](https://credija.com.br) which provided support, testing and infrastructure for the development of this project.
+
+- Thanks [VueJS](https://github.com/vuejs/vue), [Element-UI](https://github.com/ElemeFE/element) and [StropheJS](https://github.com/strophe/strophejs) for the core libraries of this project.
+
+- The emojis used in this app comes from the [Twemoji](https://github.com/twitter/twemoji) project and are licensed under CC-BY 4.0.
 

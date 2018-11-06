@@ -57,7 +57,4 @@
         "enableDarkMode": "Ativar Modo Noturno",
         "disableDarkMode": "Desativar Modo Noturno"
     },
-    "credits": {
-        "twemoji": "Os emojis utilizados neste app são provenientes de um projeto do Twitter e estão licenciados sob a CC-BY 4.0."
-    }
 }

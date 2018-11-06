@@ -18,12 +18,7 @@ export default {
       usernameCred += `@${appConfig.VUE_APP_XMPP_SERVER_DOMAIN}`;
     }
 
-    let connUrl = '';
-    if (appConfig.VUE_APP_XMPP_SERVER_IS_HTTPS) {
-      connUrl = appConfig.VUE_APP_XMPP_SERVER_HTTPS;
-    } else {
-      connUrl = appConfig.VUE_APP_XMPP_SERVER_HTTP;
-    }
+    const connUrl = appConfig.VUE_APP_XMPP_SERVER_ADDRESS;
 
     conn = new Strophe.Connection(connUrl);
     Store.dispatch('app/updateXmppClient', conn);
@@ -31,13 +26,7 @@ export default {
   },
   trySessionRestore() {
     const appConfig = Store.state.app.appConfig;
-
-    let connUrl = '';
-    if (appConfig.VUE_APP_XMPP_SERVER_IS_HTTPS) {
-      connUrl = appConfig.VUE_APP_XMPP_SERVER_HTTPS;
-    } else {
-      connUrl = appConfig.VUE_APP_XMPP_SERVER_HTTP;
-    }
+    const connUrl = appConfig.VUE_APP_XMPP_SERVER_ADDRESS;
 
     let resultBol = false;
     const conn = new Strophe.Connection(connUrl);
