@@ -17,9 +17,8 @@ RUN ls \
  && apt-get install -y nodejs \
  && npm install \
  && npm run build \
- && ls
-
-COPY /usr/opa-build/dist/. /usr/share/nginx/html
+ && cp /usr/opa-build/dist/. /usr/share/nginx/html \
+ && ls /usr/share/nginx/html
 
 WORKDIR /usr
 
