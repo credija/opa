@@ -1,0 +1,56 @@
+
+// Media Query Card Contact
+@media (min-width: 1900px) {
+	.card-contact-list {
+        max-height: 710px;
+        height: 710px;
+        min-height: 710px;
+        overflow: auto;
+    }
+}
+
+@media (min-width: 1400px) and (max-width: 1900px)  {
+	.card-contact-list {
+        max-height: 550px;
+        height: 550px;
+        min-height: 550px;
+        overflow: auto;
+    }
+}
+
+@media (max-width: 1400px)  {
+	.card-contact-list {
+        max-height: 448px;
+        height: 448px;
+        min-height: 448px;
+        overflow: auto;
+    }
+}
+
+// Media Query Card Chatbox
+@media (min-width: 1600px) {
+	.card-chatbox {
+        max-height: 915px;
+        height: 915px;
+        min-height: 915px;
+        overflow: auto;
+    }
+}
+
+@media (min-width: 1400px) and (max-width: 1600px)  {
+	.card-chatbox {
+        max-height: 745px;
+        height: 745px;
+        min-height: 745px;
+        overflow: auto;
+    }
+}
+
+@media (max-width: 1400px)  {
+	.card-chatbox {
+        max-height: 652px;
+        height: 652px;
+        min-height: 652px;
+        overflow: auto;
+    }
+}

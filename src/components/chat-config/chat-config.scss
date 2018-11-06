@@ -1,0 +1,27 @@
+// Media Query Card Contact
+@media (min-width: 1900px) {
+	.chat-config-size {
+    max-height: 90px;
+    height: 90px;
+    min-height: 90px;
+    overflow: auto;
+  }
+}
+
+@media (min-width: 1400px) and (max-width: 1900px)  {
+	.chat-config-size {
+    max-height: 80px;
+    height: 80px;
+    min-height: 80px;
+    overflow: auto;
+  }
+}
+
+@media (max-width: 1400px)  {
+	.chat-config-size {
+    max-height: 90px;
+    height: 90px;
+    min-height: 90px;
+    overflow: auto;
+  }
+}

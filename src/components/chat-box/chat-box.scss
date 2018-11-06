@@ -1,0 +1,47 @@
+@media (min-width: 1900px) {
+	.size-conversation {
+		max-height: 710px;
+		height: 710px;
+		min-height: 710px;
+		overflow: auto;
+	}
+}
+
+@media (min-width: 1400px) and (max-width: 1900px)  {
+	.size-conversation {
+		max-height: 550px;
+		height: 550px;
+		min-height: 550px;
+		overflow: auto;
+	}
+}
+
+@media (max-width: 1400px)  {
+	.size-conversation {
+		max-height: 450px;
+		height: 450px;
+		min-height: 450px;
+		overflow: auto;
+	}
+}
+
+.message-max-width {
+	max-width: 60% !important;
+	word-wrap: break-word;
+}
+
+.max-size {
+	min-height: 80px;
+  max-height: 80px;
+}
+
+.h-send-btn {
+	min-height: 44px !important;
+	max-height: 44px !important;
+    height: 44px !important;
+}
+
+.stamp-margin {
+	margin-left: 30px;
+	margin-top: 10px;
+}

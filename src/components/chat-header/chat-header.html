@@ -1,0 +1,87 @@
+<div class="chat-header">
+    <el-card class="userdetails-card p2" 
+        :class="{ 'dark-theme': chatConfig.darkMode === true, 'dark-border': chatConfig.darkMode === true }"
+        v-if="authUser">
+        <div v-if="!isDisconnected">
+            <el-col :span="5">
+                <div class="profile-img-container" @mouseover="dispatchThinkingEmoji" @mouseleave="dispatchConfusedEmoji">
+                    <img v-if="profileImageSrc !== null" 
+                        class="b-full-circle img-fit b1" 
+                        :src="profileImageSrc" 
+                        width="80" height="80"
+                        />
+                    <input type="file" :v-model="profileImgUpload" id="profileimg-upload" 
+                        accept="image/x-png,image/jpeg" @change="onFileChange" class="hidden"/>
+                    <div class="user-icon b-full-circle b1 clickable text-center v-align" 
+                        v-if="profileImageSrc === null">
+                        <font-awesome-icon :icon="userIcon" class="ml3"/>
+                    </div>
+                    <div class="overlay-profile-img b-full-circle clickable" @click="uploadProfileImage()">
+                        <p class="text-center text-bold text-primary mt5">{{ $t('profile.changePhoto') }} </p>
+                    </div>
+                    <el-button class="profile-img-close" type="danger" plain circle size="mini" 
+                        @click="deletePhoto()" v-if="profileImageSrc !== null">
+                        <font-awesome-icon :icon="timesIcon"/>
+                    </el-button>
+                </div>
+                
+            </el-col>
+            <el-col :span="15" :offset="2">
+                <el-select v-model="authUser.presence" placeholder="Status" 
+                    value-key="id" class="mt3 b-rounded-25" 
+                    @mouseover.native="dispatchThinkingEmoji"
+                    @mouseleave.native="dispatchConfusedEmoji"
+                    @change="sendChangePresenceSignal()"
+                    :class="{ 'dark-theme': chatConfig.darkMode === true }">
+                    <template slot="prefix">
+                        <font-awesome-icon :icon="circleIcon"
+                            class="text-label mr1 mt-prefix" 
+                            :class="getPresenceColor(authUser.presence.id)"/>
+                    </template>
+                    <el-option
+                        v-for="presence in presenceList"
+                        :key="presence.id"
+                        :label="getPresenceLabeli18n(presence)"
+                        :value="presence">
+                        <font-awesome-icon :icon="circleIcon"
+                            class="text-label mr1" 
+                            :class="getPresenceColor(presence.id)"/>
+                        <span> {{ getPresenceLabeli18n(presence) }}</span>
+                    </el-option>
+                </el-select>
+            </el-col>
+            <el-col :span="1" :offset="1">
+                <el-popover
+                    placement="bottom"
+                    width="150"
+                    trigger="hover"
+                    :content="$t('chat.openNewConversation')"
+                    v-if="!showContactList">
+                    <el-button slot="reference" type="primary" circle class="float-right mt2"
+                        @click="emitSwitchActiveMenu()"
+                        @mouseover.native="dispatchHappyEmoji"
+                        @mouseleave.native="dispatchConfusedEmoji">
+                        <font-awesome-icon :icon="speechBubbleIcon" class="icon-medium"/>
+                    </el-button>
+                </el-popover>
+    
+                <el-popover
+                    placement="bottom"
+                    width="150"
+                    trigger="hover"
+                    :content="$t('chat.back')"
+                    v-if="showContactList">
+                    <el-button slot="reference" type="primary" circle class="float-right mt2"
+                        @click="emitSwitchActiveMenu()">
+                        <font-awesome-icon :icon="undoIcon" class="icon-medium"/>
+                    </el-button>
+                </el-popover>
+            </el-col>
+        </div>
+        <div v-if="isDisconnected" class="text-center mt3">
+            <el-button type="primary" plain @click="goToLogin()">
+                <font-awesome-icon :icon="keyIcon"/> {{ $t('profile.reLoginButton') }}
+            </el-button>
+        </div>
+    </el-card>
+</div>

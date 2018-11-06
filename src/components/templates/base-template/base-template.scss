@@ -1,0 +1,14 @@
+.login-page-bg {
+    background-image: url('../../../assets/img/background-login.jpg');
+    background-size: cover;
+    -ms-background-size: cover;
+    -o-background-size: cover;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+}
+
+@media (max-width: 1400px)  {
+	.el-main {
+		padding: 0px;
+	}
+}
