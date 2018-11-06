@@ -16,9 +16,12 @@ RUN ls \
  && curl -sL https://deb.nodesource.com/setup_11.x | bash - \
  && apt-get install -y nodejs \
  && npm install \
- && npm run build
+ && npm run build \
+ && ls
 
-COPY dist/. /usr/share/nginx/html
+WORKDIR /usr/opa-build
+
+COPY dist/ /usr/share/nginx/html
 
 WORKDIR /usr
 
