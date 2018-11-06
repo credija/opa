@@ -1,4 +1,4 @@
-import ConfigService from '@services/config-service';
+import ProfileConfigService from '@services/profile-config-service';
 import Push from 'push.js';
 import { 
   faCommentAlt,
@@ -70,7 +70,7 @@ export default {
   },
   methods: {
     chatConfigFormSubmit() {
-      ConfigService.saveConfig(this.chatConfigForm);
+      ProfileConfigService.saveConfig(this.chatConfigForm);
     },
     changeSoundNotification() {
       this.changePresenceUserAction();
@@ -80,7 +80,7 @@ export default {
       } else {
         this.chatConfigForm.soundNotification = false;
       }
-      ConfigService.saveConfig(this.chatConfigForm);
+      ProfileConfigService.saveConfig(this.chatConfigForm);
     },
     changeShowOffline() {
       this.changePresenceUserAction();
@@ -90,7 +90,7 @@ export default {
       } else {
         this.chatConfigForm.showOffline = false;
       }
-      ConfigService.saveConfig(this.chatConfigForm);
+      ProfileConfigService.saveConfig(this.chatConfigForm);
     },
     changeDarkTheme() {
       this.changePresenceUserAction();
@@ -100,7 +100,7 @@ export default {
       } else {
         this.chatConfigForm.darkMode = false;
       }
-      ConfigService.saveConfig(this.chatConfigForm);
+      ProfileConfigService.saveConfig(this.chatConfigForm);
     },
     requestNotificationPermission() {
       this.changePresenceUserAction();

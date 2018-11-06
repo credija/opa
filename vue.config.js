@@ -42,20 +42,6 @@ const productionConfig = {
 };
 
 module.exports = {
-  chainWebpack: config => {
-    if (process.env.NODE_ENV === 'production') {
-      config.module
-        .rule('string-replace')
-        .test(/main\.js/)
-        .use('string-replace-loader')
-        .loader('string-replace-loader')
-        .options({
-          search: '../public/config/app-config-dev.json',
-          replace: '../public/config/app-config.json',
-        })
-        .end();
-    }
-  },
   devServer: {
     https: false,
   },

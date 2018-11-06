@@ -4,6 +4,7 @@
 import Store from '@store/vuex-instance';
 import Vue from 'vue';
 import VueI18n from 'vue-i18n';
+import AxiosLocal from '@services/axios-local-service';
 
 export const LocaleService = {
   getEnUsLocale() {
@@ -76,8 +77,8 @@ export const LocaleService = {
   loadLanguageAsync() {
     const locale = Store.state.app.appConfig.VUE_APP_LOCALE;
     if (i18n.locale !== locale) {
-      return import(`../../public/config/i18n/${locale.toLowerCase()}.json`).then(msgs => {
-        i18n.setLocaleMessage(locale, msgs.default);
+      return AxiosLocal.getLocaleFile(locale).then(res => {
+        i18n.setLocaleMessage(locale, res.data);
         i18n.locale = locale;
         Store.dispatch('app/updateAppLocale', locale);
         return locale;

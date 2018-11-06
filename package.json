@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@websanova/vue-auth": "^2.21.14-beta",
+    "axios": "^0.18.0",
     "element-ui": "^2.4.9",
     "jwt-decode": "^2.2.0",
     "lodash.includes": "^4.3.0",
@@ -40,7 +41,6 @@
     "babel-plugin-component": "^1.1.1",
     "node-sass": "^4.9.4",
     "sass-loader": "^7.1.0",
-    "string-replace-loader": "^2.1.1",
     "vue-template-compiler": "^2.5.17"
   }
 }
