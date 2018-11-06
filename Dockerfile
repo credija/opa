@@ -6,8 +6,8 @@ COPY . /usr/opa-build
 WORKDIR /usr/opa-build
 
 RUN apt-get update \
- && curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash \
- && nvm install node \
+ && curl -sL https://deb.nodesource.com/setup_11.x | bash - \
+ && apt-get install -y nodejs \
  && npm install \
  && npm run build
 
