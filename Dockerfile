@@ -1,4 +1,5 @@
 FROM credija/nginx:lts
+
 MAINTAINER kevinfaveridev@gmail.com
 
 COPY . /opt/opa-build
