@@ -106,7 +106,7 @@ docker run --name opa -d --restart=always \
   --publish 8080:80 \
   --volume /opt/your-config.json:/usr/share/nginx/html/config/app-config.json \
   -m 256MB \
-  credija/opa:lts
+  credija/opa
 ```
 
 Also, if you need to overwrite the HTTP server config (which is an NGINX), you will need to overwrite the nginx.conf like:
@@ -115,7 +115,7 @@ docker run --name opa -d --restart=always \
   --publish 8080:80 \
   -m 256MB \
   --volume /opt/your-nginx.conf:/etc/nginx/nginx.conf \
-  credija/opa:lts
+  credija/opa
 ```
 ___
 Note: If you want to use a XMPP server in Docker we recommend our Openfire build which is available here: https://github.com/credija/openfire
