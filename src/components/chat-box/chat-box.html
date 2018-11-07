@@ -1,7 +1,7 @@
 <div class="chat-box">
     <div v-if="activeConversation !== null">
         <el-row class="pl1 py2 bb1 v-align" :class="{ 'dark-border': chatConfig.darkMode === true}">
-            <el-col :span="3" class="max-size mr1">
+            <el-col :span="3" class="max-size-header mr1">
                 <img v-if="profileImageSrc !== null" class="b-full-circle img-fit b1 clickable" 
                 :src="profileImageSrc" width="80" height="80"
                 @click="clickContactDetails()"/>
@@ -121,7 +121,7 @@
                 <el-col :span="20" class="mt1">
                     <el-form-item prop="message">
                         <el-input class="disable-resize b-full-circle _lr-hide"
-                        :autosize="{ minRows: 1, maxRows: 3}"
+                        :autosize="{ minRows: 1, maxRows: 2}"
                         :disabled="isDisconnected"
                         :placeholder="$t('chatbox.chatboxPlaceholder')"
                         type="textarea"

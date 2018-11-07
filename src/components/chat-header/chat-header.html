@@ -1,5 +1,5 @@
 <div class="chat-header">
-    <el-card class="userdetails-card p2" 
+    <el-card class="p2" 
         :class="{ 'dark-theme': chatConfig.darkMode === true, 'dark-border': chatConfig.darkMode === true }"
         v-if="authUser">
         <div v-if="!isDisconnected">
@@ -24,9 +24,8 @@
                         <font-awesome-icon :icon="timesIcon"/>
                     </el-button>
                 </div>
-                
             </el-col>
-            <el-col :span="15" :offset="2">
+            <el-col :span="12" :offset="2">
                 <el-select v-model="authUser.presence" placeholder="Status" 
                     value-key="id" class="mt3 b-rounded-25" 
                     @mouseover.native="dispatchThinkingEmoji"
@@ -50,7 +49,7 @@
                     </el-option>
                 </el-select>
             </el-col>
-            <el-col :span="1" :offset="1">
+            <el-col :span="1" :offset="3">
                 <el-popover
                     placement="bottom"
                     width="150"

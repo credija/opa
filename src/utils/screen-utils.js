@@ -12,7 +12,7 @@ export default {
         offsetChatbox: 0,
         sizeChatbox: 14,
       };
-    } else if (screenWidth >= 1600) {
+    } else if (screenWidth >= 1400) {
       return {
         offsetAlert: 1,
         sizeAlert: 22,

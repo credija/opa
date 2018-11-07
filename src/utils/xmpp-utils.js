@@ -147,7 +147,7 @@ export default {
 
     let conversation = conversationList.find(conversationFind => 
       conversationFind.contact.username.toUpperCase() === from.toUpperCase());
-    
+
     if (fromAttr === 'chat') {
       const msgContent = MessageParser.parseMessage(body.textContent);
       let newDate = new Date();

@@ -1,6 +1,6 @@
 
 // Media Query Card Contact
-@media (min-width: 1900px) {
+@media (min-height: 920px) {
 	.card-contact-list {
         max-height: 710px;
         height: 710px;
@@ -9,35 +9,44 @@
     }
 }
 
-@media (min-width: 1400px) and (max-width: 1900px)  {
+@media (min-height: 760px) and (max-height: 920px) {
 	.card-contact-list {
-        max-height: 550px;
-        height: 550px;
-        min-height: 550px;
+        max-height: 560px;
+        height: 560px;
+        min-height: 560px;
         overflow: auto;
     }
 }
 
-@media (max-width: 1400px)  {
+@media (min-height: 660px) and (max-height: 760px)  {
 	.card-contact-list {
-        max-height: 448px;
-        height: 448px;
-        min-height: 448px;
+        max-height: 490px;
+        height: 490px;
+        min-height: 490px;
+        overflow: auto;
+    }
+}
+
+@media (max-height: 660px)  {
+	.card-contact-list {
+        max-height: 460px;
+        height: 460px;
+        min-height: 460px;
         overflow: auto;
     }
 }
 
 // Media Query Card Chatbox
-@media (min-width: 1600px) {
+@media (min-height: 920px) {
 	.card-chatbox {
-        max-height: 915px;
-        height: 915px;
-        min-height: 915px;
+        max-height: 895px;
+        height: 895px;
+        min-height: 895px;
         overflow: auto;
     }
 }
 
-@media (min-width: 1400px) and (max-width: 1600px)  {
+@media (min-height: 760px) and (max-height: 920px) {
 	.card-chatbox {
         max-height: 745px;
         height: 745px;
@@ -46,11 +55,20 @@
     }
 }
 
-@media (max-width: 1400px)  {
+@media (min-height: 660px) and (max-height: 760px)  {
 	.card-chatbox {
-        max-height: 652px;
-        height: 652px;
-        min-height: 652px;
+        max-height: 675px;
+        height: 675px;
+        min-height: 675px;
+        overflow: auto;
+    }
+}
+
+@media (max-height: 660px)  {
+	.card-chatbox {
+        max-height: 645px;
+        height: 645px;
+        min-height: 645px;
         overflow: auto;
     }
 }
