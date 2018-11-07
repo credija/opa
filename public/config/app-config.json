@@ -1,6 +1,6 @@
 {
     "VUE_APP_XMPP_SERVER_ADDRESS": "https://chat-domain:7443/http-bind",
     "VUE_APP_XMPP_SERVER_DOMAIN": "chat",
-    "VUE_APP_EMOJI_SERVER": "https://twemoji.maxcdn.com/36x36/",
+    "VUE_APP_EMOJI_SERVER": "https://twemoji.maxcdn.com/",
     "VUE_APP_LOCALE": "en-us"
 }
