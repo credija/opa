@@ -1,35 +1,35 @@
-@media (min-height: 920px) {
+@media (min-height: 910px) {
 	.size-conversation {
-		max-height: 712px;
-		height: 712px;
-		min-height: 712px;
+		max-height: 680px;
+		height: 680px;
+		min-height: 680px;
 		overflow: auto;
 	}
 }
 
-@media (min-height: 760px) and (max-height: 920px) {
+@media (min-height: 760px) and (max-height: 910px) {
 	.size-conversation {
-		max-height: 563px;
-		height: 563px;
-		min-height: 563px;
+		max-height: 540px;
+		height: 540px;
+		min-height: 540px;
 		overflow: auto;
 	}
 }
 
 @media (min-height: 660px) and (max-height: 760px)  {
 	.size-conversation {
-		max-height: 493px;
-		height: 493px;
-		min-height: 493px;
+		max-height: 500px;
+		height: 500px;
+		min-height: 500px;
 		overflow: auto;
 	}
 }
 
 @media (max-height: 660px)  {
 	.size-conversation {
-		max-height: 464px;
-		height: 464px;
-		min-height: 464px;
+		max-height: 470px;
+		height: 470px;
+		min-height: 470px;
 		overflow: auto;
 	}
 }

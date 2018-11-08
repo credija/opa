@@ -127,7 +127,7 @@ export default {
 
     const profileImageObj = profileImageList.find(profileImage => 
       profileImage.username.toUpperCase() === from.toUpperCase());
-    
+      
     if (profileImageObj === undefined) {
       Store.dispatch('app/addProfileImageToList', { 
         username: from, 

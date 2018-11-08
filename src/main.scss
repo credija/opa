@@ -12,6 +12,30 @@ body {
     font-size: 14px;
 }
 
+@media (min-height: 910px) {
+	body {
+        overflow: hidden;
+    }
+}
+
+@media (min-height: 760px) and (max-height: 910px) {
+	body {
+        overflow: hidden;
+    }
+}
+
+@media (min-height: 650px) and (max-height: 760px)  {
+	body {
+        overflow: hidden;
+    }
+}
+
+@media (max-height: 650px)  {
+	body {
+        overflow: auto;
+    }
+}
+
 .flex-row {
     display:flex;
     flex-direction: row;

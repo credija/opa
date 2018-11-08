@@ -1,8 +1,8 @@
-<div class="chat" >
+<el-row class="chat" :gutter="10">
     <el-col :offset="sizes.offsetAlert" :span="sizes.sizeAlert" class="my2" v-if="isDisconnected">
         <el-alert :title="disconnectedMessage" type="error" show-icon :closable="false"></el-alert>
     </el-col>
-    <el-col :offset="sizes.offsetSideMenu" :span="sizes.sizeSideMenu" class="b-rounded side-col" 
+    <el-col :offset="sizes.offsetSideMenu" :span="sizes.sizeSideMenu" class="b-rounded" 
         :class="{ 'dark-theme': chatConfig.darkMode === true }">
         <chat-header :showContactList="showContactList" @switchActiveMenu="switchActiveMenu"></chat-header>
         <el-card class="card-contact-list" 
@@ -24,4 +24,4 @@
     </el-col>
     <loading-dialog></loading-dialog>
     <confirm-tab-dialog :showDialog="showConfirmTabDialog"></confirm-tab-dialog>
-</div>
+</el-row>
