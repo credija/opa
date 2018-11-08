@@ -1,6 +1,8 @@
-import * as types from '../../mutation-types';
+import Vue from 'vue';
+import * as types from './mutation-types';
 
 const mutations = {
+  // Global App States
   [types.UPDATE_APP_LOCALE](state, { appLocale }) {
     state.appLocale = appLocale;
   },
@@ -19,20 +21,49 @@ const mutations = {
   [types.UPDATE_XMPP_CLIENT](state, { xmppClient }) {
     state.xmppClient = xmppClient;
   },
+  [types.UPDATE_CHAT_TIMESTAMP](state, { chatTimestamp }) {
+    state.chatTimestamp = chatTimestamp;
+  },
+
+  // Auth User
   [types.UPDATE_AUTH_USER](state, { authUser }) {
     state.authUser = authUser;
   },
+  [types.UPDATE_AUTH_USER_PRESENCE](state, { presence }) {
+    state.authUser.presence = presence;
+  },
+  [types.UPDATE_AUTH_USER_IMAGE_BIN](state, { authUser, type, bin }) {
+    Vue.set(authUser, 'photoType', type);
+    Vue.set(authUser, 'photoBin', bin);
+  },
+
+  // Roster List
   [types.UPDATE_ROSTER_LIST](state, { rosterList }) {
     state.rosterList = rosterList;
   },
   [types.UPDATE_ROSTER_FIRST_LOAD](state, { rosterFirstLoad }) {
     state.rosterFirstLoad = rosterFirstLoad;
   },
+  [types.UPDATE_PRESENCE_ROSTER_CONTACT](state, { rosterObj, presence }) {
+    Vue.set(rosterObj, 'presence', presence);
+  },
+  [types.UPDATE_STATUS_ROSTER_CONTACT](state, { rosterObj, status }) {
+    Vue.set(rosterObj, 'status', status);
+  },
+  
+  // Profile Image
   [types.UPDATE_PROFILE_IMAGE_LIST](state, { profileImageList }) {
     state.profileImageList = profileImageList;
   },
-  [types.UPDATE_CHAT_TIMESTAMP](state, { chatTimestamp }) {
-    state.chatTimestamp = chatTimestamp;
+  [types.UPDATE_PROFILE_IMAGE_BIN](state, { profileImage, type, bin }) {
+    Vue.set(profileImage, 'type', type);
+    Vue.set(profileImage, 'bin', bin);
+  },
+  [types.UPDATE_PROFILE_IMAGE_HASH](state, { profileImage, hash }) {
+    Vue.set(profileImage, 'hash', hash);
+  },
+  [types.ADD_PROFILE_IMAGE_TO_LIST](state, { profileImage }) {
+    state.profileImageList.push(profileImage);
   },
 };
 

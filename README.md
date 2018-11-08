@@ -31,11 +31,10 @@ Has some feature in mind, suggestion or come across a bug? Open an [Issue](https
 # Features
 
 Features Opa already has:
-- [x] BOSH support
+- [x] BOSH/WebSocket support
 - [x] Multi language support 
   - Basic en-US | pt-BR for the time being, but you can add your own language by following the [Localization](#localization) section instructions of this README.
-- [x] Responsive up to 1366x768 
-  - Below that the layout will be broken.
+- [x] Responsive for desktop screens
 - [x] One-to-one chat
 - [x] Basic emoji using keywords
   - Credits to Tweemoji for the emoji arts
@@ -79,8 +78,8 @@ Features Opa that are under development (not necessarily in that order):
 - [ ] Language configurable by the user
 - [ ] Notification interval configurable by the user
 - [ ] Presence change interval configurable by the user
-- [ ] Better responsive layout
-- [ ] WebSocket support
+- [ ] Download other users avatar on demand
+- [ ] Encrypted key:values of LocalStorage
 
 ___
 

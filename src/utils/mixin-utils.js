@@ -21,9 +21,9 @@ export default {
         changePresenceUserAction() {
           Store.dispatch('chat/updateLastMessageSentStamp', new Date());
           if (Store.state.chat.isPresenceAway) {
-            Store.state.app.authUser.presence = PresenceEnum
-              .getPresenceById(Store.state.chat.lastPresence);
             XmppService.sendChangePresenceSignal(Store.state.chat.lastPresence);
+            Store.dispatch('app/updateAuthUserPresence', PresenceEnum
+              .getPresenceById(Store.state.chat.lastPresence));
             Store.dispatch('chat/updateIsPresenceAway', false);
           }
         }

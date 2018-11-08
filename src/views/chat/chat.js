@@ -67,11 +67,11 @@ export default {
   mounted() {
     const vueContext = this;
     this.intervalAwayPresence = setInterval(function() { 
-      if (DateUtils.isDateLastMessageSentMinutesOlder(20) 
+      if (DateUtils.isDateLastMessageSentMinutesOlder(15) 
         && vueContext.isPresenceAway === false 
         && vueContext.authUser.presence.id !== 'away') {
-        vueContext.authUser.presence = PresenceEnum.getPresenceById('away');
         XmppService.sendChangePresenceSignal('away');
+        vueContext.$store.dispatch('app/updateAuthUserPresence', PresenceEnum.getPresenceById('away'));
         vueContext.$store.dispatch('chat/updateIsPresenceAway', true);
       }
     }, 1000);

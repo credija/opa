@@ -20,11 +20,11 @@ export default {
     userIcon() {
       return faUser;
     },
-    rosterList() {
-      return this.$store.state.app.rosterList;
-    },
     rosterListByGroup() {
       return ArrayUtils.getRosterByGroup(this.rosterList);
+    },
+    rosterList() {
+      return this.$store.state.app.rosterList;
     },
     rosterFirstLoad() {
       return this.$store.state.app.rosterFirstLoad;
@@ -79,16 +79,20 @@ export default {
         };
         XmppService.setLastMessageId(conversation);
       } else {
-        conversation.numUnreadMsgs = 0;
+        this.$store.dispatch('chat/clearUnreadCounterConversation', conversation);
       }
 
       let chatBoxTextarea = document.getElementById('chatbox-textarea');
       if (chatBoxTextarea) {
-        this.activeConversation.chatboxState = chatBoxTextarea.value;
+        this.$store.dispatch('chat/setChatboxStateConversation', { 
+          conversation: this.activeConversation, 
+          chatboxState: chatBoxTextarea.value
+        });
       }
 
       this.$store.dispatch('chat/updateActiveConversation', conversation);
       this.$emit('switchActiveMenu');
+
       setTimeout(function () {
         chatBoxTextarea = document.getElementById('chatbox-textarea');
         const messageBoxDoc = document.getElementById('messageBox');
@@ -107,7 +111,7 @@ export default {
         this.searchedRosterList = [];
       }
     },
-    showOfflineContacts(contact) {
+    showOfflineContact(contact) {
       if (contact.presence.id === 'off' && !this.showOffline) {
         return false;
       }

@@ -3,7 +3,6 @@ import XmppUtils from '@utils/xmpp-utils';
 import { Strophe, $iq, $pres, $msg } from 'strophe.js';
 import StringUtils from '@utils/string-utils';
 import FormatUtils from '@utils/format-utils';
-import Vue from 'vue';
 import 'strophejs-plugin-rsm';
 import '@strophe/strophe-mam-mod';
 import MessageParser from '@services/message-parser';
@@ -63,7 +62,6 @@ export default {
   },
   updateRosterPresence() {
     const appConfig = Store.state.app.appConfig;
-
     const rosterList = Store.state.app.rosterList;
     const client = Store.state.app.xmppClient;
     const profileImageList = Store.state.app.profileImageList;
@@ -92,8 +90,8 @@ export default {
   },
   sendMessage(msg, to, date) {
     const appConfig = Store.state.app.appConfig;
-
     const client = Store.state.app.xmppClient;
+
     const m = $msg({
       to: to + `@${appConfig.VUE_APP_XMPP_SERVER_DOMAIN}`,
       type: 'chat'
@@ -105,32 +103,16 @@ export default {
       .t(msg);
     client.send(m);
   },
-  reorderConversationsByActive() {
-    const conversationList = Store.state.chat.conversationList;
-    const activeConversation = Store.state.chat.activeConversation;
-
-    const reorderedConversations = conversationList.filter(conv => 
-      conv.contact.username !== activeConversation.contact.username);
-    reorderedConversations.unshift(activeConversation);
-    Store.dispatch('chat/updateConversationList', reorderedConversations);
-  },
-  reorderConversationsByConversation(conversation) {
-    const conversationList = Store.state.chat.conversationList;
-
-    const reorderedConversations = conversationList.filter(conv => 
-      conv.contact.username !== conversation.contact.username);
-    reorderedConversations.unshift(conversation);
-    Store.dispatch('chat/updateConversationList', reorderedConversations);
-  },
   sendChatSignal(jid, notification) {
     const appConfig = Store.state.app.appConfig;
-
     const client = Store.state.app.xmppClient;
+
     const chatSignal = $msg({ 
       to: jid + `@${appConfig.VUE_APP_XMPP_SERVER_DOMAIN}`, 
       type: 'chat' 
     })
       .c(notification, { xmlns: Strophe.NS.CHATSTATES });
+
     client.send(chatSignal);
   },
   profileImageCreator(presence) {
@@ -147,19 +129,24 @@ export default {
       profileImage.username.toUpperCase() === from.toUpperCase());
     
     if (profileImageObj === undefined) {
-      profileImageList.push({ 
+      Store.dispatch('app/addProfileImageToList', { 
         username: from, 
         hash: photoId, 
         type: null, 
         bin: null 
       });
       XmppUtils.updateUserAvatar(from);
-    } else if (profileImageObj !== undefined 
-        && profileImageObj.hash !== photoId) {
+    } else if (profileImageObj.hash !== photoId) {
       if (photoId === null) {
-        profileImageObj.hash = 'null_hash';
+        Store.dispatch('app/updateProfileImageHash', { 
+          profileImage: profileImageObj, 
+          hash: 'null_hash', 
+        });
       } else {
-        profileImageObj.hash = photoId;
+        Store.dispatch('app/updateProfileImageHash', { 
+          profileImage: profileImageObj, 
+          hash: photoId, 
+        });
       }
       
       XmppUtils.updateUserAvatar(from);
@@ -180,30 +167,33 @@ export default {
     if (photoTag !== undefined) {
       photoType = photoTag.getElementsByTagName('TYPE')[0].textContent;
       photoBin = photoTag.getElementsByTagName('BINVAL')[0].textContent;
-      Vue.set(profileImageObj, 'type', photoType);
-      Vue.set(profileImageObj, 'bin', photoBin);
+      Store.dispatch('app/updateProfileImageBin', { 
+        profileImage: profileImageObj, 
+        type: photoType,
+        bin: photoBin, 
+      });
     } else {
-      profileImageObj.type = undefined;
-      profileImageObj.bin = undefined;
+      Store.dispatch('app/updateProfileImageBin', { 
+        profileImage: profileImageObj, 
+        type: undefined,
+        bin: undefined, 
+      });
     }
   },
   updateLoggedUserVcard() {
     const appConfig = Store.state.app.appConfig;
-
     const client = Store.state.app.xmppClient;
+
     const clientUsername = StringUtils.removeAfterInclChar(client.jid, '@');
-    let authUser = Store.state.app.authUser;
 
     Store.dispatch('app/updateAuthUser', { 
       username: clientUsername, 
       presence: { id: 'on', value: 'Online' }
     });
-    
-    authUser = Store.state.app.authUser;
 
     const avatarIq = $iq({ 
       type: 'get',
-      to: authUser.username + `@${appConfig.VUE_APP_XMPP_SERVER_DOMAIN}` 
+      to: clientUsername + `@${appConfig.VUE_APP_XMPP_SERVER_DOMAIN}` 
     })
       .c('vCard', { xmlns: 'vcard-temp' });
     client.sendIQ(avatarIq, XmppUtils.vCardLoggedUser);
@@ -223,6 +213,7 @@ export default {
   updateProfileImage(profileImage) {
     const client = Store.state.app.xmppClient;
     const authUser = Store.state.app.authUser;
+
     FormatUtils.getBase64FromFile(profileImage)
       .then((base64File) => {
         const iq = $iq({ 
@@ -235,8 +226,13 @@ export default {
           .c('BINVAL', base64File);
 
         client.sendIQ(iq);
-        Vue.set(authUser, 'photoType', profileImage.type);
-        Vue.set(authUser, 'photoBin', base64File);
+
+        Store.dispatch('app/updateAuthUserImageBin', { 
+          authUser: authUser, 
+          type: profileImage.type,
+          bin: base64File, 
+        });
+
         const updateAvatarPres = $pres()
           .c('x', { xmlns: 'vcard-temp:x:update' })
           .c('photo', {}, StringUtils.randomIdGenerator())
@@ -249,6 +245,7 @@ export default {
   deleteProfileImage() {
     const client = Store.state.app.xmppClient;
     const authUser = Store.state.app.authUser;
+
     const iq = $iq({ 
       type: 'set'
     })
@@ -259,8 +256,13 @@ export default {
       .c('BINVAL', '');
 
     client.sendIQ(iq);
-    Vue.set(authUser, 'photoType', undefined);
-    Vue.set(authUser, 'photoBin', undefined);
+
+    Store.dispatch('app/updateAuthUserImageBin', { 
+      authUser: authUser, 
+      type: undefined,
+      bin: undefined, 
+    });
+
     const updateAvatarPres = $pres()
       .c('x', { xmlns: 'vcard-temp:x:update' })
       .c('photo', {}, StringUtils.randomIdGenerator())
@@ -269,39 +271,56 @@ export default {
       .t(authUser.presence.id);
     client.send(updateAvatarPres);
   },
-  getOldMessages(activeConversation) {
+  getOldMessages(conversation) {
     const appConfig = Store.state.app.appConfig;
+    const client = Store.state.app.xmppClient;
+    const authUser = Store.state.app.authUser;
 
     const messageBox = document.getElementById('messageBox');
     const scrollHeight = messageBox.scrollHeight;
-    const client = Store.state.app.xmppClient;
-    const authUser = Store.state.app.authUser;
     const startOfTime = new Date(1970, 0, 1).toISOString();
 
-    if (Number(activeConversation.oldConversation.lastRetrievedId) 
-      === Number(activeConversation.oldConversation.lastMessageId) 
-    && Number(activeConversation.oldConversation.lastMessageId) !== 0) {
-      activeConversation.oldConversation.isLoading = true;
+    if (Number(conversation.oldConversation.lastRetrievedId) 
+      === Number(conversation.oldConversation.lastMessageId) 
+    && Number(conversation.oldConversation.lastMessageId) !== 0) {
+      Store.dispatch('chat/updateOldConversationIsLoading', { 
+        oldConversation: conversation.oldConversation, 
+        bool: true 
+      });
       setTimeout(() => {
-        activeConversation.oldConversation.isLoading = false;
-        activeConversation.oldConversation.noResult = true;
+        Store.dispatch('chat/updateOldConversationIsLoading', { 
+          oldConversation: conversation.oldConversation, 
+          bool: false 
+        });
+        Store.dispatch('chat/updateOldConversationNoResult', { 
+          oldConversation: conversation.oldConversation, 
+          bool: true 
+        });
       }, 300);
       return;
     }
 
-    if (activeConversation.oldConversation.lastStamp === null) {
-      activeConversation.oldConversation.lastStamp = new Date().toISOString();
+    if (conversation.oldConversation.lastStamp === null) {
+      Store.dispatch('chat/updateOldConversationLastStamp', { 
+        oldConversation: conversation.oldConversation, 
+        lastStamp: new Date().toISOString()
+      });
     }
 
-    activeConversation.oldConversation.isLoading = true;
+    Store.dispatch('chat/updateOldConversationIsLoading', { 
+      oldConversation: conversation.oldConversation, 
+      bool: true 
+    });
+
     let isFirstMessage = true;
     const messageList = [];
+    
     client.mam.query(authUser.username + `@${appConfig.VUE_APP_XMPP_SERVER_DOMAIN}`, {
-      with: activeConversation.contact.username + `@${appConfig.VUE_APP_XMPP_SERVER_DOMAIN}`,
+      with: conversation.contact.username + `@${appConfig.VUE_APP_XMPP_SERVER_DOMAIN}`,
       start: startOfTime,
-      end: activeConversation.oldConversation.lastStamp,
-      before: activeConversation.oldConversation.lastRetrievedId,
-      max: 2,
+      end: conversation.oldConversation.lastStamp,
+      before: conversation.oldConversation.lastRetrievedId,
+      max: 5,
       isGroup: false,
       onMessage: function(message) {
         const locale = Store.state.app.appLocale;
@@ -315,7 +334,10 @@ export default {
         const chatMessageFormated = MessageParser.parseMessage(messageBody);
 
         if (isFirstMessage) {
-          activeConversation.oldConversation.lastRetrievedId = resultId;
+          Store.dispatch('chat/updateOldConversationLastRetrievedId', { 
+            oldConversation: conversation.oldConversation, 
+            lastRetrievedId: resultId 
+          });
           isFirstMessage = false;
         }
 
@@ -333,15 +355,22 @@ export default {
         return true;
       },
       onComplete: function() {
-        activeConversation.oldConversation.isLoading = false;
+        Store.dispatch('chat/updateOldConversationIsLoading', { 
+          oldConversation: conversation.oldConversation, 
+          bool: false 
+        });
 
         if (messageList.length === 0) {
-          activeConversation.oldConversation.noResult = true;
+          Store.dispatch('chat/updateOldConversationNoResult', { 
+            oldConversation: conversation.oldConversation, 
+            bool: true 
+          });
         } else {
-          activeConversation.oldConversation.list = messageList
-            .concat(activeConversation.oldConversation.list);
+          Store.dispatch('chat/addMessageListToOldConversation', { 
+            oldConversation: conversation.oldConversation, 
+            messageList: messageList 
+          });
         }
-
         setTimeout(function () {
           if (messageBox !== undefined) {
             messageBox.scrollTop = messageBox.scrollHeight - scrollHeight;
@@ -350,22 +379,25 @@ export default {
       },
     });
   },
-  setLastMessageId(activeConversation) {
+  setLastMessageId(conversation) {
     const appConfig = Store.state.app.appConfig;
-
     const client = Store.state.app.xmppClient;
     const authUser = Store.state.app.authUser;
+
     const startOfTime = new Date(1970, 0, 1).toISOString();
 
     client.mam.query(authUser.username + `@${appConfig.VUE_APP_XMPP_SERVER_DOMAIN}`, {
-      with: activeConversation.contact.username + `@${appConfig.VUE_APP_XMPP_SERVER_DOMAIN}`,
+      with: conversation.contact.username + `@${appConfig.VUE_APP_XMPP_SERVER_DOMAIN}`,
       start: startOfTime,
       end: new Date().toISOString(),
       max: 1,
       isGroup: false,
       onMessage: function(message) {
         const resultId = message.getElementsByTagName('result')[0].getAttribute('id');
-        activeConversation.oldConversation.lastMessageId = resultId;
+        Store.dispatch('chat/updateOldConversationLastMessageId', { 
+          oldConversation: conversation.oldConversation, 
+          lastRetrievedId: resultId 
+        });
         return true;
       },
       onComplete: function() {

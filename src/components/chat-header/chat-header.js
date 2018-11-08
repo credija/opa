@@ -35,6 +35,9 @@ export default {
     timesIcon() {
       return faTimes;
     },
+    presenceList() {
+      return PresenceEnum.getPresenceEnumUser();
+    },
     authUser() {
       return this.$store.state.app.authUser;
     },
@@ -44,9 +47,6 @@ export default {
         imgSrc = 'data:' + this.authUser.photoType + ';base64,' + this.authUser.photoBin;
       }
       return imgSrc;
-    },
-    presenceList() {
-      return PresenceEnum.getPresenceEnumUser();
     },
     isDisconnected() {
       return this.$store.state.app.isDisconnected;
