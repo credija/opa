@@ -1,28 +1,28 @@
 
 // Media Query Card Contact
-@media (min-height: 920px) {
+@media (min-height: 910px) {
 	.card-contact-list {
-        max-height: 710px;
-        height: 710px;
-        min-height: 710px;
+        max-height: 680px;
+        height: 680px;
+        min-height: 680px;
         overflow: auto;
     }
 }
 
-@media (min-height: 760px) and (max-height: 920px) {
+@media (min-height: 760px) and (max-height: 910px) {
 	.card-contact-list {
-        max-height: 560px;
-        height: 560px;
-        min-height: 560px;
+        max-height: 550px;
+        height: 550px;
+        min-height: 550px;
         overflow: auto;
     }
 }
 
 @media (min-height: 660px) and (max-height: 760px)  {
 	.card-contact-list {
-        max-height: 490px;
-        height: 490px;
-        min-height: 490px;
+        max-height: 500px;
+        height: 500px;
+        min-height: 500px;
         overflow: auto;
     }
 }
@@ -37,38 +37,44 @@
 }
 
 // Media Query Card Chatbox
-@media (min-height: 920px) {
+@media (min-height: 910px) {
 	.card-chatbox {
-        max-height: 895px;
-        height: 895px;
-        min-height: 895px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        max-height: 860px;
+        height: 860px;
+        min-height: 860px;
         overflow: auto;
     }
 }
 
-@media (min-height: 760px) and (max-height: 920px) {
+@media (min-height: 760px) and (max-height: 910px) {
 	.card-chatbox {
-        max-height: 745px;
-        height: 745px;
-        min-height: 745px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        max-height: 730px;
+        height: 730px;
+        min-height: 730px;
         overflow: auto;
     }
 }
 
 @media (min-height: 660px) and (max-height: 760px)  {
 	.card-chatbox {
-        max-height: 675px;
-        height: 675px;
-        min-height: 675px;
+        margin-top: 3px;
+        margin-bottom: 3px;
+        max-height: 680px;
+        height: 680px;
+        min-height: 680px;
         overflow: auto;
     }
 }
 
 @media (max-height: 660px)  {
 	.card-chatbox {
-        max-height: 645px;
-        height: 645px;
-        min-height: 645px;
+        max-height: 660px;
+        height: 660px;
+        min-height: 660px;
         overflow: auto;
     }
 }

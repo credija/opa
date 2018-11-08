@@ -10,7 +10,7 @@
                     <font-awesome-icon :icon="userIcon" class="ml3"/>
                 </div>
             </el-col>
-            <el-col :span="18">
+            <el-col :span="16">
                 <el-row>
                     <strong class="clickable" @click="clickContactDetails()">{{ activeConversation.contact.name }}</strong>
                 </el-row>
@@ -27,7 +27,7 @@
                     <span class="text-teal-clean text-bold" v-if="activeConversation.isTyping">{{ $t('chatbox.typingLabel') }}</span>
                 </el-row>
             </el-col>
-            <el-col :span="4">
+            <el-col :span="6">
                 <el-button type="danger" size="mini" class="float-right mr1" plain @click="closeActiveConversation">
                     <font-awesome-icon :icon="timesIcon"/>
                 </el-button>

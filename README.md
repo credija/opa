@@ -34,7 +34,7 @@ Features Opa already has:
 - [x] BOSH/WebSocket support
 - [x] Multi language support 
   - Basic en-US | pt-BR for the time being, but you can add your own language by following the [Localization](#localization) section instructions of this README.
-- [x] Responsive for desktop screens
+- [x] Responsive for desktop screens (up to 1024x768)
 - [x] One-to-one chat
 - [x] Basic emoji using keywords
   - Credits to Tweemoji for the emoji arts
