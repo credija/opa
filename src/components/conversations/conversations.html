@@ -10,7 +10,6 @@
         @click.native="onClickConversation(conversation)"
         @mouseover.native="dispatchHappyEmoji"
         @mouseleave.native="dispatchThinkingEmoji">
-
         <el-col :span="4">
             <img v-if="profileImageSrc(conversation.contact.username) !== null" class="b-full-circle img-fit b4" 
             :src="profileImageSrc(conversation.contact.username)" width="48" height="48"
@@ -25,7 +24,9 @@
         <el-col :span="20" class="unselectable">
             <el-row class="ml2 my1">
                 <span class="text-bold">{{ conversation.contact.name }}</span>
-                <small class="float-right text-italic">{{ getLastMessage(conversation).stamp | isDateToday }}</small>
+                <small class="float-right text-italic" v-if="getLastMessage(conversation).msg !== ''">
+                    {{ getLastMessage(conversation).stamp | isDateToday }}
+                </small>
             </el-row>
             <el-row class="ml2 v-align">
                 <small class="mr1" v-if="isLastOwnMessage(conversation)"><font-awesome-icon :icon="checkIcon"/></small>

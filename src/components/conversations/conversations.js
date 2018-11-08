@@ -3,6 +3,7 @@ import ObjectUtils from '@utils/object-utils';
 import { faUser, faCheck } from '@fortawesome/free-solid-svg-icons';
 import FaviconService from '@services/favicon-service';
 import DocTitleService from '@services/doc-title-service';
+import XmppService from '@services/xmpp-service';
 
 export default {
   name: 'Conversations',
@@ -33,9 +34,6 @@ export default {
       return this.$store.state.chat.chatConfig;
     },
   },
-  mounted() {
-
-  },
   methods: {
     onClickConversation(conversation) {
       this.changePresenceUserAction();
@@ -49,10 +47,16 @@ export default {
 
       const chatBoxTextarea = document.getElementById('chatbox-textarea');
       if (chatBoxTextarea) {
-        this.activeConversation.chatboxState = chatBoxTextarea.value;
+        this.$store.dispatch('chat/setChatboxStateConversation', { 
+          conversation: this.activeConversation, 
+          chatboxState: chatBoxTextarea.value
+        });
+      }
+      if (this.activeConversation !== null) {
+        XmppService.sendChatSignal(this.activeConversation.contact.username, 'paused');
       }
 
-      conversation.numUnreadMsgs = 0;
+      this.$store.dispatch('chat/clearUnreadCounterConversation', conversation);
       
       this.$store.dispatch('chat/updateActiveConversation', conversation);
       setTimeout(function () {
@@ -62,7 +66,8 @@ export default {
       });
     },
     getLastMessage(conversation) {
-      let lastMessage = '';
+      let lastMessage = {};
+      lastMessage.msg = '';
       if (conversation.list.length !== 0) {
         lastMessage = ObjectUtils.cloneObject(conversation.list[conversation.list.length - 1]);
       }

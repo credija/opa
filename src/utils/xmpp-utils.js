@@ -86,8 +86,9 @@ export default {
   presenceHandler(presence) {
     const appConfig = Store.state.app.appConfig;
     const client = Store.state.app.xmppClient;
-
     const rosterList = Store.state.app.rosterList;
+    const authUser = Store.state.app.authUser.username;
+
     const show = presence.getElementsByTagName('show')[0];
     const status = presence.getElementsByTagName('status')[0];
     const type = presence.getAttribute('type');
@@ -95,7 +96,7 @@ export default {
     const rosterObj = rosterList.find(roster => 
       roster.username.toUpperCase() === from.toUpperCase());
 
-    if (rosterList.length === 0 || from === Store.state.app.authUser.username) {
+    if (rosterList.length === 0 || from === authUser) {
       return true;
     }
     
@@ -103,9 +104,15 @@ export default {
     
     if (show !== undefined) {
       const showValue = show.textContent;
-      rosterObj.presence = PresenceEnum.getPresenceById(showValue);
+      Store.dispatch('app/updatePresenceRosterContact', { 
+        rosterObj: rosterObj, 
+        presence: PresenceEnum.getPresenceById(showValue) 
+      });
     } else if (type === 'unavailable' || type === 'error') {
-      rosterObj.presence = { id: 'off', value: 'Offline' };
+      Store.dispatch('app/updatePresenceRosterContact', { 
+        rosterObj: rosterObj, 
+        presence: { id: 'off', value: 'Offline' }
+      });
       setTimeout(function () {
         const check = $pres({
           type: 'probe',
@@ -114,22 +121,27 @@ export default {
         client.send(check);
       }, 5000);
     } else {
-      rosterObj.presence = { id: 'on', value: 'Online' };
+      Store.dispatch('app/updatePresenceRosterContact', { 
+        rosterObj: rosterObj, 
+        presence: PresenceEnum.getPresenceById('on') 
+      });
     }
 
     if (status !== undefined) {
       const statusValue = status.childNodes[0].nodeValue;
-      rosterObj.status = statusValue;
+      Store.dispatch('app/updateStatusRosterContact', { 
+        rosterObj: rosterObj, 
+        status: statusValue
+      });
     }
 
     return true;
   },
   messageHandler(msg) {
-    const locale = Store.state.app.appLocale;
-
     const fromAttr = msg.getAttribute('from');
     if (fromAttr === null) return true;
 
+    const locale = Store.state.app.appLocale;
     const rosterList = Store.state.app.rosterList;
     const conversationList = Store.state.chat.conversationList;
     const activeConversation = Store.state.chat.activeConversation;
@@ -147,7 +159,7 @@ export default {
 
     let conversation = conversationList.find(conversationFind => 
       conversationFind.contact.username.toUpperCase() === from.toUpperCase());
-
+    
     if (fromAttr === 'chat') {
       const msgContent = MessageParser.parseMessage(body.textContent);
       let newDate = new Date();
@@ -181,11 +193,14 @@ export default {
           }
         }
 
-        conversation.list.push({ 
-          msg: msgContent, 
-          ownMessage: false, 
-          stamp: newDate.toLocaleString(locale), 
-          stampDate: newDate 
+        Store.dispatch('chat/addMessageToConversation', { 
+          messageList: conversation.list, 
+          messageToAdd: { 
+            msg: msgContent, 
+            ownMessage: false, 
+            stamp: newDate.toLocaleString(locale), 
+            stampDate: newDate 
+          } 
         });
       } else {
         const rosterObj = rosterList.find(roster => 
@@ -204,25 +219,34 @@ export default {
             list: []
           }
         };
-
+        
         XmppService.setLastMessageId(conversation);
 
-        conversation.list.push({ 
-          msg: msgContent, 
-          ownMessage: false,
-          stamp: newDate.toLocaleString(locale),
-          stampDate: newDate
+        Store.dispatch('chat/addMessageToConversation', { 
+          messageList: conversation.list, 
+          messageToAdd: { 
+            msg: msgContent, 
+            ownMessage: false,
+            stamp: newDate.toLocaleString(locale),
+            stampDate: newDate
+          }
         });
 
         newDate.setSeconds(newDate.getSeconds() - 5);
-        conversation.oldConversation.lastStamp = newDate.toISOString();
+        Store.dispatch('chat/updateOldConversationLastStamp', { 
+          oldConversation: conversation.oldConversation, 
+          lastStamp: newDate.toISOString()
+        });
 
-        conversationList.push(conversation);
+        Store.dispatch('chat/addConversationToList', conversation);
 
         if (conversation.contact.username 
           === ObjectUtils.getValidUsername(() => activeConversation.contact.username)) {
-          conversation.numUnreadMsgs = 0;
-          conversation.oldConversation = activeConversation.oldConversation;
+          Store.dispatch('chat/clearUnreadCounterConversation', conversation);
+          Store.dispatch('chat/updateOldConversation', { 
+            conversation: conversation, 
+            oldConversation: activeConversation.oldConversation
+          });
           Store.dispatch('chat/updateActiveConversation', conversation);
         } else {
           const numUnreadConversation = Store.state.chat.numUnreadConversation;
@@ -233,7 +257,7 @@ export default {
       }
 
       if (!bolFirstConversation) {
-        XmppService.reorderConversationsByConversation(conversation);
+        Store.dispatch('chat/reorderConversationByConversation', conversation);
       }
 
       setTimeout(function () {
@@ -245,17 +269,16 @@ export default {
       });
     } else if (composing !== undefined
       && from === ObjectUtils.getValidUsername(() => activeConversation.contact.username)) {
-      activeConversation.isTyping = true;
+      Store.dispatch('chat/updateActiveConversationIsTyping', true);
     } else if (paused !== undefined 
       && from === ObjectUtils.getValidUsername(() => activeConversation.contact.username)) {
-      activeConversation.isTyping = false;
+      Store.dispatch('chat/updateActiveConversationIsTyping', false);
     }
 
     return true;
   },
   updateUserAvatar(username) {
     const appConfig = Store.state.app.appConfig;
-
     const client = Store.state.app.xmppClient;
 
     const avatarIq = $iq({ 
@@ -269,25 +292,18 @@ export default {
     const authUser = Store.state.app.authUser;
 
     const vCardElement = iq.getElementsByTagName('vCard')[0];
-    let formalName = '';
-    if (vCardElement.getElementsByTagName('FN')[0] !== undefined) {
-      formalName = vCardElement.getElementsByTagName('FN')[0].textContent;
-    } else {
-      formalName = iq.getAttribute('from');
-    }
-
-    authUser.formalName = formalName;
    
     const photoTag = vCardElement.getElementsByTagName('PHOTO')[0];
-   
-
     let photoType;
     let photoBin;
     if (photoTag !== undefined) {
       photoType = photoTag.getElementsByTagName('TYPE')[0].textContent;
       photoBin = photoTag.getElementsByTagName('BINVAL')[0].textContent;
-      Vue.set(authUser, 'photoType', photoType);
-      Vue.set(authUser, 'photoBin', photoBin);
+      Store.dispatch('app/updateAuthUserImageBin', { 
+        authUser: authUser, 
+        type: photoType,
+        bin: photoBin, 
+      });
     }
   }
 };

@@ -9,7 +9,7 @@
             :key="key"
             :title="rosterGroup.group" :name="key"
             :class="{ 'dark-theme': chatConfig.darkMode === true }">
-            <el-row v-if="rosterGroup.contacts.length !== 0 && showOfflineContacts(contact)" 
+            <el-row v-if="rosterGroup.contacts.length !== 0 && showOfflineContact(contact)" 
                 v-for="(contact, key) in rosterGroup.contacts" :key="key" 
                 class="v-align clickable bg-gray-hover p1 b-rounded height-fix-contact dark-hover"
                 :class="{ 'dark-theme': chatConfig.darkMode === true }"

@@ -1,9 +1,7 @@
 import { 
   faPlane, faCaretRight, faCircle, 
   faClock, faTimes, faUser, faComment,
-  faCheck,
-  faMinus,
-  faSmile
+  faCheck, faMinus, faSmile
 } from '@fortawesome/free-solid-svg-icons';
 import PresenceEnum from '@enums/presence-enum';
 import XmppService from '@services/xmpp-service';
@@ -98,6 +96,9 @@ export default {
     chatConfig() {
       return this.$store.state.chat.chatConfig;
     },
+    appLocale() {
+      return this.$store.state.app.appLocale;
+    }
   },
   watch: {
     activeConversation: function (val) {
@@ -120,12 +121,11 @@ export default {
       });
     },
     send() {
+      this.changePresenceUserAction();
       const newDate = new Date();
-      const locale = this.$store.state.app.appLocale;
 
       XmppService
         .sendMessage(this.chatBoxForm.message, this.activeConversation.contact.username, newDate);
-      this.changePresenceUserAction();
       
       const conversation = this.conversationList.find(conversationFind => 
         conversationFind.contact.username.toUpperCase() === 
@@ -135,26 +135,33 @@ export default {
       
       if (this.activeConversation.list.length === 0) {
         newDate.setSeconds(newDate.getSeconds() - 5);
-        this.activeConversation.oldConversation.lastStamp = newDate.toISOString();
+        this.$store.dispatch('chat/updateOldConversationLastStamp', { 
+          oldConversation: this.activeConversation.oldConversation, 
+          lastStamp: newDate.toISOString() 
+        });
       }
 
+      const messageToAdd = { 
+        msg: chatMessageFormated, 
+        ownMessage: true, 
+        stamp: newDate.toLocaleString(this.appLocale), 
+        stampDate: newDate 
+      };
+
       if (conversation !== undefined) {
-        conversation.list.push({ 
-          msg: chatMessageFormated, 
-          ownMessage: true, 
-          stamp: newDate.toLocaleString(locale), 
-          stampDate: newDate 
+        this.$store.dispatch('chat/addMessageToConversation', { 
+          messageList: conversation.list, 
+          messageToAdd: messageToAdd 
         });
       } else {
-        this.activeConversation.list.push({ 
-          msg: chatMessageFormated, 
-          ownMessage: true,
-          stamp: newDate.toLocaleString(locale),
-          stampDate: newDate 
+        this.$store.dispatch('chat/addMessageToConversation', {
+          messageList: this.activeConversation.list, 
+          messageToAdd: messageToAdd 
         });
-        this.conversationList.push(this.activeConversation);
+        this.$store.dispatch('chat/addConversationToList', this.activeConversation);
       }
-      XmppService.reorderConversationsByActive();
+
+      this.$store.dispatch('chat/reorderConversationByConversation', this.activeConversation);
 
       this.chatBoxForm.message = '';
       const thisComponent = this;
@@ -168,13 +175,13 @@ export default {
     },
     minimizeActiveConversation() {
       this.changePresenceUserAction();
+      XmppService.sendChatSignal(this.activeConversation.contact.username, 'paused');
       this.$store.dispatch('chat/updateActiveConversation', null);
     },
     closeActiveConversation() {
       this.changePresenceUserAction();
-      const newConversationList = this.conversationList.filter(conv => 
-        conv.contact.username !== this.activeConversation.contact.username);
-      this.$store.dispatch('chat/updateConversationList', newConversationList);
+      XmppService.sendChatSignal(this.activeConversation.contact.username, 'paused');
+      this.$store.dispatch('chat/removeConversationFromList', this.activeConversation);
       this.$store.dispatch('chat/updateActiveConversation', null);
     },
     sendTypingSignal() {
