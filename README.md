@@ -27,7 +27,8 @@ Day Mode             |  Night Mode
 :-------------------------:|:-------------------------:
 ![](https://i.imgur.com/gQ4MXuk.png)  |  ![](https://i.imgur.com/YxrEoKz.png)
 
-~~A demo will be available soon~~
+A demo will be available soon.
+
 Has some feature in mind, suggestion or come across a bug? Open an [Issue](https://github.com/credija/opa/issues) so we can discuss 👍
 
 # Features
