@@ -23,7 +23,9 @@ _**Trivia**_: "Opa", among many meanings in Brazil, is also used informally as a
 
 **Opa** was born as an internal project to fill the **absence of an XMPP client** that did not need an **installation on each machine**, was **developed with current techs**, had a **modern design** and supported **common features** for a chat in a corporate environment.
 
-![alt text](https://i.imgur.com/Etj88t9.png "Opa Chat 2")
+Day Mode             |  Night Mode
+:-------------------------:|:-------------------------:
+![](https://i.imgur.com/gQ4MXuk.png)  |  ![](https://i.imgur.com/YxrEoKz.png)
 
 A demo is available here: opa.github.io
 Has some feature in mind, suggestion or come across a bug? Open an [Issue](https://github.com/credija/opa/issues) so we can discuss 👍
@@ -55,7 +57,7 @@ Features Opa already has:
 - [x] Sound desktop notification 
   - 1 minute interval.
 - [x] Option to show/hide offline contacts
-- [x] Option to enable Night/Day mode
+- [x] Option to enable Day/Night mode
 - [x] Conversation history from server. 
   - Your XMPP server must support these protocols:
   - [MSM](https://xmpp.org/extensions/xep-0313.html)
