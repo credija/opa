@@ -60,11 +60,6 @@ const actions = {
       rosterList
     });
   },
-  updateRosterFirstLoad({ commit }, rosterFirstLoad) {
-    commit(types.UPDATE_ROSTER_FIRST_LOAD, {
-      rosterFirstLoad
-    });
-  },
   updatePresenceRosterContact({ commit }, updatePresenceRosterContact) {
     const { rosterObj, presence } = updatePresenceRosterContact;
     commit(types.UPDATE_PRESENCE_ROSTER_CONTACT, {

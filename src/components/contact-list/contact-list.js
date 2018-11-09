@@ -26,9 +26,6 @@ export default {
     rosterList() {
       return this.$store.state.app.rosterList;
     },
-    rosterFirstLoad() {
-      return this.$store.state.app.rosterFirstLoad;
-    },
     conversationList() {
       return this.$store.state.chat.conversationList;
     },
