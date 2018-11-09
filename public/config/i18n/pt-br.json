@@ -9,7 +9,7 @@
     },
     "chat": {
         "loadingMessages": "Carregando suas mensagens, aguarde...",
-        "isDisconnectedMsg": "Você foi desconectado do chat por problemas de conexão, porém ainda pode conferir suas mensagens. Para voltar a utilizar o chat efetue o login novamente.",
+        "isDisconnectedMsg": "Você foi desconectado do chat por problemas de conexão.",
         "noOpenConversation": "Não há nenhuma conversa aberta.",
         "tipNewConversation": "Você pode abrir uma nova conversa clicando no botão",
         "noConversation": "Você ainda não possui conversas.",

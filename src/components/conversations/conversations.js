@@ -45,7 +45,7 @@ export default {
         DocTitleService.updateTitle();
       }
 
-      const chatBoxTextarea = document.getElementById('chatbox-textarea');
+      let chatBoxTextarea = document.getElementById('chatbox-textarea');
       if (chatBoxTextarea) {
         this.$store.dispatch('chat/setChatboxStateConversation', { 
           conversation: this.activeConversation, 
@@ -61,6 +61,7 @@ export default {
       this.$store.dispatch('chat/updateActiveConversation', conversation);
       setTimeout(function () {
         const messageBoxDoc = document.getElementById('messageBox');
+        chatBoxTextarea = document.getElementById('chatbox-textarea');
         if (messageBoxDoc) messageBoxDoc.scrollTop = messageBoxDoc.scrollHeight;
         if (chatBoxTextarea) chatBoxTextarea.focus();
       });

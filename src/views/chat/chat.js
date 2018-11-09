@@ -27,7 +27,6 @@ export default {
     return {
       showConfirmTabDialog: false,
       showContactList: false,
-      disconnectedMessage: this.$t('chat.isDisconnectedMsg'),
       sizes: ScreenUtils.getSizeChat(),
       intervalAwayPresence: null,
     };
@@ -44,9 +43,6 @@ export default {
     },
     undoIcon() {
       return faUndo;
-    },
-    isDisconnected() {
-      return this.$store.state.app.isDisconnected;
     },
     chatConfig() {
       return this.$store.state.chat.chatConfig;

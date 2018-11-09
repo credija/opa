@@ -1,5 +1,5 @@
 <div class="chat-header">
-    <el-card class="p2" 
+    <el-card class="p2 header-max-height" 
         :class="{ 'dark-theme': chatConfig.darkMode === true, 'dark-border': chatConfig.darkMode === true }"
         v-if="authUser">
         <div v-if="!isDisconnected">
@@ -77,7 +77,8 @@
                 </el-popover>
             </el-col>
         </div>
-        <div v-if="isDisconnected" class="text-center mt3">
+        <div v-if="isDisconnected" class="text-center">
+            <el-alert class="mb1" :title="disconnectedMessage" type="error" show-icon :closable="false"></el-alert>
             <el-button type="primary" plain @click="goToLogin()">
                 <font-awesome-icon :icon="keyIcon"/> {{ $t('profile.reLoginButton') }}
             </el-button>

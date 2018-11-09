@@ -8,7 +8,16 @@ import RemoveAccents from 'remove-accents';
 export default {
   name: 'ContactList',
   components: {},
-  props: [],
+  props: ['showContactList'],
+  watch: {
+    showContactList: function (newVal) {
+      if (newVal === false) {
+        this.searchTerm = '';
+      } else {
+        this.focusContactSearch();
+      }
+    }
+  },
   data() {
     return {
       activeAccordion: -1,
@@ -44,10 +53,7 @@ export default {
     },
   },
   mounted() {
-    setTimeout(function () {
-      const contactSearchInput = document.getElementById('contact-search');
-      if (contactSearchInput) contactSearchInput.focus();
-    });
+    this.focusContactSearch();
   },
   methods: {
     getPresenceBorderColor(idPresence) {
@@ -125,5 +131,11 @@ export default {
       }
       return imgSrc;
     },
+    focusContactSearch() {
+      setTimeout(function () {
+        const contactSearchInput = document.getElementById('contact-search');
+        if (contactSearchInput) contactSearchInput.focus();
+      });
+    }
   },
 };

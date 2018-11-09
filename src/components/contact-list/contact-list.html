@@ -1,16 +1,16 @@
 <div class="contact-list">
     <el-input :placeholder="$t('chat.searchPlaceholder')" v-model="searchTerm" 
-        @keyup.native="searchContactByName()" class="mt2 b-rounded-25" 
+        @keyup.native="searchContactByName()" class="mt2 mb1 b-rounded-25" 
         id="contact-search"></el-input>
-    <small class="text-center text-danger text-bold ml2" v-if="searchedRosterList.length === 0 
+    <span class="text-center text-danger text-bold ml2" v-if="searchedRosterList.length === 0 
         && searchTerm.length < 3 
         && searchTerm.length !== 0">
         {{ $t('chat.min3Characters') }}
-    </small>
-    <small class="text-center text-danger text-bold ml2" v-if="searchedRosterList.length === 0 && searchTerm.length > 2">
+    </span>
+    <span class="text-center text-danger text-bold ml2" v-if="searchedRosterList.length === 0 && searchTerm.length > 2">
         {{ $t('chat.noContactFound') }}
         <img src="/emoji/72x72/2639.png" width="12" height="12"/>
-    </small>
+    </span>
     <transition name="slide-bt">
         <el-collapse class="px2 mt1" v-model="activeAccordion" v-show="searchTerm.length === 0" 
             :class="{ 'dark-theme': chatConfig.darkMode === true, 'dark-border': chatConfig.darkMode === true }" accordion>
@@ -46,7 +46,7 @@
         <el-row v-show="searchedRosterList.length !== 0 && searchTerm.length !== 0" 
             v-for="(contact, key) in searchedRosterList" 
             :key="contact.username" 
-            class="v-align-wrap clickable bg-gray-hover p1 b-rounded height-fix-contact dark-hover"
+            class="v-align-wrap clickable bg-gray-hover p1 mt1 b-rounded height-fix-contact dark-hover"
             @click.native="openConversation(contact)">
             <el-col :span="4">
                 <img v-if="profileImageSrc(contact.username) !== null" class="b-full-circle img-fit b4" 
