@@ -64,7 +64,6 @@ export default {
     const appConfig = Store.state.app.appConfig;
     const rosterList = Store.state.app.rosterList;
     const client = Store.state.app.xmppClient;
-    const profileImageList = Store.state.app.profileImageList;
     const authUser = Store.state.app.authUser;
     
     for (let i = 0; i < rosterList.length; i++) {
@@ -75,16 +74,6 @@ export default {
       });
       client.send(check);
     }
-
-    const asyncRosterLoading = async () => { 
-      while (Store.state.app.rosterList.length === 0) {
-        console.log('Loading list...');
-      }
-      setTimeout(function () {
-        Store.dispatch('app/updateIsChatReady', true);
-      }, 300);
-    };
-    asyncRosterLoading();
   },
   sendMessage(msg, to, date) {
     const appConfig = Store.state.app.appConfig;

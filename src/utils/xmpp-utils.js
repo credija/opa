@@ -81,6 +81,9 @@ export default {
       
       Store.dispatch('app/updateRosterList', rosterList);
       XmppService.updateRosterPresence();
+      setTimeout(function () {
+        Store.dispatch('app/updateIsChatReady', true);
+      }, 300);
     }
   },
   presenceHandler(presence) {
