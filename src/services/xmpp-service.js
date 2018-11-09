@@ -75,18 +75,16 @@ export default {
       });
       client.send(check);
     }
-    
-    setTimeout(function () {
-      Store.dispatch('app/updateRosterFirstLoad', false);
-    }, 3000);
 
-    setTimeout(function () {
-      localStorage.setItem('profileImageList', JSON.stringify(profileImageList));
-    }, 5000);
-
-    setTimeout(function () {
-      Store.dispatch('app/updateIsChatReady', true);
-    }, 2000);
+    const asyncRosterLoading = async () => { 
+      while (Store.state.app.rosterList.length === 0) {
+        console.log('Loading list...');
+      }
+      setTimeout(function () {
+        Store.dispatch('app/updateIsChatReady', true);
+      }, 300);
+    };
+    asyncRosterLoading();
   },
   sendMessage(msg, to, date) {
     const appConfig = Store.state.app.appConfig;
@@ -135,6 +133,7 @@ export default {
         type: null, 
         bin: null 
       });
+      localStorage.setItem('profileImageList', JSON.stringify(profileImageList));
       XmppUtils.updateUserAvatar(from);
     } else if (profileImageObj.hash !== photoId) {
       if (photoId === null) {
@@ -142,11 +141,13 @@ export default {
           profileImage: profileImageObj, 
           hash: 'null_hash', 
         });
+        localStorage.setItem('profileImageList', JSON.stringify(profileImageList));
       } else {
         Store.dispatch('app/updateProfileImageHash', { 
           profileImage: profileImageObj, 
           hash: photoId, 
         });
+        localStorage.setItem('profileImageList', JSON.stringify(profileImageList));
       }
       
       XmppUtils.updateUserAvatar(from);

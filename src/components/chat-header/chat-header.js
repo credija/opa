@@ -11,6 +11,7 @@ export default {
   data() {
     return {
       profileImgUpload: null,
+      disconnectedMessage: this.$t('chat.isDisconnectedMsg'),
     };
   },
   computed: {

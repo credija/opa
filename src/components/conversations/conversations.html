@@ -1,61 +1,46 @@
 <div class="conversations">
-    <el-row v-if="conversationList.length !== 0" v-for="(conversation, key) in conversationList" :key="key" 
-        class="p1 by1 clickable max-h-64"
-        :class="{ bl8: isConversationActive(conversation), 
-            'bg-gray': chatConfig.darkMode === false && isConversationActive(conversation), 
-            'bg-gray-hover': chatConfig.darkMode === false, 
-            'dark-bg': chatConfig.darkMode === true && isConversationActive(conversation),
-            'dark-hover': chatConfig.darkMode === true,
-            'dark-border': chatConfig.darkMode === true && !isConversationActive(conversation) }"
-        @click.native="onClickConversation(conversation)"
-        @mouseover.native="dispatchHappyEmoji"
-        @mouseleave.native="dispatchThinkingEmoji">
-        <el-col :span="4">
-            <img v-if="profileImageSrc(conversation.contact.username) !== null" class="b-full-circle img-fit b4" 
-            :src="profileImageSrc(conversation.contact.username)" width="48" height="48"
-            :class="getPresenceBorderColor(conversation.contact.presence.id)"/>
+    <transition-group name="slide-bt">
+        <el-row v-if="conversationList.length !== 0" v-for="(conversation, key) in conversationList" 
+            :key="conversation.contact.username" 
+            class="p1 by1 clickable max-h-64"
+            :class="{ bl8: isConversationActive(conversation), 
+                'bg-gray': chatConfig.darkMode === false && isConversationActive(conversation), 
+                'bg-gray-hover': chatConfig.darkMode === false, 
+                'dark-bg': chatConfig.darkMode === true && isConversationActive(conversation),
+                'dark-hover': chatConfig.darkMode === true,
+                'dark-border': chatConfig.darkMode === true && !isConversationActive(conversation) }"
+            @click.native="onClickConversation(conversation)"
+            @mouseover.native="dispatchHappyEmoji"
+            @mouseleave.native="dispatchThinkingEmoji">
+            <el-col :span="4">
+                <img v-if="profileImageSrc(conversation.contact.username) !== null" class="b-full-circle img-fit b4" 
+                :src="profileImageSrc(conversation.contact.username)" width="48" height="48"
+                :class="getPresenceBorderColor(conversation.contact.presence.id)"/>
 
-            <div class="user-icon-mini b-full-circle b4 clickable text-center v-align" 
-                :class="getPresenceBorderColor(conversation.contact.presence.id)"
-                v-if="profileImageSrc(conversation.contact.username) === null">
-                <font-awesome-icon :icon="userIcon" class="ml2"/>
-            </div>
-        </el-col>
-        <el-col :span="20" class="unselectable">
-            <el-row class="ml2 my1">
-                <span class="text-bold">{{ conversation.contact.name }}</span>
-                <small class="float-right text-italic" v-if="getLastMessage(conversation).msg !== ''">
-                    {{ getLastMessage(conversation).stamp | isDateToday }}
-                </small>
-            </el-row>
-            <el-row class="ml2 v-align">
-                <small class="mr1" v-if="isLastOwnMessage(conversation)"><font-awesome-icon :icon="checkIcon"/></small>
-                <small class="float-right p-fix bg-primary b-half-circle text-white text-bold mr1" 
-                    v-if="conversation.numUnreadMsgs !== 0">
-                    {{ conversation.numUnreadMsgs }}
-                </small>
-                <span class="truncate-last-message emoji-mini disable-anchors _lr-hide" v-html="getLastMessage(conversation).msg"></span>
-            </el-row>
-        </el-col>
-
-        <!--
-        <p>
-            <font-awesome-icon :icon="circleIcon" 
-                class="text-label mr1" 
-                :class="getPresenceColor(conversation.contact.presence.id)" v-if="!isDisconnected"/>
-            <span></span>{{ conversation.contact.name }} 
-           
-        </p>
-        <p class="text-italic">
-            <span>{{ getLastMessageTruncated(conversation) }}</span>
-            <small class="float-right p1 bg-primary b-full-circle text-white text-bold" v-if="conversation.numUnreadMsgs !== 0">
-                {{ conversation.numUnreadMsgs }}
-            </small>
-        </p>
-        -->
-        
-    </el-row>
-
+                <div class="user-icon-mini b-full-circle b4 clickable text-center v-align" 
+                    :class="getPresenceBorderColor(conversation.contact.presence.id)"
+                    v-if="profileImageSrc(conversation.contact.username) === null">
+                    <font-awesome-icon :icon="userIcon" class="ml2"/>
+                </div>
+            </el-col>
+            <el-col :span="20" class="unselectable">
+                <el-row class="ml2 my1">
+                    <span class="text-bold">{{ conversation.contact.name }}</span>
+                    <small class="float-right text-italic" v-if="getLastMessage(conversation).msg !== ''">
+                        {{ getLastMessage(conversation).stamp | isDateToday }}
+                    </small>
+                </el-row>
+                <el-row class="ml2 v-align">
+                    <small class="mr1" v-if="isLastOwnMessage(conversation)"><font-awesome-icon :icon="checkIcon"/></small>
+                    <small class="float-right p-fix bg-primary b-half-circle text-white text-bold mr1" 
+                        v-if="conversation.numUnreadMsgs !== 0">
+                        {{ conversation.numUnreadMsgs }}
+                    </small>
+                    <span class="truncate-last-message emoji-mini disable-anchors _lr-hide" v-html="getLastMessage(conversation).msg"></span>
+                </el-row>
+            </el-col>
+        </el-row>
+    </transition-group>
     <el-row v-if="conversationList.length === 0" class="p1 by1 text-center">
         <p>{{ $t('chat.noConversation') }} <img src="/emoji/72x72/2639.png" width="20" height="20"/></p>
     </el-row>

@@ -41,9 +41,6 @@ const mutations = {
   [types.UPDATE_ROSTER_LIST](state, { rosterList }) {
     state.rosterList = rosterList;
   },
-  [types.UPDATE_ROSTER_FIRST_LOAD](state, { rosterFirstLoad }) {
-    state.rosterFirstLoad = rosterFirstLoad;
-  },
   [types.UPDATE_PRESENCE_ROSTER_CONTACT](state, { rosterObj, presence }) {
     Vue.set(rosterObj, 'presence', presence);
   },
