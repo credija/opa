@@ -8,8 +8,9 @@
         <el-card class="card-contact-list" 
         :class="{ 'dark-theme': chatConfig.darkMode === true, 'dark-border': chatConfig.darkMode === true }">
             <el-row>
-                <contact-list class="mx2" v-if="showContactList" @switchActiveMenu="switchActiveMenu"></contact-list>
-                <conversations v-if="!showContactList"></conversations>
+                <contact-list class="mx2" v-show="showContactList" 
+                    @switchActiveMenu="switchActiveMenu"></contact-list>
+                <conversations v-show="!showContactList"></conversations>
             </el-row>
         </el-card>
         <chat-config></chat-config>
