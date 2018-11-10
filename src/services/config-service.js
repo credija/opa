@@ -1,8 +1,8 @@
-import AxiosLocal from '@services/axios-local-service';
+import AxiosService from '@services/axios-service';
 
 export default {
   async getConfigFile() {
-    const appConfig = await AxiosLocal.getAppConfigFile()
+    const appConfig = await AxiosService.getAppConfigFile()
       .then((res) => {
         return res.data;
       })

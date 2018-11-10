@@ -20,9 +20,7 @@
                         :class="getPresenceColor(activeConversation.contact.presence.id)"
                         v-if="!activeConversation.isTyping"/>
                     <span class="ml1" v-if="!activeConversation.isTyping">
-                        {{ activeConversation.contact.presence.id === 'dnd' ? $t('profile.busyPresence') : 
-                        ( activeConversation.contact.presence.id === 'away' ? $t('profile.awayPresence') : 
-                        activeConversation.contact.presence.value ) }}
+                        {{ presenceValue }}
                     </span>
                     <span class="text-teal-clean text-bold" v-if="activeConversation.isTyping">{{ $t('chatbox.typingLabel') }}</span>
                 </el-row>
@@ -61,6 +59,7 @@
                             'bg-primary': chatConfig.darkMode === true }"
                         v-if="message.ownMessage">
                         <p class="m0">
+                            <div id="tweet" tweetID="515490786800963584"></div>
                             <span v-html="message.msg" class="_lr-hide"></span>
                             <small class="float-right text-gray stamp-margin"> {{ message.stamp | isDateToday }}</small>
                         </p>
@@ -71,6 +70,7 @@
                             'bg-dark-light': chatConfig.darkMode === true }"
                          v-if="message.ownMessage === false">
                          <p class="m0">
+                            <div id="tweet" tweetID="515490786800963584"></div>
                             <span v-html="message.msg" class="_lr-hide"></span>
                             <small class="float-right text-gray stamp-margin"> {{ message.stamp | isDateToday }}</small>
                         </p>
