@@ -11,7 +11,7 @@ export const LocaleService = {
     return {
       'en-us': {
         login: {
-          usernamePlaceholder: 'User',
+          usernamePlaceholder: 'Username',
           passwordPlaceholder: 'Password',
           loginButton: 'Sign In',
           isLoginExpired: 'Your session has expired, please sign in again.',
@@ -20,8 +20,7 @@ export const LocaleService = {
         },
         chat: {
           loadingMessages: 'Loading your messages, please wait...',
-          isDisconnectedMsg: 'You have been disconnected from the chat because of connection problems, but you can still check your messages. ' +
-          'To re-use the chat sign in again.',
+          isDisconnectedMsg: 'You have been disconnected from the chat because of connection problems.',
           noOpenConversation: 'There is no open chat.',
           tipNewConversation: 'You can open a new chat by clicking the',
           noConversation: 'You do not have conversations yet',
@@ -44,7 +43,7 @@ export const LocaleService = {
           loadOldMessages: 'Load old messages...',
           loadingOldMessages: 'Loading old messages...',
           oldMessagesLimit: 'You have reached the old message search limit',
-          oldMessagesLabel: 'Mensagens Antigas...'
+          oldMessagesLabel: 'Old Messages'
         },
         profile: {
           changePhoto: 'Change',
