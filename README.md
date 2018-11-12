@@ -35,7 +35,7 @@ Has some feature in mind, suggestion or come across a bug? Open an [Issue](https
 
 Features Opa already has:
 - [x] BOSH/WebSocket support
-- [x] Multi language support 
+- [x] Multi-language support 
   - Basic en-US | pt-BR for the time being, but you can add your own language by following the [Localization](#localization) section instructions of this README.
 - [x] Responsive for desktop screens (up to 1024x768)
 - [x] One-to-one chat
@@ -54,12 +54,12 @@ Features Opa already has:
 
 - [x] Browser tab icon change when has a new message
 - [x] Browser desktop notification 
-  - 1 minute interval.
+  - 1-minute interval.
 - [x] Sound desktop notification 
-  - 1 minute interval.
+  - 1-minute interval.
 - [x] Option to show/hide offline contacts
 - [x] Option to enable Day/Night mode
-- [x] Conversation history from server. 
+- [x] Conversation history from the server. 
   - Your XMPP server must support these protocols:
   - [MSM](https://xmpp.org/extensions/xep-0313.html)
   - [RSM](https://xmpp.org/extensions/xep-0059.html)
@@ -76,7 +76,7 @@ Features Opa that are under development (not necessarily in that order):
 - [ ] Popular social networks posts embedding in messages
 - [ ] Better images embedding in messages with support to maximize
 - [ ] Fully featured chatbox to preview emoji, video, and images before sending
-- [ ] Emoji using emoji unicodes rather than keywords
+- [ ] Emoji using emoji Unicode rather than keywords
 
 - [ ] Language configurable by the user
 - [ ] Notification interval configurable by the user
@@ -94,9 +94,9 @@ Features that are not currently being developed but may be in the future:
 
 # Getting Started
 
-The initial idea of Opa was to be a plug-n-play client to any XMPP server and this was what influenced the decision to be a SPA and not a server-side-rendered application. 
+The initial idea of Opa was to be a plug-n-play client to any XMPP server and this was what influenced the decision to be an SPA and not a server-side-rendered application. 
 Following this you have two ways of running this app:
-- Cloning, configuration and building from the source, then hosting the /dist folder
+- Cloning, configuration, and building from the source, then hosting the /dist folder
 - Using the Docker container provided and overwriting the global configuration file
 
 ## Installation
@@ -124,18 +124,18 @@ Note: If you want to use a XMPP server in Docker we recommend our Openfire build
 
 ## Configuration
 
-To connect to a XMPP server you will need to overwrite the [app-config.json](public/config/app-config.json). The options are these:
+To connect to an XMPP server you will need to overwrite the [app-config.json](public/config/app-config.json). The options are these:
 - **VUE_APP_XMPP_SERVER_ADDRESS**: The address for the HTTP/S BOSH or WSS WebSocket connection.
 - **VUE_APP_XMPP_SERVER_DOMAIN**: Your chat domain.
 - **VUE_APP_EMOJI_SERVER**: The server where the emoji arts will be downloaded from:
   - This app already has the emojis it uses on its static folder so you only need to append "emoji/" to the domain where the app will be hosted, like: `opa.credija.com.br/emoji/`
-- **VUE_APP_LOCALE**: The locale need to be set in the format "language-country", like "en-us", "pt-br", etc since this value will be used to format date through the app.
+- **VUE_APP_LOCALE**: The locale needs to be set in the format "language-country", like "en-us", "pt-br", etc since this value will be used to format date through the app.
 
 ## Localization
 
-Opa has a plug-n-play structure for localizations, who are get from 'i18n' folder in /public/config. 
+Opa has a plug-n-play structure for localizations, who get from 'i18n' folder in /public/config. 
 
-If you want to test Opa but it doesn't has your language you can develop your own translation to the app following the example provided by [en-us.json](public/config/i18n/en-us.json). 
+If you want to test Opa but it doesn't have your language you can develop your own translation to the app following the example provided by [en-us.json](public/config/i18n/en-us.json). 
 
 Once finished just put the translation on the 'i18n' folder and change your app-config.json **VUE_APP_LOCALE** option to the language code you choose. 
 
@@ -162,9 +162,8 @@ Tested XMPP Servers:
 
 # Credits
 
-- Thanks to the IT team of [Sicoob Credija](https://credija.com.br) which provided support, testing and infrastructure for the development of this project.
+- Thanks to the IT team of [Sicoob Credija](https://credija.com.br) which provided support, testing, and infrastructure for the development of this project.
 
 - Thanks [VueJS](https://github.com/vuejs/vue), [Element-UI](https://github.com/ElemeFE/element) and [StropheJS](https://github.com/strophe/strophejs) for the core libraries of this project.
 
 - The emojis used in this app comes from the [Twemoji](https://github.com/twitter/twemoji) project and are licensed under CC-BY 4.0.
-

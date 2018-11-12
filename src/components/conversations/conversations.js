@@ -4,6 +4,7 @@ import { faUser, faCheck } from '@fortawesome/free-solid-svg-icons';
 import FaviconService from '@services/favicon-service';
 import DocTitleService from '@services/doc-title-service';
 import XmppService from '@services/xmpp-service';
+import MessageParser from '@services/message-parser';
 
 export default {
   name: 'Conversations',
@@ -73,7 +74,7 @@ export default {
         lastMessage = ObjectUtils.cloneObject(conversation.list[conversation.list.length - 1]);
       }
 
-      lastMessage.msg = lastMessage.msg.replace(/<br\/>/g, '');
+      lastMessage.msg = MessageParser.removeHtmlTags(lastMessage.msg);
       return lastMessage;
     },
     getPresenceBorderColor(idPresence) {

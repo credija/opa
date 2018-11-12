@@ -98,6 +98,17 @@ export default {
     },
     appLocale() {
       return this.$store.state.app.appLocale;
+    },
+    presenceValue() {
+      let presenceValue = '';
+      if (this.activeConversation.contact.presence.id === 'dnd') {
+        presenceValue = this.$t('profile.busyPresence');
+      } else if (this.activeConversation.contact.presence.id === 'away') {
+        presenceValue = this.$t('profile.awayPresence');
+      } else {
+        presenceValue = this.activeConversation.contact.presence.value;
+      }
+      return presenceValue;
     }
   },
   watch: {
