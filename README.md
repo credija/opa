@@ -105,7 +105,7 @@ Following this you have two ways of running this app:
 ## Installation
 ![alt text](https://www.docker.com/sites/default/files/social/docker_twitter_share_new.png "Docker Logo")
 
-DOCKER COMMAND:
+The installation with Docker is very straightforward. You will, however, need to connect to your XMPP server. To do that you need to overwrite the /app/static/config/app-config.json (explanation of each option in the config file is in [Configuration](#configuration) section):
 ```
 docker run --name opa -d --restart=always \
   --publish 3000:3000 \
