@@ -2,7 +2,7 @@
 
 import EmojiService from '@/services/emoji-service';
 
-// TODO: Tratar espaços em branco em mensagens
+// TODO: Threat white spaces
 export default {
   parseChatboxMessage(msg) {
     msg = this.escapeHTML(msg);

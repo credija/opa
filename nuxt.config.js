@@ -1,6 +1,6 @@
 const pkg = require('./package');
 
-// TODO: Criar page 404
+// TODO: Create page 404
 module.exports = {
   mode: 'universal',
   buildDir: 'bundle',
@@ -37,11 +37,9 @@ module.exports = {
   ],
 
   modules: [
-    // Doc: https://github.com/nuxt-community/axios-module#usage
     '@nuxtjs/axios'
   ],
   axios: {
-    // See https://github.com/nuxt-community/axios-module#options
   },
 
   build: {

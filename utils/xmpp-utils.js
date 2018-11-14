@@ -9,7 +9,7 @@ import MessageParser from '@/services/message-parser';
 import { Strophe, $iq, $pres } from 'strophe.js';
 import { MessageBox } from 'element-ui';
 
-// TODO: Verificar se não está ocorrendo esse bug: https://github.com/nuxt/nuxt.js/issues/1467
+// TODO: Check if this is not happening https://github.com/nuxt/nuxt.js/issues/1467
 export default {
   constructor(store) {
     this.store = store;

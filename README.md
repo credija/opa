@@ -11,7 +11,7 @@
 
 # Introduction
 
-**Opa** is an **open-source XMPP chat client for the Web (SSR)** entirely built on top of **Vue**, **NuxtJS**, **ElementUI** and **StropheJS** that follows the coolest trends out there ~~bye bye Flash and Desktop clients~~! 
+**Opa** is an **open-source XMPP chat client for the Web (SSR)** entirely built on top of **Vue**, **NuxtJS** and **ElementUI** that follows the coolest trends out there ~~bye bye Flash and Desktop clients~~! 
 
 ![alt text](https://i.imgur.com/4CwlaqS.png "Landing Page Opa")
 
@@ -110,7 +110,7 @@ DOCKER COMMAND:
 docker run --name opa -d --restart=always \
   --publish 3000:3000 \
   --volume /opt/your-config.json:/app/static/config/app-config.json \
-  -m 1GB \
+  -m 512MB \
   credija/opa
 ```
 ___
