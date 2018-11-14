@@ -1,0 +1,68 @@
+<div class="contact-list">
+    <el-input :placeholder="$t('chat.searchPlaceholder')" v-model="searchTerm" 
+        @keyup.native="searchContactByName()" class="mt2 mb1 b-rounded-25" 
+        id="contact-search"></el-input>
+    <span class="text-center text-danger text-bold ml2" v-if="searchedRosterList.length === 0 
+        && searchTerm.length < 3 
+        && searchTerm.length !== 0">
+        {{ $t('chat.min3Characters') }}
+    </span>
+    <span class="text-center text-danger text-bold ml2" v-if="searchedRosterList.length === 0 && searchTerm.length > 2">
+        {{ $t('chat.noContactFound') }}
+        <img src="/emoji/72x72/2639.png" width="12" height="12"/>
+    </span>
+    <transition name="slide-bt">
+        <el-collapse class="px2 mt1" v-model="activeAccordion" v-show="searchTerm.length === 0" 
+            :class="{ 'dark-theme': chatConfig.darkMode === true, 'dark-border': chatConfig.darkMode === true }" accordion>
+            <el-collapse-item v-if="rosterListByGroup.length !== 0" 
+                v-for="(rosterGroup, key) in rosterListByGroup" 
+                :key="key"
+                :title="rosterGroup.group" :name="key"
+                :class="{ 'dark-theme': chatConfig.darkMode === true }">
+                <el-row v-if="rosterGroup.contacts.length !== 0 && showOfflineContact(contact)" 
+                    v-for="(contact, key) in rosterGroup.contacts" :key="key" 
+                    class="v-align clickable bg-gray-hover p1 b-rounded height-fix-contact dark-hover"
+                    :class="{ 'dark-theme': chatConfig.darkMode === true }"
+                    @click.native="openConversation(contact)">
+                    <el-col :span="4">
+                        <img v-if="profileImageSrc(contact.username) !== null" class="b-full-circle img-fit b4 mt1" 
+                        :src="profileImageSrc(contact.username)" width="48" height="48"
+                        :class="getPresenceBorderColor(contact.presence.id)"/>
+            
+                        <div class="user-icon-mini b-full-circle b4 clickable text-center v-align" 
+                            :class="getPresenceBorderColor(contact.presence.id)"
+                            v-if="profileImageSrc(contact.username) === null">
+                            <font-awesome-icon icon="user" class="ml2"/>
+                        </div>
+                    </el-col>
+                    <el-col :span="20">
+                        <strong class="ml2">{{ contact.name }}</strong>
+                    </el-col>
+                </el-row>
+            </el-collapse-item>
+        </el-collapse>
+    </transition>
+    <transition-group name="slide-rl">
+        <el-row v-show="searchedRosterList.length !== 0 && searchTerm.length !== 0" 
+            v-for="(contact, key) in searchedRosterList" 
+            :key="contact.username" 
+            class="v-align-wrap clickable bg-gray-hover p1 mt1 b-rounded height-fix-contact dark-hover"
+            @click.native="openConversation(contact)">
+            <el-col :span="4">
+                <img v-if="profileImageSrc(contact.username) !== null" class="b-full-circle img-fit b4" 
+                :src="profileImageSrc(contact.username)" width="48" height="48"
+                :class="getPresenceBorderColor(contact.presence.id)"/>
+
+                <div class="user-icon-mini b-full-circle b4 clickable text-center v-align" 
+                    :class="getPresenceBorderColor(contact.presence.id)"
+                    v-if="profileImageSrc(contact.username) === null">
+                    <font-awesome-icon icon="user" class="ml2"/>
+                </div>
+            </el-col>
+            <el-col :span="20">
+                <el-row class="ml2 text-bold">{{ contact.name }}</el-row>
+                <el-row class="ml2">{{ contact.group }}</el-row>
+            </el-col>
+        </el-row>
+    </transition-group>
+</div>

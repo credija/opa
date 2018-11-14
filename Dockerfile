@@ -1,27 +1,21 @@
-FROM credija/nginx:lts
+FROM node:10.13-alpine
 
-MAINTAINER kevinfaveridev@gmail.com
+LABEL Author: Kevin de Faveri Aguiar
 
-COPY . /opt/opa-build
+RUN mkdir -p /app
+COPY . /app
+WORKDIR /app
 
-WORKDIR /opt/opa-build
+COPY package.json /app
+COPY yarn.lock /app
+RUN yarn install 
 
-RUN apt-get update && apt-get install -y \
-	curl \
-	python \
-	make \
-  gnupg \
-	g++
-  
-RUN curl -sL https://deb.nodesource.com/setup_11.x | bash - \
- && apt-get install -y nodejs \
- && npm install \
- && npm run build \
- && cp -r /opt/opa-build/dist/* /usr/share/nginx/html/ \
- && ls /usr/share/nginx/html/
+ENV NODE_ENV=production
 
-WORKDIR /opt
+COPY . /app
+RUN yarn build && yarn cache clean
 
-RUN rm -rf opa-build
+ENV HOST 0.0.0.0
+EXPOSE 3000
 
-EXPOSE 80/tcp
+CMD [ "yarn", "start" ]
