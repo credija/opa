@@ -1,0 +1,46 @@
+<el-card :class="{ 'dark-theme': chatConfig.darkMode === true}" class="chat-config pb1">
+    <el-row class="text-bold text-center mt2">
+        <el-popover
+          placement="bottom"
+          trigger="hover"
+          :content="$t('config.desktopNotifications')">
+          <el-button slot="reference" type="primary" circle @click="requestNotificationPermission()" class="mx1">
+              <font-awesome-icon icon="comment-alt" class="icon-medium"/>
+          </el-button>
+        </el-popover>
+
+        <el-popover
+          placement="bottom"
+          trigger="hover"
+          :content="soundNotificationMsg">
+          <el-button slot="reference" type="primary" circle @click="changeSoundNotification()" class="mx1">
+              <font-awesome-icon icon="bell" class="icon-medium" v-if="chatConfig.soundNotification"/>
+              <font-awesome-icon icon="bell-slash" class="icon-medium" 
+                v-if="chatConfig.soundNotification === undefined || chatConfig.soundNotification === false"/>
+          </el-button>
+        </el-popover>
+
+        <el-popover
+          placement="bottom"
+          trigger="hover"
+          :content="showOfflineMsg">
+          <el-button slot="reference" type="primary" circle @click="changeShowOffline()" class="mx1">
+              <font-awesome-icon icon="user" class="icon-medium" v-if="chatConfig.showOffline"/>
+              <font-awesome-icon icon="user-slash" class="icon-medium" 
+                v-if="chatConfig.showOffline === undefined || chatConfig.showOffline === false"/>
+          </el-button>
+        </el-popover>
+
+        <el-popover
+          placement="bottom"
+          trigger="hover"
+          :content="darkModeMsg">
+          <el-button slot="reference" type="primary" circle @click="changeDarkTheme()" class="mx1">
+              <font-awesome-icon icon="moon" class="icon-medium" v-if="chatConfig.darkMode"/>
+              <font-awesome-icon icon="sun" class="icon-medium" 
+                v-if="chatConfig.darkMode === undefined || chatConfig.darkMode === false"/>
+          </el-button>
+        </el-popover>
+    </el-row>
+  
+</el-card>

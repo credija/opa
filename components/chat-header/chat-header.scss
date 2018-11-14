@@ -1,0 +1,36 @@
+.mt-prefix {
+    margin-top: 13px;
+}
+
+.overlay-profile-img {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 83px;
+    width: 83px;
+    opacity: 0;
+    transition: .3s ease;
+    background-color: #ccffff;
+}
+
+.profile-img-container {
+    position: relative;
+}
+
+.profile-img-container:hover .overlay-profile-img {
+    opacity: 1;
+}
+
+.profile-img-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.header-max-height {
+    height: 90px;
+    min-height: 90px;
+    max-height: 90px;
+}

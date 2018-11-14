@@ -1,0 +1,159 @@
+# Opa - A XMPP Chat Client for the Web
+
+- [Introduction](#introduction)
+- [Features](#features)
+- [Getting started](#getting-started)
+  - [Installation](#installation)
+  - [Configuration](#configuration)
+  - [Internationalization](#internationalization)
+  - [Compatibility](#compatibility)
+- [Credits](#credits)
+
+# Introduction
+
+**Opa** is an **open-source XMPP chat client for the Web (SSR)** entirely built on top of **Vue**, **NuxtJS**, **ElementUI** and **StropheJS** that follows the coolest trends out there ~~bye bye Flash and Desktop clients~~! 
+
+![alt text](https://i.imgur.com/4CwlaqS.png "Landing Page Opa")
+
+_**Trivia**_: "Opa", among many meanings in Brazil, is also used informally as a greeting!
+
+**Opa** boasts a modern design having a clean interface that offers a good user experience. The interface is inspired by numerous web apps that already exist in the Javascript environment, such as **WhatsApp Web**, **Telegram Web**, **Discord**, **Rocket Chat**, etc...
+
+![alt text](https://i.imgur.com/ReZn9zL.png "Opa Chat 1")
+
+**Opa** was born as an internal project to fill the **absence of an XMPP client** that did not need an **installation on each machine**, was **developed with current techs**, had a **modern design** and supported **common features** for a chat in a corporate environment.
+
+Day Mode             |  Night Mode
+:-------------------------:|:-------------------------:
+![](https://i.imgur.com/gQ4MXuk.png "Opa Day Mode")  |  ![](https://i.imgur.com/YxrEoKz.png "Opa Night Mode")
+
+A demo will be available soon.
+
+Has some feature in mind, suggestion or come across a bug? Open an [Issue](https://github.com/credija/opa/issues) so we can discuss 👍
+
+# Features
+
+Features Opa already has:
+- [x] BOSH/WebSocket support
+- [x] Multi-language support 
+  - Basic en-US | pt-BR for the time being, but you can develop your own translation by following the [Internationalization](#internationalization) section instructions of this README.
+- [x] Responsive for desktop screens (up to 1024x768)
+- [x] One-to-one chat
+- [x] Basic emoji using keywords
+  - Credits to Tweemoji for the emoji arts
+- [x] Profile presence change option
+- [x] Automatic presence change when away
+  - After 20 minutes without performing any action in the app
+- [x] Profile avatar change and delete option. 
+  - Your XMPP server must support V-Card.
+
+- [x] Contacts organized by group (Like Pidgin)
+- [x] Contacts details. 
+  - Your XMPP server must support V-Card.
+- [x] Contacts search
+
+- [x] Browser tab icon change when has a new message
+- [x] Browser desktop notification 
+  - 1-minute interval.
+- [x] Sound desktop notification 
+  - 1-minute interval.
+- [x] Option to show/hide offline contacts
+- [x] Option to enable Day/Night mode
+- [x] Conversation history from the server. 
+  - Your XMPP server must support these protocols:
+  - [MSM](https://xmpp.org/extensions/xep-0313.html)
+  - [RSM](https://xmpp.org/extensions/xep-0059.html)
+  - Note: The client always searches the history on the server, meaning the conversation history is not cached locally.
+
+___
+
+Features Opa that are under development (not necessarily in that order):
+- [ ] Support for users who are not in any group
+- [ ] Profile status message change option
+- [ ] Group chat
+
+- [ ] Popular video sites, like Youtube, embedding in messages
+- [ ] Popular social networks posts embedding in messages
+- [ ] Better images embedding in messages with support to maximize
+- [ ] Fully featured chatbox to preview emoji, video, and images before sending
+- [ ] Emoji using emoji Unicode rather than keywords
+
+- [ ] Language configurable by the user
+- [ ] Notification interval configurable by the user
+- [ ] Presence change interval configurable by the user
+- [ ] Download other users avatar on demand
+- [ ] Encrypted key:values of LocalStorage
+
+___
+
+Features that are not currently being developed but may be in the future:
+- [ ] Voice Chat
+- [ ] Video Chat
+- [ ] Room Chat
+- [ ] Mobile support
+
+# Getting Started
+
+The initial idea of Opa was to be a plug-n-play client to any XMPP server.
+
+Following this you have two ways of running this app:
+
+- Cloning, configuration, and building from the source, then hosting the /dist folder
+
+- Using the Docker container provided and overwriting the global configuration file
+
+## Installation
+![alt text](https://www.docker.com/sites/default/files/social/docker_twitter_share_new.png "Docker Logo")
+
+DOCKER COMMAND:
+```
+docker run --name opa -d --restart=always \
+  --publish 3000:3000 \
+  --volume /opt/your-config.json:/app/static/config/app-config.json \
+  -m 1GB \
+  credija/opa
+```
+___
+Note: If you want to use a XMPP server in Docker we recommend our Openfire build which is available here: https://github.com/credija/openfire
+
+## Configuration
+
+To connect to an XMPP server you will need to overwrite the [app-config.json](https://github.com/credija/opa/blob/master/static/config/app-config.json). The options are these:
+- **VUE_APP_XMPP_SERVER_ADDRESS**: The address for the HTTP/S BOSH or WSS WebSocket connection.
+- **VUE_APP_XMPP_SERVER_DOMAIN**: Your chat domain.
+- **VUE_APP_LOCALE**: The locale needs to be set in the format "language-country", like "en-us", "pt-br", etc since this value will be used to format date through the app.
+
+## Internationalization
+
+Opa has a plug-n-play structure for locales, which are stored in /static/locales. 
+
+If you want to test Opa but it doesn't have your language you can develop your own translation to the app following the example provided by [en-us.json](https://github.com/credija/opa/blob/master/static/locales/en-us.json). 
+
+Once finished send a [pull request](https://github.com/credija/opa/pulls) on the develop branch with your translation so we can add it to Opa.
+
+**Note:** It's important to remember that the file needs to follow the 'language-country.json' format which is the same used in the **VUE_APP_LOCALE** option.
+
+## Compatibility
+
+Tested Browsers:
+- Google Chrome
+- Firefox
+- Opera
+- Microsoft Edge
+
+Not Tested:
+- IE
+- Safari
+
+____
+
+Tested XMPP Servers:
+- Ignite Realtime: Openfire Server
+
+# Credits
+
+- Thanks to the IT team of [Sicoob Credija](https://credija.com.br) which provided support, testing, and infrastructure for the development of this project.
+
+- Thanks [VueJS](https://github.com/vuejs/vue), [NuxtJS](https://github.com/nuxt/nuxt.js/), [Element-UI](https://github.com/ElemeFE/element),  [StropheJS](https://github.com/strophe/strophejs) for the core libraries of this project.
+
+- The emojis used in this app comes from the [Twemoji](https://github.com/twitter/twemoji) project and are licensed under CC-BY 4.0.

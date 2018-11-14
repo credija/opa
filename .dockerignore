@@ -1,0 +1,5 @@
+node_modules
+.nuxt
+npm-debug.log
+README.md
+Dockerfile

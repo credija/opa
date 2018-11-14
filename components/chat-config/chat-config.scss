@@ -1,0 +1,31 @@
+@media (min-height: 910px) {
+	.chat-config {
+		max-height: 70px;
+		height: 70px;
+		min-height: 70px;
+	}
+}
+
+@media (min-height: 760px) and (max-height: 910px) {
+	.chat-config {
+		max-height: 70px;
+		height: 70px;
+		min-height: 70px;
+	}
+}
+
+@media (min-height: 660px) and (max-height: 760px)  {
+	.chat-config {
+		max-height: 60px;
+		height: 60px;
+		min-height: 60px;
+	}
+}
+
+@media (max-height: 660px)  {
+	.chat-config {
+		max-height: 70px;
+		height: 70px;
+		min-height: 70px;
+	}
+}
