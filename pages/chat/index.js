@@ -1,5 +1,5 @@
 import ChatBox from '@/components/chat-box/chat-box.vue';
-import LoadingDialog from '@/components/loading-dialog/loading-dialog.vue';
+import LoadingApp from '@/components/loading-app/loading-app.vue';
 import ConfirmTabDialog from '@/components/confirm-tab-dialog/confirm-tab-dialog.vue';
 import ContactList from '@/components/contact-list/contact-list.vue';
 import Conversations from '@/components/conversations/conversations.vue';
@@ -15,7 +15,7 @@ export default {
   name: 'Chat',
   components: { 
     'chat-box': ChatBox, 
-    'loading-dialog': LoadingDialog, 
+    'loading-app': LoadingApp, 
     'confirm-tab-dialog': ConfirmTabDialog,
     'contact-list': ContactList,
     'chat-header': ChatHeader,

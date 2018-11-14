@@ -87,7 +87,7 @@ export default {
         },
       )
         .then(() => {
-          this.$store.dispatch('app/updateIsChatReady', false);
+          this.$store.dispatch('app/updateIsAppLoading', true);
           this.$router.push('/');
         })
         .catch(() => {});

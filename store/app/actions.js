@@ -22,11 +22,6 @@ const actions = {
       isLogging
     });
   },
-  updateIsChatReady({ commit }, isChatReady) {
-    commit(types.UPDATE_IS_CHAT_READY, {
-      isChatReady
-    });
-  },
   updateIsDisconnected({ commit }, isDisconnected) {
     commit(types.UPDATE_IS_DISCONNECTED, {
       isDisconnected

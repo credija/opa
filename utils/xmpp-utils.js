@@ -22,6 +22,7 @@ export default {
         break;
       case Strophe.Status.CONNECTED:
         console.log('CONNECTED');
+        this.store.dispatch('app/updateIsAppLoading', true);
         this.store.dispatch('app/updateIsDisconnected', false);
         this.store.dispatch('app/updateIsLogging', false);
         XmppService.updateLoggedUserVcard();
@@ -85,8 +86,8 @@ export default {
 
       const ctx = this;
       setTimeout(function () {
-        ctx.store.dispatch('app/updateIsChatReady', true);
-      }, 300);
+        ctx.store.dispatch('app/updateIsAppLoading', false);
+      }, 500);
     }
   },
   presenceHandler(presence) {
