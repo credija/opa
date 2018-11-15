@@ -123,6 +123,13 @@ small {
     font-size: 11px;
 }
 
+// Custom styles for components 
+.button-clean {
+	background-color: #e6e6e6 !important;
+	white-space: #ffffff !important;
+	border: none !important;
+}
+
 // Fix Bug Filter Dropdown
 .hidden-filter > div > .el-table__column-filter-trigger {
     visibility: hidden !important;
@@ -371,6 +378,10 @@ a {
 
 .bg-dark-light {
     background-color: #5f6c86;
+}
+
+.bg-white-clean {
+    background-color: #f2f2f2;
 }
 
 // Position Relatives
