@@ -11,25 +11,31 @@
 
 # Introduction
 
+<p align="center">
+  <img src="https://i.imgur.com/eQsT8zn.png" alt="Logo Opa"/>
+</p>
+
 **Opa** is an **open-source XMPP chat client for the Web (SSR)** entirely built on top of **Vue**, **NuxtJS** and **ElementUI** that follows the coolest trends out there ~~bye bye Flash and Desktop clients~~! 
 
-![alt text](https://i.imgur.com/4CwlaqS.png "Landing Page Opa")
+![alt text](https://i.imgur.com/ReZn9zL.png "Landing Page Opa")
 
 _**Trivia**_: "Opa", among many meanings in Brazil, is also used informally as a greeting!
 
 **Opa** boasts a modern design having a clean interface that offers a good user experience. The interface is inspired by numerous web apps that already exist in the Javascript environment, such as **WhatsApp Web**, **Telegram Web**, **Discord**, **Rocket Chat**, etc...
 
-![alt text](https://i.imgur.com/ReZn9zL.png "Opa Chat 1")
-
-**Opa** was born as an internal project to fill the **absence of an XMPP client** that did not need an **installation on each machine**, was **developed with current techs**, had a **modern design** and supported **common features** for a chat in a corporate environment.
-
 Day Mode             |  Night Mode
 :-------------------------:|:-------------------------:
 ![](https://i.imgur.com/gQ4MXuk.png "Opa Day Mode")  |  ![](https://i.imgur.com/YxrEoKz.png "Opa Night Mode")
 
+**Opa** was born as an internal project to fill the **absence of an XMPP client** that did not need an **installation on each machine**, was **developed with current techs**, had a **modern design** and supported **common features** for a chat in a corporate environment.
+
 A demo will be available soon.
 
+---
+
 Has some feature in mind, suggestion or come across a bug? Open an [Issue](https://github.com/credija/opa/issues) so we can discuss 👍
+
+---
 
 # Features
 
@@ -64,33 +70,6 @@ Features Opa already has:
   - [MSM](https://xmpp.org/extensions/xep-0313.html)
   - [RSM](https://xmpp.org/extensions/xep-0059.html)
   - Note: The client always searches the history on the server, meaning the conversation history is not cached locally.
-
-___
-
-Features Opa that are under development (not necessarily in that order):
-- [ ] Support for users who are not in any group
-- [ ] Profile status message change option
-- [ ] Group chat
-
-- [ ] Popular video sites, like Youtube, embedding in messages
-- [ ] Popular social networks posts embedding in messages
-- [ ] Better images embedding in messages with support to maximize
-- [ ] Fully featured chatbox to preview emoji, video, and images before sending
-- [ ] Emoji using emoji Unicode rather than keywords
-
-- [ ] Language configurable by the user
-- [ ] Notification interval configurable by the user
-- [ ] Presence change interval configurable by the user
-- [ ] Download other users avatar on demand
-- [ ] Encrypted key:values of LocalStorage
-
-___
-
-Features that are not currently being developed but may be in the future:
-- [ ] Voice Chat
-- [ ] Video Chat
-- [ ] Room Chat
-- [ ] Mobile support
 
 # Getting Started
 
