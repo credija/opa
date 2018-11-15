@@ -1,0 +1,9 @@
+<div class="cool-textarea" contenteditable="true" 
+    @input="updateContent($event.target.innerHTML)"
+    @paste="onPaste"
+    @keydown.enter="enterKey"
+    @mouseup="saveSelection" 
+    @keyup="saveSelection" 
+    @focus="restoreSelection">
+    {{ content }}
+</div>

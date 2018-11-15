@@ -117,16 +117,20 @@
                     </el-popover>
                 </el-col>
                 <el-col :span="20" class="mt1">
-                    <el-form-item prop="message">
-                        <el-input class="disable-resize b-full-circle"
-                        :autosize="{ minRows: 1, maxRows: 2}"
-                        :disabled="isDisconnected"
-                        :placeholder="$t('chatbox.chatboxPlaceholder')"
-                        type="textarea" id="chatbox-textarea"
-                        v-model="chatBoxForm.message" 
-                        @keyup.native="sendTypingSignal()"
-                        @keydown.native.enter.exact.prevent="chatBoxFormSubmit"></el-input>
-                    </el-form-item>
+                   <cool-textarea :content="chatBoxForm.message"></cool-textarea>
+                    <!--
+                        <el-form-item prop="message">
+                            <el-input class="disable-resize b-full-circle"
+                            :autosize="{ minRows: 1, maxRows: 2}"
+                            :disabled="isDisconnected"
+                            :placeholder="$t('chatbox.chatboxPlaceholder')"
+                            type="textarea" id="chatbox-textarea"
+                            v-model="chatBoxForm.message" 
+                            @keyup.native="sendTypingSignal()"
+                            @keydown.native.enter.exact.prevent="chatBoxFormSubmit"></el-input>
+                        </el-form-item>
+                    -->
+                    
                 </el-col>
                 <el-col :span="2" class="text-center">
                     <el-button class="ml1 mb1 button-clean" native-type="submit"

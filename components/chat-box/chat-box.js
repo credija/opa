@@ -1,18 +1,22 @@
 import PresenceEnum from '@/enums/presence-enum';
 import ContactDetails from '@/components/contact-details/contact-details.vue';
 import MessageParser from '@/services/message-parser';
+import CoolTextarea from '@/components/cool-textarea/cool-textarea.vue';
 
 let XmppService, EmojiService = null;
 
 export default {
   name: 'ChatBox',
-  components: { 'contact-details': ContactDetails },
+  components: { 
+    'contact-details': ContactDetails,
+    'cool-textarea': CoolTextarea
+  },
   props: [],
   data() {
     return {
       isSendingMessage: false,
       chatBoxForm: {
-        message: '',
+        message: 'teste',
       },
       formRules: {
         message: [
@@ -197,6 +201,6 @@ export default {
     },
     parseMessage(msg) {
       return MessageParser.parseChatboxMessage(msg);
-    }
+    },
   },
 };
