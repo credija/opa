@@ -54,7 +54,7 @@
 
             <el-row v-if="activeConversation.oldConversation.list.length !== 0">
                 <el-row v-for="(message, key) in activeConversation.oldConversation.list" :key="key">
-                    <div class="float-right p2 m1 b-rounded message-max-width"
+                    <div class="float-right p2 m1 b-rounded message-style"
                         :class="{ 'bg-light-teal': chatConfig.darkMode === undefined || chatConfig.darkMode === false, 
                             'bg-primary': chatConfig.darkMode === true }"
                         v-if="message.ownMessage">
@@ -64,7 +64,7 @@
                         </p>
                     </div>
 
-                    <div class="float-left p2 m1 b-rounded message-max-width"
+                    <div class="float-left p2 m1 b-rounded message-style"
                         :class="{ 'bg-light-gray': chatConfig.darkMode === undefined || chatConfig.darkMode === false, 
                             'bg-dark-light': chatConfig.darkMode === true }"
                          v-if="message.ownMessage === false">
@@ -78,7 +78,7 @@
             </el-row>
 
             <el-row v-for="(message, key) in activeConversation.list" :key="key">
-                <div class="float-right p2 m1 b-rounded message-max-width" 
+                <div class="float-right p2 m1 b-rounded message-style" 
                     :class="{ 'bg-light-teal': chatConfig.darkMode === undefined || chatConfig.darkMode === false, 
                         'bg-primary': chatConfig.darkMode === true }"
                     v-if="message.ownMessage">
@@ -88,7 +88,7 @@
                     </p>
                 </div>
 
-                <div class="float-left p2 m1 b-rounded message-max-width" 
+                <div class="float-left p2 m1 b-rounded message-style" 
                     :class="{ 'bg-light-gray': chatConfig.darkMode === undefined || chatConfig.darkMode === false, 
                         'bg-dark-light': chatConfig.darkMode === true }"    
                     v-if="message.ownMessage === false">
@@ -99,47 +99,35 @@
                 </div>
             </el-row>
         </el-row>
-        <el-form :model="chatBoxForm" status-icon label-position="left" :rules="formRules" ref="chatBoxForm" 
-            @submit.native.prevent="chatBoxFormSubmit()">
-            <el-row class="v-align">
-                <el-col :span="2" class="ml1 text-center">
-                    <el-popover
-                        placement="top"
-                        width="350"
-                        trigger="click">
-                        <span v-for="(emoji, key) in emojiList" class="clickable m1 unselectable" 
-                            @click="selectEmoji(emoji)">
-                            <span v-html="getEmojiImg(emoji)" class="bg-gray-hover pt1"></span>
-                        </span>
-                        <el-button slot="reference" size="mini" class="button-clean mb1">
-                            <font-awesome-icon icon="smile" class="icon-medium"/>
-                        </el-button>
-                    </el-popover>
-                </el-col>
-                <el-col :span="20" class="mt1">
-                   <cool-textarea :content="chatBoxForm.message"></cool-textarea>
-                    <!--
-                        <el-form-item prop="message">
-                            <el-input class="disable-resize b-full-circle"
-                            :autosize="{ minRows: 1, maxRows: 2}"
-                            :disabled="isDisconnected"
-                            :placeholder="$t('chatbox.chatboxPlaceholder')"
-                            type="textarea" id="chatbox-textarea"
-                            v-model="chatBoxForm.message" 
-                            @keyup.native="sendTypingSignal()"
-                            @keydown.native.enter.exact.prevent="chatBoxFormSubmit"></el-input>
-                        </el-form-item>
-                    -->
-                    
-                </el-col>
-                <el-col :span="2" class="text-center">
-                    <el-button class="ml1 mb1 button-clean" native-type="submit"
-                        :disabled="isDisconnected" :loading="isSendingMessage" size="mini">
-                        <font-awesome-icon icon="chevron-circle-right" class="icon-medium"/>
+        <el-row>
+            <el-col :span="2" class="text-center margin-chatbox-btn">
+                <el-popover
+                    placement="top"
+                    width="350"
+                    trigger="click">
+                    <span v-for="(emoji, key) in emojiList" class="clickable m1 unselectable" 
+                        @click="selectEmoji(emoji)">
+                        <span v-html="getEmojiImg(emoji)" class="bg-gray-hover pt1"></span>
+                    </span>
+                    <el-button slot="reference" size="mini" class="button-clean mb1">
+                        <font-awesome-icon icon="smile" class="icon-medium"/>
                     </el-button>
-                </el-col>
-            </el-row>
-        </el-form>
+                </el-popover>
+            </el-col>
+            <el-col :span="20" class="mt1">
+                <cool-textarea 
+                    :content.sync="chatBoxForm.message" 
+                    ref="coolTextarea" 
+                    @enterKey="submitMessage()" 
+                    @contentChanged="chatboxMessageChanged"></cool-textarea>
+            </el-col>
+            <el-col :span="2" class="text-center margin-chatbox-btn">
+                <el-button class=" button-clean" native-type="button"
+                    :disabled="isDisconnected" :loading="isSendingMessage" size="mini" @click="submitMessage()">
+                    <font-awesome-icon icon="chevron-circle-right" class="icon-medium"/>
+                </el-button>
+            </el-col>
+        </el-row>
     </div>
     <div v-if="activeConversation === null">
         <el-row class="text-center mt7">

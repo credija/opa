@@ -11,17 +11,11 @@ export default {
     'contact-details': ContactDetails,
     'cool-textarea': CoolTextarea
   },
-  props: [],
   data() {
     return {
       isSendingMessage: false,
       chatBoxForm: {
-        message: 'teste',
-      },
-      formRules: {
-        message: [
-          { required: true, message: this.$t('chatbox.messageRequired'), trigger: 'none' },
-        ],
+        message: '',
       },
       signalTimeout: null,
       isTyping: false,
@@ -92,17 +86,10 @@ export default {
     }
   },
   methods: {
-    chatBoxFormSubmit() {
-      this.isSendingMessage = true;
-      this.$refs.chatBoxForm.validate((valid) => {
-        if (valid) {
-          this.isSendingMessage = true;
-          this.send();
-          this.isSendingMessage = false;
-        } else {
-          this.isSendingMessage = false;
-        }
-      });
+    submitMessage() {
+      if (this.chatBoxForm.message.trim().length !== 0) {
+        this.send();
+      }
     },
     send() {
       this.changePresenceUserAction();
@@ -151,6 +138,8 @@ export default {
         const messageBox = thisComponent.$el.querySelector('#messageBox');
         if (messageBox !== undefined) messageBox.scrollTop = messageBox.scrollHeight;
       });
+
+      this.$refs.coolTextarea.cleanText();
     },
     getPresenceColor(idPresence) {
       return PresenceEnum.getIconColor(idPresence).value;
@@ -195,12 +184,17 @@ export default {
       return EmojiService.getEmojiImg(emoji.codepoint);
     },
     selectEmoji(emoji) {
-      this.chatBoxForm.message += ' ' + emoji.shortcut + ' ';
-      const chatBoxTextarea = document.getElementById('chatbox-textarea');
-      if (chatBoxTextarea) chatBoxTextarea.focus();
+      this.$refs.coolTextarea.addText(emoji.shortcut);
     },
     parseMessage(msg) {
       return MessageParser.parseChatboxMessage(msg);
     },
+    chatboxMessageChanged() {
+      this.sendTypingSignal();
+    },
+    eventMouseDown(event) {
+      event.stopPropagation();
+      event.preventDefault();
+    }
   },
 };

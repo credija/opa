@@ -118,6 +118,16 @@ body {
     background-color: #282D38 !important;
 }
 
+.dark-theme .button-clean {
+    background-color: #5f6c86 !important;
+	color: #fafafa !important;
+    border: none !important;
+    
+    :hover {
+        color: #00b3b3 !important;
+    }
+}
+
 // Native Elements
 small {
     font-size: 11px;
@@ -125,9 +135,8 @@ small {
 
 // Custom styles for components 
 .button-clean {
-	background-color: #e6e6e6 !important;
-	white-space: #ffffff !important;
-	border: none !important;
+    background-color: #e6e6e6 !important;
+    border: none !important;
 }
 
 // Fix Bug Filter Dropdown

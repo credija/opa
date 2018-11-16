@@ -34,9 +34,10 @@
 	}
 }
 
-.message-max-width {
+.message-style {
 	max-width: 60% !important;
 	word-wrap: break-word;
+	white-space: pre-wrap;
 }
 
 .max-size-header {
@@ -47,4 +48,8 @@
 .stamp-margin {
 	margin-left: 30px;
 	margin-top: 10px;
+}
+
+.margin-chatbox-btn {
+	margin-top: 13px;
 }
