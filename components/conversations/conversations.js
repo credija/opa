@@ -45,11 +45,15 @@ export default {
         DocTitleService.updateTitle();
       }
 
-      let chatBoxTextarea = document.getElementById('chatbox-textarea');
-      if (chatBoxTextarea) {
+      let coolTextarea = document.getElementById('cool-textarea');
+      if (coolTextarea) {
+        let content = coolTextarea.innerHTML;
+        content = MessageParser.replaceEmojiWithAltAttribute(content);
+        content = MessageParser.unescapeHtml(content);
+
         this.$store.dispatch('chat/setChatboxStateConversation', { 
           conversation: this.activeConversation, 
-          chatboxState: chatBoxTextarea.value
+          chatboxState: content
         });
       }
       if (this.activeConversation !== null) {
@@ -61,9 +65,11 @@ export default {
       this.$store.dispatch('chat/updateActiveConversation', conversation);
       setTimeout(function () {
         const messageBoxDoc = document.getElementById('messageBox');
-        chatBoxTextarea = document.getElementById('chatbox-textarea');
+        coolTextarea = document.getElementById('cool-textarea');
         if (messageBoxDoc) messageBoxDoc.scrollTop = messageBoxDoc.scrollHeight;
-        if (chatBoxTextarea) chatBoxTextarea.focus();
+        if (coolTextarea) {
+          this.$nuxt.$emit('COOL_TEXTAREA_FOCUS'); 
+        }
       });
     },
     getLastMessage(conversation) {

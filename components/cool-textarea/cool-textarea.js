@@ -8,14 +8,31 @@ export default {
       savedRange: window.getSelection().getRangeAt(0),
     }
   },
+  computed: {
+    activeConversation() {
+      return this.$store.state.chat.activeConversation;
+    },
+  },
+  created() {
+    this.$nuxt.$on('COOL_TEXTAREA_FOCUS', () => {
+      this.cleanText();
+      this.focus();
+      if (this.activeConversation.chatboxState !== '')  {
+        this.addText(this.activeConversation.chatboxState);
+      }    
+    });
+  },
+  beforeDestroy() {
+    this.$nuxt.$off('COOL_TEXTAREA_FOCUS');
+  },
+  // TODO: Set chatbox state when minimizing some conversation
   methods: {
-    // TODO: Verificar como colocar o foco no cool-textarea a partir de outros componentes
-    // TODO: Verificar como pegar os valores entre conversações de forma que o conteudo (estado do chatbox) seja restaurado ao mudar de janelas
-    // TODO: Verificar se é deletado da lista de conversações o estado do chatbox quando fecha-se uma janela
     updateContent(event) {
       let content = event.target.innerHTML;
+
       content = MessageParser.replaceEmojiWithAltAttribute(content);
       content = MessageParser.unescapeHtml(content);
+
       this.$emit('update:content', content);
       this.$emit('contentChanged');
     },
@@ -30,22 +47,11 @@ export default {
       }
     },
     shiftEnterKey(event) {
-      const content = event.target.innerHTML;
       event.stopPropagation();
       event.preventDefault();
 
-      if (this.savedRange.startOffset === this.savedRange.endOffset 
-        && content.length === 0) {
-        window.document.execCommand('insertHTML', false, '\n');
-        window.document.execCommand('insertHTML', false, '\n');
-      } else if (this.savedRange.startOffset === this.savedRange.endOffset 
-        && content.length !== 0 
-        && this.savedRange.endOffset === content.length) {
-        window.document.execCommand('insertHTML', false, '\n');
-        window.document.execCommand('insertHTML', false, '\n');
-      } else {
-        window.document.execCommand('insertHTML', false, '\n');
-      }
+      this.addText('\n');
+      this.addText('\n');
     },
     onPaste(pasteEvent) {
       var clipboardData, pastedData;
@@ -60,16 +66,30 @@ export default {
 
       window.document.execCommand('insertHTML', false, pastedData);
     },
-    addText(text) {
-      // TODO: Verificar bug quando o input não foi focado nenhuma vez ainda
-      // Talvez seja possivel criando um range selection no element em questão
+    focus() {
       const doc = this.$el;
+      const childNode = doc.childNodes[0];
       doc.focus();
+
+      if (childNode === undefined) {
+        const textNode = document.createTextNode("");
+        doc.appendChild(textNode);
+        const range = document.createRange();
+        const sel = window.getSelection();
+        range.setStart(doc.childNodes[0], 0);
+        range.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(range);
+        this.saveSelection();
+      }
+    },
+    addText(text) {
+      this.focus();
 
       text = MessageParser.escapeHTML(text);
       text = MessageParser.convertUnicodeToTwemoji(text);
-      window.document.execCommand('insertHTML', false, text);
 
+      window.document.execCommand('insertHTML', false, text);
       this.saveSelection();
     },
     cleanText() {

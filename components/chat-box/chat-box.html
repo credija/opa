@@ -115,11 +115,13 @@
                 </el-popover>
             </el-col>
             <el-col :span="20" class="mt1">
-                <cool-textarea 
-                    :content.sync="chatBoxForm.message" 
-                    ref="coolTextarea" 
-                    @enterKey="submitMessage()" 
-                    @contentChanged="chatboxMessageChanged"></cool-textarea>
+                <div class="chatbox-bg">
+                    <cool-textarea 
+                        :content.sync="chatBoxForm.message" 
+                        ref="coolTextarea" 
+                        @enterKey="submitMessage()" 
+                        @contentChanged="chatboxMessageChanged"></cool-textarea>
+                </div>
             </el-col>
             <el-col :span="2" class="text-center margin-chatbox-btn">
                 <el-button class=" button-clean" native-type="button"

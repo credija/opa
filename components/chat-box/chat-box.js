@@ -74,11 +74,6 @@ export default {
       return presenceValue;
     }
   },
-  watch: {
-    activeConversation: function (val) {
-      if (val !== null) this.chatBoxForm.message = val.chatboxState;
-    }
-  },
   beforeCreate() {
     if (process.browser) {
       XmppService = require('@/services/xmpp-service').default.constructor(this.$store);

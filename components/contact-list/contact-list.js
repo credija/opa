@@ -2,6 +2,7 @@ import PresenceEnum from '@/enums/presence-enum';
 import ArrayUtils from '@/utils/array-utils';
 import includes from 'lodash.includes';
 import RemoveAccents from 'remove-accents';
+import MessageParser from '@/services/message-parser';
 
 let XmppService = null;
 
@@ -87,11 +88,15 @@ export default {
         this.$store.dispatch('chat/clearUnreadCounterConversation', conversation);
       }
 
-      let chatBoxTextarea = document.getElementById('chatbox-textarea');
-      if (chatBoxTextarea) {
+      let coolTextarea = document.getElementById('cool-textarea');
+      if (coolTextarea) {
+        let content = coolTextarea.innerHTML;
+        content = MessageParser.replaceEmojiWithAltAttribute(content);
+        content = MessageParser.unescapeHtml(content);
+
         this.$store.dispatch('chat/setChatboxStateConversation', { 
           conversation: this.activeConversation, 
-          chatboxState: chatBoxTextarea.value
+          chatboxState: content
         });
       }
 
@@ -99,10 +104,12 @@ export default {
       this.$emit('switchActiveMenu');
 
       setTimeout(function () {
-        chatBoxTextarea = document.getElementById('chatbox-textarea');
+        coolTextarea = document.getElementById('cool-textarea');
         const messageBoxDoc = document.getElementById('messageBox');
         if (messageBoxDoc) messageBoxDoc.scrollTop = messageBoxDoc.scrollHeight;
-        if (chatBoxTextarea) chatBoxTextarea.focus();
+        if (coolTextarea) {
+          this.$nuxt.$emit('COOL_TEXTAREA_FOCUS'); 
+        }
       });
     },
     searchContactByName() {
