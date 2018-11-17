@@ -9,7 +9,6 @@ import MessageParser from '@/services/message-parser';
 import { Strophe, $iq, $pres } from 'strophe.js';
 import { MessageBox } from 'element-ui';
 
-// TODO: Check if this is not happening https://github.com/nuxt/nuxt.js/issues/1467
 export default {
   constructor(store) {
     this.store = store;
@@ -22,6 +21,7 @@ export default {
         break;
       case Strophe.Status.CONNECTED:
         console.log('CONNECTED');
+        this.store.dispatch('app/updateIsAppLoading', true);
         this.store.dispatch('app/updateIsDisconnected', false);
         this.store.dispatch('app/updateIsLogging', false);
         XmppService.updateLoggedUserVcard();
@@ -85,8 +85,8 @@ export default {
 
       const ctx = this;
       setTimeout(function () {
-        ctx.store.dispatch('app/updateIsChatReady', true);
-      }, 300);
+        ctx.store.dispatch('app/updateIsAppLoading', false);
+      }, 500);
     }
   },
   presenceHandler(presence) {
@@ -175,7 +175,7 @@ export default {
       else if (stamp !== undefined) newDate = new Date(stamp.textContent);
 
       MessageBox.alert(`${newDate.toLocaleString(locale)}:<br> ` + 
-      `<span class"text-justify">${msgContent}</span>`, 
+      `<p style="word-wrap: break-word !important; white-space: pre-wrap !important;">${msgContent}</p>`, 
         context.translation.t('chat.adminMessageTitle'), 
       {
         showClose: false,
@@ -273,7 +273,7 @@ export default {
 
       const ctx = this;
       setTimeout(function () {
-        const messageBoxDoc = document.getElementById('messageBox');
+        const messageBoxDoc = document.getElementById('message-box');
         if (messageBoxDoc) messageBoxDoc.scrollTop = messageBoxDoc.scrollHeight;
         NotificationService.constructor(ctx.store)
           .sendAudioNotification();

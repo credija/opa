@@ -87,7 +87,8 @@ export default {
 
     client.send(chatSignal);
   },
-
+  // TODO: Resgatar fotos dos usuários por demanda, a medida que o contato for visto pelo usuário
+  // TODO: Verificar porque as vezes não está atualizando a foto cacheada etc...
   profileImageCreator(presence) {
     const profileImageList = this.store.state.app.profileImageList;
 
@@ -260,7 +261,7 @@ export default {
     const client = this.store.state.app.xmppClient;
     const authUser = this.store.state.app.authUser;
 
-    const messageBox = document.getElementById('messageBox');
+    const messageBox = document.getElementById('message-box');
     const scrollHeight = messageBox.scrollHeight;
     const startOfTime = new Date(1970, 0, 1).toISOString();
 

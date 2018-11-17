@@ -2,7 +2,7 @@ import Vue from 'vue'
 import { library, config } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { 
-  faUser, faPlane, faCaretRight, faCircle, 
+  faUser, faPlane, faChevronCircleRight, faCircle, 
   faClock, faTimes, faComment,
   faCheck, faMinus, faSmile, faCommentAlt,
   faBell, faBellSlash, faUserSlash, 
@@ -13,7 +13,7 @@ import {
 export default () => {
   config.autoAddCss = false;
 
-  library.add(faUser, faPlane, faCaretRight, faCircle, 
+  library.add(faUser, faPlane, faChevronCircleRight, faCircle, 
     faClock, faTimes, faComment,
     faCheck, faMinus, faSmile, faCommentAlt,
     faBell, faBellSlash, faUserSlash, 

@@ -2,7 +2,6 @@
 
 import EmojiService from '@/services/emoji-service';
 
-// TODO: Threat white spaces
 export default {
   parseChatboxMessage(msg) {
     msg = this.escapeHTML(msg);
@@ -16,11 +15,7 @@ export default {
     msg = this.convertUrlToAnchorTag(msg);
     msg = this.convertUrlToImageTag(msg);
 
-    // Convert \n to <br>
-    msg = this.convertNewlineToBrTag(msg);
-
     // Convert emoji shortchut to IMG tag with the emoji
-    msg = this.convertEmojiShortcutToUnicode(msg);
     msg = this.convertUnicodeToTwemoji(msg);
     return msg;
   },
@@ -29,11 +24,7 @@ export default {
 
     // The parsing order is important!!!
 
-    // Convert \n to <br>
-    msg = this.convertNewlineToBrTag(msg);
-
     // Convert emoji shortchut to IMG tag with the emoji
-    msg = this.convertEmojiShortcutToUnicode(msg);
     msg = this.convertUnicodeToTwemoji(msg);
     return msg;
   },
@@ -42,7 +33,6 @@ export default {
 
     // The parsing order is important!!!
     // Convert emoji shortchut to IMG tag with the emoji
-    msg = this.convertEmojiShortcutToUnicode(msg);
     msg = this.convertUnicodeToTwemoji(msg);
     return msg;
   },
@@ -97,23 +87,11 @@ export default {
   escapeHTML(msg) {
     return document.createElement('div').appendChild(document.createTextNode(msg)).parentNode.innerHTML;
   },
-  convertEmojiShortcutToUnicode(msg) {
-    const emojiShortcutRegex = /:smiling:|:grin:|:joy:|:innocent:|:wink:|:heart_eyes:|:stuck_out_tongue:|:antonished:|:expressionless:|:cry:|:pensive:|:sad:|:angry:|:sleeping:|:tired:|:unamused:|:facepalm:|:heart:|:thumbsup:|:thumbsdown:|:poop:|:hear-no-monkey:|:see-no-monkey:|:speak-no-monkey:/g;
-    return msg.replace(emojiShortcutRegex, function(emojiShortcut) {
-      return EmojiService.localTwemoji()
-        .convert.fromCodePoint(EmojiService.getEmojiByShortcut(emojiShortcut).codepoint);
-    });
-  },
   convertUnicodeToTwemoji(msg) {
     return EmojiService.localTwemoji().parse(msg);
   },
-  convertTwitterUrlToEmbed(msg) {
-    const twitterRegex = /https?:\/\/twitter\.com\/(?:#!\/)?(\w+)\/status(es)?\/(\d+)/g;
-    msg = msg.replace(twitterRegex, function(twitterMatch) {
-      // Try with Twitter Widget library
-      return `<iframe border=0 frameborder=0 height=250 width=550 src="${twitterMatch}"></iframe>`;
-    });
-    return msg; 
+  replaceEmojiWithAltAttribute(msg) {
+    return msg.replace(/<img.*?alt="(.*?)"[^\>]+>/g, '$1');
   },
   unescapeHtml(msg) {
     return msg
@@ -122,5 +100,14 @@ export default {
       .replace(/&gt;/g, '>')
       .replace(/&quot;/g, '"')
       .replace(/&#039;/g, '\'');
-  }
+  },
+
+  // TODO: Twitter Embed
+  convertTwitterUrlToEmbed(msg) {
+    const twitterRegex = /https?:\/\/twitter\.com\/(?:#!\/)?(\w+)\/status(es)?\/(\d+)/g;
+    msg = msg.replace(twitterRegex, function(twitterMatch) {
+      return `<iframe border=0 frameborder=0 height=250 width=550 src="${twitterMatch}"></iframe>`;
+    });
+    return msg; 
+  },
 };

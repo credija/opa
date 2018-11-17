@@ -118,9 +118,25 @@ body {
     background-color: #282D38 !important;
 }
 
+.dark-theme .button-clean {
+    background-color: #5f6c86 !important;
+	color: #fafafa !important;
+    border: none !important;
+    
+    :hover {
+        color: #00b3b3 !important;
+    }
+}
+
 // Native Elements
 small {
     font-size: 11px;
+}
+
+// Custom styles for components 
+.button-clean {
+    background-color: #e6e6e6 !important;
+    border: none !important;
 }
 
 // Fix Bug Filter Dropdown
@@ -320,10 +336,6 @@ a {
     padding: 0 10px; 
 }
 
-.wrap-pre {
-    white-space: pre-wrap;
-}
-
 // Background Relatives
 .bg-alert {
     background-color: #ffcdd2 !important;
@@ -371,6 +383,10 @@ a {
 
 .bg-dark-light {
     background-color: #5f6c86;
+}
+
+.bg-white-clean {
+    background-color: #f2f2f2;
 }
 
 // Position Relatives

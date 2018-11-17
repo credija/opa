@@ -1,6 +1,7 @@
 const pkg = require('./package');
 
 // TODO: Create page 404
+// TODO: Teste em todos navegadores para verificar performance e compatibilidade (Não havia funcionado no EDGE)
 module.exports = {
   mode: 'universal',
   buildDir: 'bundle',

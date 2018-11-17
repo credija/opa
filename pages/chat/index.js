@@ -1,5 +1,5 @@
 import ChatBox from '@/components/chat-box/chat-box.vue';
-import LoadingDialog from '@/components/loading-dialog/loading-dialog.vue';
+import LoadingApp from '@/components/loading-app/loading-app.vue';
 import ConfirmTabDialog from '@/components/confirm-tab-dialog/confirm-tab-dialog.vue';
 import ContactList from '@/components/contact-list/contact-list.vue';
 import Conversations from '@/components/conversations/conversations.vue';
@@ -15,7 +15,7 @@ export default {
   name: 'Chat',
   components: { 
     'chat-box': ChatBox, 
-    'loading-dialog': LoadingDialog, 
+    'loading-app': LoadingApp, 
     'confirm-tab-dialog': ConfirmTabDialog,
     'contact-list': ContactList,
     'chat-header': ChatHeader,
@@ -77,15 +77,16 @@ export default {
         }
       };
 
+      window.onresize = function() {
+        ctx.sizes = ScreenUtils.getSizeChat();
+        ctx.$nuxt.$emit('RE_RENDER_CHATBOX');
+      };
+
       // Set browser zoom to default (100%)
       document.body.style.webkitTransform = 'scale(1)';
       document.body.style.msTransform = 'scale(100)';
       document.body.style.transform = 'scale(1)';
       document.body.style.zoom = screen.logicalXDPI / screen.deviceXDPI;
-
-      window.onresize = function() {
-        ctx.sizes = ScreenUtils.getSizeChat();
-      };
     }
   },
   mounted() {

@@ -8,7 +8,6 @@
         "isLogout": "Sessão encerrada com sucesso!"
     },
     "chat": {
-        "loadingMessages": "Carregando suas mensagens, aguarde...",
         "isDisconnectedMsg": "Você foi desconectado do chat por problemas de conexão.",
         "noOpenConversation": "Não há nenhuma conversa aberta.",
         "tipNewConversation": "Você pode abrir uma nova conversa clicando no botão",

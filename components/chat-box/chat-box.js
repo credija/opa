@@ -1,29 +1,78 @@
 import PresenceEnum from '@/enums/presence-enum';
 import ContactDetails from '@/components/contact-details/contact-details.vue';
 import MessageParser from '@/services/message-parser';
+import CoolTextarea from '@/components/cool-textarea/cool-textarea.vue';
 
 let XmppService, EmojiService = null;
 
 export default {
   name: 'ChatBox',
-  components: { 'contact-details': ContactDetails },
-  props: [],
+  components: { 
+    'contact-details': ContactDetails,
+    'cool-textarea': CoolTextarea
+  },
   data() {
     return {
       isSendingMessage: false,
       chatBoxForm: {
         message: '',
       },
-      formRules: {
-        message: [
-          { required: true, message: this.$t('chatbox.messageRequired'), trigger: 'none' },
-        ],
-      },
       signalTimeout: null,
       isTyping: false,
       showContactDetails: false,
-      emojiList: EmojiService.emojiArray()
+      emojiList: EmojiService.emojiArray(),
+      chatboxHeight: 0,
+      chatboxMaxHeight: 0,
     };
+  },
+  created() {
+    this.$nuxt.$on('RE_RENDER_CHATBOX', () => {
+      let componentHeight = 0;
+      const screenHeight = window.innerHeight;
+      
+      if (screenHeight >= 910) {
+        componentHeight = 680;
+      } else if (screenHeight >= 760) {
+        componentHeight = 540;
+      } else if (screenHeight >= 660) {
+        componentHeight = 500;
+      } else {
+        componentHeight = 470;
+      }
+
+      const newHeight = componentHeight - (this.chatboxHeight - 17);
+
+      this.chatboxMaxHeight = componentHeight;
+      this.setMessageBoxHeight(newHeight);
+      
+      this.scrollMessageBoxToBottom();
+    });
+  },
+  beforeDestroy() {
+    this.$nuxt.$off('RE_RENDER_CHATBOX');
+  },
+  watch: {
+    chatboxHeight: function (newVal, oldVal) {
+      const messageBox = document.getElementById('message-box');
+
+      if (oldVal === 0) {
+        this.chatboxMaxHeight = messageBox.offsetHeight;
+        if (newVal !== 17) {
+          const newHeight = messageBox.offsetHeight - (newVal / 2);
+          this.setMessageBoxHeight(newHeight);
+        }
+      } else if (newVal > oldVal && oldVal !== 0) {
+        const newHeight = messageBox.offsetHeight - (newVal - oldVal);
+        this.setMessageBoxHeight(newHeight);
+      } else {
+        const newHeight = messageBox.offsetHeight + (oldVal - newVal);
+        if (this.chatboxMaxHeight >= newHeight) {
+          this.setMessageBoxHeight(newHeight);
+        }
+      }
+
+      this.scrollMessageBoxToBottom();
+    },
   },
   computed: {
     xmppClient() {
@@ -74,12 +123,7 @@ export default {
         presenceValue = this.activeConversation.contact.presence.value;
       }
       return presenceValue;
-    }
-  },
-  watch: {
-    activeConversation: function (val) {
-      if (val !== null) this.chatBoxForm.message = val.chatboxState;
-    }
+    },
   },
   beforeCreate() {
     if (process.browser) {
@@ -88,17 +132,10 @@ export default {
     }
   },
   methods: {
-    chatBoxFormSubmit() {
-      this.isSendingMessage = true;
-      this.$refs.chatBoxForm.validate((valid) => {
-        if (valid) {
-          this.isSendingMessage = true;
-          this.send();
-          this.isSendingMessage = false;
-        } else {
-          this.isSendingMessage = false;
-        }
-      });
+    submitMessage() {
+      if (this.chatBoxForm.message.trim().length !== 0) {
+        this.send();
+      }
     },
     send() {
       this.changePresenceUserAction();
@@ -142,16 +179,16 @@ export default {
       this.$store.dispatch('chat/reorderConversationByConversation', this.activeConversation);
 
       this.chatBoxForm.message = '';
-      const thisComponent = this;
-      setTimeout(function () {
-        const messageBox = thisComponent.$el.querySelector('#messageBox');
-        if (messageBox !== undefined) messageBox.scrollTop = messageBox.scrollHeight;
-      });
+      this.scrollMessageBoxToBottom();
+
+      this.$refs.coolTextarea.cleanText();
+      this.chatboxHeight = this.$refs.coolTextarea.$el.clientHeight;
     },
     getPresenceColor(idPresence) {
       return PresenceEnum.getIconColor(idPresence).value;
     },
     minimizeActiveConversation() {
+      this.saveChatboxState();
       this.changePresenceUserAction();
       XmppService.sendChatSignal(this.activeConversation.contact.username, 'paused');
       this.$store.dispatch('chat/updateActiveConversation', null);
@@ -171,7 +208,9 @@ export default {
 
       clearTimeout(this.signalTimeout);
       this.signalTimeout = setTimeout(function () {
-        XmppService.sendChatSignal(vueContext.activeConversation.contact.username, 'paused');
+        if (vueContext.activeConversation !== null) {
+          XmppService.sendChatSignal(vueContext.activeConversation.contact.username, 'paused');
+        }
         vueContext.isTyping = false;
       }, 1000);
     },
@@ -191,12 +230,22 @@ export default {
       return EmojiService.getEmojiImg(emoji.codepoint);
     },
     selectEmoji(emoji) {
-      this.chatBoxForm.message += ' ' + emoji.shortcut + ' ';
-      const chatBoxTextarea = document.getElementById('chatbox-textarea');
-      if (chatBoxTextarea) chatBoxTextarea.focus();
+      this.$refs.coolTextarea.addText(emoji.shortcut);
     },
     parseMessage(msg) {
       return MessageParser.parseChatboxMessage(msg);
+    },
+    chatboxContentChanged() {
+      this.sendTypingSignal();
+      this.chatboxHeight = this.$refs.coolTextarea.$el.clientHeight;
+    },
+    setMessageBoxHeight(height) {
+      const messageBox = document.getElementById('message-box');
+      if (messageBox !== undefined && messageBox !== null) {
+        messageBox.style.height = height + 'px';
+        messageBox.style.minHeight = height + 'px';
+        messageBox.style.maxHeight = height + 'px';
+      }
     }
   },
 };

@@ -3,7 +3,6 @@ export const state = () => ({
   appConfig: null,
   appLocale: 'en-us',
   isLogging: false,
-  isChatReady: false,
   isDisconnected: false,
   xmppClient: null,
   authUser: '',

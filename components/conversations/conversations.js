@@ -45,13 +45,8 @@ export default {
         DocTitleService.updateTitle();
       }
 
-      let chatBoxTextarea = document.getElementById('chatbox-textarea');
-      if (chatBoxTextarea) {
-        this.$store.dispatch('chat/setChatboxStateConversation', { 
-          conversation: this.activeConversation, 
-          chatboxState: chatBoxTextarea.value
-        });
-      }
+      this.saveChatboxState();
+
       if (this.activeConversation !== null) {
         XmppService.sendChatSignal(this.activeConversation.contact.username, 'paused');
       }
@@ -60,11 +55,12 @@ export default {
       
       this.$store.dispatch('chat/updateActiveConversation', conversation);
       setTimeout(function () {
-        const messageBoxDoc = document.getElementById('messageBox');
-        chatBoxTextarea = document.getElementById('chatbox-textarea');
-        if (messageBoxDoc) messageBoxDoc.scrollTop = messageBoxDoc.scrollHeight;
-        if (chatBoxTextarea) chatBoxTextarea.focus();
+        const coolTextarea = document.getElementById('cool-textarea');
+        if (coolTextarea) {
+          this.$nuxt.$emit('COOL_TEXTAREA_FOCUS');
+        }
       });
+      this.scrollMessageBoxToBottom();
     },
     getLastMessage(conversation) {
       let lastMessage = {};

@@ -15,9 +15,6 @@ const mutations = {
   [types.UPDATE_IS_LOGGING](state, { isLogging }) {
     state.isLogging = isLogging;
   },
-  [types.UPDATE_IS_CHAT_READY](state, { isChatReady }) {
-    state.isChatReady = isChatReady;
-  },
   [types.UPDATE_IS_DISCONNECTED](state, { isDisconnected }) {
     state.isDisconnected = isDisconnected;
   },
