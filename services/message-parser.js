@@ -2,8 +2,6 @@
 
 import EmojiService from '@/services/emoji-service';
 
-// TODO: Quando acontecer de criar um nó lembrar de deletar ele
-// TODO: Threat white spaces
 export default {
   parseChatboxMessage(msg) {
     msg = this.escapeHTML(msg);
@@ -17,9 +15,6 @@ export default {
     msg = this.convertUrlToAnchorTag(msg);
     msg = this.convertUrlToImageTag(msg);
 
-    // Convert \n to <br>
-    msg = this.convertNewlineToBrTag(msg);
-
     // Convert emoji shortchut to IMG tag with the emoji
     msg = this.convertUnicodeToTwemoji(msg);
     return msg;
@@ -28,9 +23,6 @@ export default {
     msg = this.escapeHTML(msg);
 
     // The parsing order is important!!!
-
-    // Convert \n to <br>
-    msg = this.convertNewlineToBrTag(msg);
 
     // Convert emoji shortchut to IMG tag with the emoji
     msg = this.convertUnicodeToTwemoji(msg);

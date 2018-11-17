@@ -25,7 +25,7 @@ export default {
       { codepoint: '1F634', shortcut: '😴', description: 'Sleeping Face' },
       { codepoint: '1F62B', shortcut: '😫', description: 'Tired Face' },
       { codepoint: '1F612', shortcut: '😒', description: 'Unamused Face' },
-      { codepoint: '1F926', shortcut: '🤦🏻‍♂️', description: 'Facepalm' },
+      { codepoint: '1F926', shortcut: '🤦', description: 'Facepalm' },
       { codepoint: '2764', shortcut: '❤️', description: 'Heart' },
       { codepoint: '1F44D', shortcut: '👍', description: 'Thumbs Up' },
       { codepoint: '1F44E', shortcut: '👎', description: 'Thumbs Down' },

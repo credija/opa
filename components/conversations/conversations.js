@@ -45,17 +45,8 @@ export default {
         DocTitleService.updateTitle();
       }
 
-      let coolTextarea = document.getElementById('cool-textarea');
-      if (coolTextarea) {
-        let content = coolTextarea.innerHTML;
-        content = MessageParser.replaceEmojiWithAltAttribute(content);
-        content = MessageParser.unescapeHtml(content);
+      this.saveChatboxState();
 
-        this.$store.dispatch('chat/setChatboxStateConversation', { 
-          conversation: this.activeConversation, 
-          chatboxState: content
-        });
-      }
       if (this.activeConversation !== null) {
         XmppService.sendChatSignal(this.activeConversation.contact.username, 'paused');
       }
@@ -64,13 +55,12 @@ export default {
       
       this.$store.dispatch('chat/updateActiveConversation', conversation);
       setTimeout(function () {
-        const messageBoxDoc = document.getElementById('messageBox');
-        coolTextarea = document.getElementById('cool-textarea');
-        if (messageBoxDoc) messageBoxDoc.scrollTop = messageBoxDoc.scrollHeight;
+        const coolTextarea = document.getElementById('cool-textarea');
         if (coolTextarea) {
-          this.$nuxt.$emit('COOL_TEXTAREA_FOCUS'); 
+          this.$nuxt.$emit('COOL_TEXTAREA_FOCUS');
         }
       });
+      this.scrollMessageBoxToBottom();
     },
     getLastMessage(conversation) {
       let lastMessage = {};

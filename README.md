@@ -17,7 +17,7 @@
 
 **Opa** is an **open-source XMPP chat client for the Web (SSR)** entirely built on top of **Vue**, **NuxtJS** and **ElementUI** that follows the coolest trends out there ~~bye bye Flash and Desktop clients~~! 
 
-![alt text](https://i.imgur.com/ReZn9zL.png "Landing Page Opa")
+![alt text](https://i.imgur.com/9wQHz8j.png "Landing Page Opa")
 
 _**Trivia**_: "Opa", among many meanings in Brazil, is also used informally as a greeting!
 
@@ -45,8 +45,9 @@ Features Opa already has:
   - Basic en-US | pt-BR for the time being, but you can develop your own translation by following the [Internationalization](#internationalization) section instructions of this README.
 - [x] Responsive for desktop screens (up to 1024x768)
 - [x] One-to-one chat
-- [x] Basic emoji using keywords
+- [x] NEW! Basic Emoji support through Unicode
   - Credits to Tweemoji for the emoji arts
+- [x] NEW! Chatbox with support to rendering emojis and resizing for better text writing
 - [x] Profile presence change option
 - [x] Automatic presence change when away
   - After 20 minutes without performing any action in the app

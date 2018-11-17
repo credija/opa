@@ -88,29 +88,18 @@ export default {
         this.$store.dispatch('chat/clearUnreadCounterConversation', conversation);
       }
 
-      let coolTextarea = document.getElementById('cool-textarea');
-      if (coolTextarea) {
-        let content = coolTextarea.innerHTML;
-        content = MessageParser.replaceEmojiWithAltAttribute(content);
-        content = MessageParser.unescapeHtml(content);
-
-        this.$store.dispatch('chat/setChatboxStateConversation', { 
-          conversation: this.activeConversation, 
-          chatboxState: content
-        });
-      }
+      this.saveChatboxState();
 
       this.$store.dispatch('chat/updateActiveConversation', conversation);
       this.$emit('switchActiveMenu');
 
       setTimeout(function () {
-        coolTextarea = document.getElementById('cool-textarea');
-        const messageBoxDoc = document.getElementById('messageBox');
-        if (messageBoxDoc) messageBoxDoc.scrollTop = messageBoxDoc.scrollHeight;
+        const coolTextarea = document.getElementById('cool-textarea');
         if (coolTextarea) {
-          this.$nuxt.$emit('COOL_TEXTAREA_FOCUS'); 
+          this.$nuxt.$emit('COOL_TEXTAREA_FOCUS');
         }
       });
+      this.scrollMessageBoxToBottom();
     },
     searchContactByName() {
       if (this.searchTerm.length > 2) {

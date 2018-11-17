@@ -77,15 +77,16 @@ export default {
         }
       };
 
+      window.onresize = function() {
+        ctx.sizes = ScreenUtils.getSizeChat();
+        ctx.$nuxt.$emit('RE_RENDER_CHATBOX');
+      };
+
       // Set browser zoom to default (100%)
       document.body.style.webkitTransform = 'scale(1)';
       document.body.style.msTransform = 'scale(100)';
       document.body.style.transform = 'scale(1)';
       document.body.style.zoom = screen.logicalXDPI / screen.deviceXDPI;
-
-      window.onresize = function() {
-        ctx.sizes = ScreenUtils.getSizeChat();
-      };
     }
   },
   mounted() {

@@ -20,8 +20,59 @@ export default {
       signalTimeout: null,
       isTyping: false,
       showContactDetails: false,
-      emojiList: EmojiService.emojiArray()
+      emojiList: EmojiService.emojiArray(),
+      chatboxHeight: 0,
+      chatboxMaxHeight: 0,
     };
+  },
+  created() {
+    this.$nuxt.$on('RE_RENDER_CHATBOX', () => {
+      let componentHeight = 0;
+      const screenHeight = window.innerHeight;
+      
+      if (screenHeight >= 910) {
+        componentHeight = 680;
+      } else if (screenHeight >= 760) {
+        componentHeight = 540;
+      } else if (screenHeight >= 660) {
+        componentHeight = 500;
+      } else {
+        componentHeight = 470;
+      }
+
+      const newHeight = componentHeight - (this.chatboxHeight - 17);
+
+      this.chatboxMaxHeight = componentHeight;
+      this.setMessageBoxHeight(newHeight);
+      
+      this.scrollMessageBoxToBottom();
+    });
+  },
+  beforeDestroy() {
+    this.$nuxt.$off('RE_RENDER_CHATBOX');
+  },
+  watch: {
+    chatboxHeight: function (newVal, oldVal) {
+      const messageBox = document.getElementById('message-box');
+
+      if (oldVal === 0) {
+        this.chatboxMaxHeight = messageBox.offsetHeight;
+        if (newVal !== 17) {
+          const newHeight = messageBox.offsetHeight - (newVal / 2);
+          this.setMessageBoxHeight(newHeight);
+        }
+      } else if (newVal > oldVal && oldVal !== 0) {
+        const newHeight = messageBox.offsetHeight - (newVal - oldVal);
+        this.setMessageBoxHeight(newHeight);
+      } else {
+        const newHeight = messageBox.offsetHeight + (oldVal - newVal);
+        if (this.chatboxMaxHeight >= newHeight) {
+          this.setMessageBoxHeight(newHeight);
+        }
+      }
+
+      this.scrollMessageBoxToBottom();
+    },
   },
   computed: {
     xmppClient() {
@@ -72,7 +123,7 @@ export default {
         presenceValue = this.activeConversation.contact.presence.value;
       }
       return presenceValue;
-    }
+    },
   },
   beforeCreate() {
     if (process.browser) {
@@ -128,18 +179,16 @@ export default {
       this.$store.dispatch('chat/reorderConversationByConversation', this.activeConversation);
 
       this.chatBoxForm.message = '';
-      const thisComponent = this;
-      setTimeout(function () {
-        const messageBox = thisComponent.$el.querySelector('#messageBox');
-        if (messageBox !== undefined) messageBox.scrollTop = messageBox.scrollHeight;
-      });
+      this.scrollMessageBoxToBottom();
 
       this.$refs.coolTextarea.cleanText();
+      this.chatboxHeight = this.$refs.coolTextarea.$el.clientHeight;
     },
     getPresenceColor(idPresence) {
       return PresenceEnum.getIconColor(idPresence).value;
     },
     minimizeActiveConversation() {
+      this.saveChatboxState();
       this.changePresenceUserAction();
       XmppService.sendChatSignal(this.activeConversation.contact.username, 'paused');
       this.$store.dispatch('chat/updateActiveConversation', null);
@@ -159,7 +208,9 @@ export default {
 
       clearTimeout(this.signalTimeout);
       this.signalTimeout = setTimeout(function () {
-        XmppService.sendChatSignal(vueContext.activeConversation.contact.username, 'paused');
+        if (vueContext.activeConversation !== null) {
+          XmppService.sendChatSignal(vueContext.activeConversation.contact.username, 'paused');
+        }
         vueContext.isTyping = false;
       }, 1000);
     },
@@ -184,12 +235,17 @@ export default {
     parseMessage(msg) {
       return MessageParser.parseChatboxMessage(msg);
     },
-    chatboxMessageChanged() {
+    chatboxContentChanged() {
       this.sendTypingSignal();
+      this.chatboxHeight = this.$refs.coolTextarea.$el.clientHeight;
     },
-    eventMouseDown(event) {
-      event.stopPropagation();
-      event.preventDefault();
+    setMessageBoxHeight(height) {
+      const messageBox = document.getElementById('message-box');
+      if (messageBox !== undefined && messageBox !== null) {
+        messageBox.style.height = height + 'px';
+        messageBox.style.minHeight = height + 'px';
+        messageBox.style.maxHeight = height + 'px';
+      }
     }
   },
 };

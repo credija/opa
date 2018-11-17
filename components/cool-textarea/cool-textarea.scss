@@ -1,8 +1,11 @@
 .cool-textarea {
 	min-height: 15px;
-	max-height: 30px;
+	max-height: 150px;
 	background-color: white;
-	overflow: hidden;
+	padding-left: 3px;
+	padding-right: 3px;
+	overflow-y: auto;
+	overflow-x: hidden;
 	white-space: pre-wrap;
 }
 

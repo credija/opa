@@ -17,29 +17,24 @@ export default {
     this.$nuxt.$on('COOL_TEXTAREA_FOCUS', () => {
       this.cleanText();
       this.focus();
-      if (this.activeConversation.chatboxState !== '')  {
-        this.addText(this.activeConversation.chatboxState);
-      }    
+      this.addText(this.activeConversation.chatboxState);
     });
   },
   beforeDestroy() {
     this.$nuxt.$off('COOL_TEXTAREA_FOCUS');
   },
-  // TODO: Set chatbox state when minimizing some conversation
   methods: {
     updateContent(event) {
       let content = event.target.innerHTML;
-
       content = MessageParser.replaceEmojiWithAltAttribute(content);
       content = MessageParser.unescapeHtml(content);
-
+      if (content.length !== 0 && content[content.length - 1] === '\n') {
+        content = content.slice(0, -1);
+      }
       this.$emit('update:content', content);
       this.$emit('contentChanged');
     },
     enterKey(event) {
-      // TODO: Deixar enter mais suave 
-      // (testar mais para ver se foi solucionado, e ver também de colocar o cursor 
-      // pointer seguindo os newlines inseridos, que as vezes nao acontece)
       event.stopPropagation();
       event.preventDefault();
       if (event.shiftKey === false) {
@@ -50,8 +45,14 @@ export default {
       event.stopPropagation();
       event.preventDefault();
 
-      this.addText('\n');
-      this.addText('\n');
+      if (this.$el.innerHTML === '' || this.$el.innerHTML[this.$el.innerHTML.length -1] !== '\n') {
+        this.addText('\n');
+        this.addText('\n');
+      } else {
+        this.addText('\n');
+      }
+
+      this.$el.scrollTop = this.$el.scrollHeight;
     },
     onPaste(pasteEvent) {
       var clipboardData, pastedData;
@@ -65,6 +66,8 @@ export default {
       pastedData = MessageParser.convertUnicodeToTwemoji(pastedData);
 
       window.document.execCommand('insertHTML', false, pastedData);
+
+      this.$el.scrollTop = this.$el.scrollHeight;
     },
     focus() {
       const doc = this.$el;

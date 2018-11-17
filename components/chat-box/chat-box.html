@@ -35,7 +35,7 @@
             </el-col>
         </el-row>
         
-        <el-row class="by1 size-conversation px3" id="messageBox" 
+        <el-row class="by1 size-conversation px3" id="message-box" 
             :class="{ 'bg-white': chatConfig.darkMode === undefined || chatConfig.darkMode === false, 
                 'dark-theme': chatConfig.darkMode === true,
                 'dark-border': chatConfig.darkMode === true}">
@@ -120,7 +120,7 @@
                         :content.sync="chatBoxForm.message" 
                         ref="coolTextarea" 
                         @enterKey="submitMessage()" 
-                        @contentChanged="chatboxMessageChanged"></cool-textarea>
+                        @contentChanged="chatboxContentChanged"></cool-textarea>
                 </div>
             </el-col>
             <el-col :span="2" class="text-center margin-chatbox-btn">
