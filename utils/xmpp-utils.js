@@ -209,7 +209,6 @@ export default {
           messageToAdd: { 
             msg: msgContent, 
             ownMessage: false, 
-            stamp: newDate.toLocaleString(locale), 
             stampDate: newDate 
           } 
         });
@@ -238,7 +237,6 @@ export default {
           messageToAdd: { 
             msg: msgContent, 
             ownMessage: false,
-            stamp: newDate.toLocaleString(locale),
             stampDate: newDate
           }
         });
