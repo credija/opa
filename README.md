@@ -53,11 +53,11 @@ Features Opa already has:
 - [x] Automatic presence change when away
   - After 20 minutes without performing any action in the app
 - [x] Profile avatar change and delete option. 
-  - Your XMPP server must support V-Card.
+  - Your XMPP server must support [v-card-temp](https://xmpp.org/extensions/xep-0054.html).
 
 - [x] Contacts organized by group (Like Pidgin)
 - [x] Contacts details. 
-  - Your XMPP server must support V-Card.
+  - Your XMPP server must support [v-card-temp](https://xmpp.org/extensions/xep-0054.html).
 - [x] Contacts search
 
 - [x] Browser tab icon change when has a new message
@@ -79,11 +79,29 @@ The initial idea of Opa was to be a plug-n-play client to any XMPP server.
 
 Following this you have two ways of running this app:
 
-- Cloning, configuration, and building from the source, then hosting the /dist folder
+- Building and running from source with NodeJS
 
 - Using the Docker container provided and overwriting the global configuration file
 
 ## Installation
+### NodeJS (From Source)
+![alt text](https://nodejs.org/static/images/logos/nodejs-new-pantone-black.png "NodeJS Logo")
+The installation with NodeJS will need you to install the package manager [Yarn](https://yarnpkg.com/pt-BR/). You can install Yarn on an NodeJS environment with this command:
+```
+npm install yarn -g
+```
+After installing Yarn you will need to clone the project into a folder. This folder will be where the Opa server will run from:
+```
+git clone https://github.com/credija/opa.git
+```
+After clonning the project you will need to navigate to this folder and run the command below to build and start Opa:
+```
+yarn build && yarn start
+```
+
+You will, however, need to connect to your XMPP server. To do that you need to overwrite the /your-project-clone-folder/static/config/app-config.json (explanation of each option in the config file is in [Configuration](#configuration) section).
+
+### Docker
 ![alt text](https://www.docker.com/sites/default/files/social/docker_twitter_share_new.png "Docker Logo")
 
 The installation with Docker is very straightforward. You will, however, need to connect to your XMPP server. To do that you need to overwrite the /app/static/config/app-config.json (explanation of each option in the config file is in [Configuration](#configuration) section):
