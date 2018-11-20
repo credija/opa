@@ -1,0 +1,66 @@
+{ 
+    "login": {
+        "usernamePlaceholder": "Nutzername",
+        "passwordPlaceholder": "Passwort",
+        "loginButton": "Anmelden",
+        "isLoginExpired": "Deine Sitzung ist abgelaufen, bitte melde dich erneut an.",
+        "isCredentialsInvalid": "Dein Nutzername / Passwort ist ungültig.",
+        "isLogout": "Deine Sitzung wurde erfolgreich beendet!"
+    },
+    "chat": {
+        "isDisconnectedMsg": "Du wurdest aufgrund eines Verbindungsfehlers abgemeldet.",
+        "noOpenConversation": "Zurzeit ist kein Chat geöffnet.",
+        "tipNewConversation": "Du kannst einen neuen Chat öffnem indem du hier klickst",
+        "noConversation": "Du hast bisher noch keine Konversationen",
+        "openNewConversation": "Neuen Chat öffnen",
+        "back": "Zurück",
+        "searchPlaceholder": "Kontakte suchen",
+        "min3Characters": "Bitte gebe mindestens 3 Zeichen ein.",
+        "noContactFound": "Keine Kontakte gefunden",
+        "adminMessageTitle": "Admin Nachricht"
+    },
+    "contactDetails": {
+        "modalTitle": "Kontakt Details",
+        "nameLabel": "Name",
+        "groupLabel": "Gruppe"
+    },
+    "chatbox": {
+        "messageRequired": "Du musst eine Nachricht angeben.",
+        "chatboxPlaceholder": "Gebe deine Nachricht ein",
+        "typingLabel": "Tippt...",
+        "loadOldMessages": "Lade alte Nachrichten...",
+        "loadingOldMessages": "Alte Nachrichten werden geladen...",
+        "oldMessagesLimit": "Du hast das Limit an alten Nachrichten in der Suche erreicht",
+        "oldMessagesLabel": "Alte Nachrichten"
+    },
+    "profile": {
+        "changePhoto": "Bearbeiten",
+        "onlinePresence": "Online",
+        "busyPresence": "Beschäftigt",
+        "awayPresence": "Weg",
+        "offlinePresence": "Offline",
+        "deleteAvatarTitle": "Bist du sicher?",
+        "deleteAvatarBody": "Wenn du das Foto löschst wirst du das Standardfoto verwenden.",
+        "cancelDeleteAvatar": "Abbrechen",
+        "avatarExtensionInvalid": "Dateityp muss .JPG oder .PNG sein!",
+        "avatarSizeInvalid": "Das Bild muss kleiner als 2 MB sein!",
+        "reLoginButton": "Erneut anmelden",
+        "reLoginTitle": "Bist du sicher?",
+        "reLoginBody": "Wenn du dich erneut anmeldest verlierst du den Zugang zu aktiven Konversationen!",
+        "cancelReLogin": "Abbrechen"
+    },
+    "config": {
+        "desktopNotifications": "Desktop Benachrichtigungen",
+        "enableSoundNotification": "Ton bei Benachrichtungen aktivieren",
+        "disableSoundNotification": "Ton bei Benachrichtigungen deaktivieren",
+        "enableOfflineContacts": "Zeige Offline Kontakte",
+        "disableOfflineContacts": "Verstecke Offline Kontakte",
+        "enableDarkMode": "Nachtmodus aktivieren",
+        "disableDarkMode": "Nachtmodus deaktivieren",
+        "selectCountry": "Wählen Sie Ihr Land aus"
+    },
+    "dialogs": {
+        "save": "Speichern",
+        "cancel": "Stornieren"
+    }
+}

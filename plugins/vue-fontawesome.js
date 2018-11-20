@@ -7,7 +7,7 @@ import {
   faCheck, faMinus, faSmile, faCommentAlt,
   faBell, faBellSlash, faUserSlash, 
   faSun, faMoon, faUndo, faKey, faUserCog,
-  faEnvelope, faLock, faArrowCircleRight
+  faEnvelope, faLock, faArrowCircleRight, faLanguage
 } from '@fortawesome/free-solid-svg-icons';
 
 export default () => {
@@ -18,7 +18,7 @@ export default () => {
     faCheck, faMinus, faSmile, faCommentAlt,
     faBell, faBellSlash, faUserSlash, 
     faSun, faMoon, faUndo, faKey, faUserCog,
-    faEnvelope, faLock, faArrowCircleRight);
+    faEnvelope, faLock, faArrowCircleRight, faLanguage);
 
   Vue.component('font-awesome-icon', FontAwesomeIcon);
 }

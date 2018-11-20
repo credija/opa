@@ -110,8 +110,19 @@ export default {
         .catch(() => {});
     },
     getPresenceLabeli18n(presence) {
-      return presence.id === 'dnd' ? this.$t('profile.busyPresence') : 
-        (presence.id === 'away' ? this.$t('profile.awayPresence') : presence.value);
+      let presenceValue = '';
+
+      if (presence.id === 'on') {
+        presenceValue = this.$t('profile.onlinePresence');
+      } else if (presence.id === 'dnd') {
+        presenceValue = this.$t('profile.busyPresence');
+      } else if (presence.id === 'away') {
+        presenceValue = this.$t('profile.awayPresence');
+      } else {
+        presenceValue = this.$t('profile.offlinePresence');
+      }
+
+      return presenceValue;
     }
   },
 };

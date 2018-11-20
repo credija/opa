@@ -10,6 +10,8 @@ export default {
     const chatConfigNew = ObjectUtils.cloneObject(chatConfig);
     this.store.dispatch('chat/updateChatConfig', chatConfigNew);
     localStorage.setItem('chat-config', JSON.stringify(chatConfig));
+    
+    this.store.dispatch('app/updateAppLocale', chatConfigNew.countryConfig);
   },
 
   loadConfig() {
@@ -17,7 +19,12 @@ export default {
     if (chatConfig) {
       this.store.dispatch('chat/updateChatConfig', chatConfig);
     } else {
-      chatConfig = { showOffline: false, soundNotification: false, darkMode: false };
+      chatConfig = { 
+        showOffline: false, 
+        soundNotification: false, 
+        darkMode: false, 
+        countryConfig: this.store.state.app.appLocale 
+      };
       this.store.dispatch('chat/updateChatConfig', chatConfig);
       localStorage.setItem('chat-config', JSON.stringify(chatConfig));
     }

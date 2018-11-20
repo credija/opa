@@ -42,12 +42,13 @@ Has some feature in mind, suggestion or come across a bug? Open an [Issue](https
 Features Opa already has:
 - [x] BOSH/WebSocket support
 - [x] Multi-language support 
-  - Basic en-US | pt-BR for the time being, but you can develop your own translation by following the [Internationalization](#internationalization) section instructions of this README.
+  - en-US | pt-BR | de-DE for the time being, but you can develop your own translation by following the [Internationalization](#internationalization) section instructions of this README.
 - [x] Responsive for desktop screens (up to 1024x768)
 - [x] One-to-one chat
 - [x] NEW! Basic Emoji support through Unicode
   - Credits to Tweemoji for the emoji arts
 - [x] NEW! Chatbox with support to rendering emojis and resizing for better text writing
+- [x] NEW! Language/Country selection
 - [x] Profile presence change option
 - [x] Automatic presence change when away
   - After 20 minutes without performing any action in the app
@@ -106,6 +107,12 @@ To connect to an XMPP server you will need to overwrite the [app-config.json](ht
 ## Internationalization
 
 Opa has a plug-n-play structure for locales, which are stored in /static/locales. 
+
+There is right now these languages:
+
+- en-US
+- pt-BR
+- de-DE (Thanks @matzeso for this translation)
 
 If you want to test Opa but it doesn't have your language you can develop your own translation to the app following the example provided by [en-us.json](https://github.com/credija/opa/blob/master/static/locales/en-us.json). 
 

@@ -27,7 +27,7 @@
                 <el-row class="ml2 my1">
                     <span class="text-bold">{{ conversation.contact.name }}</span>
                     <small class="float-right text-italic" v-if="getLastMessage(conversation).msg !== ''">
-                        {{ getLastMessage(conversation).stamp | isDateToday }}
+                        {{ getLastMessage(conversation).stampDate | isDateToday(appLocale) }}
                     </small>
                 </el-row>
                 <el-row class="ml2 v-align">
