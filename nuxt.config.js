@@ -45,7 +45,7 @@ module.exports = {
 
   build: {
     babel: {
-      presets: ['@nuxtjs/babel-preset-app'],
+      presets: ['@nuxt/babel-preset-app'],
       plugins: [
         [
           'component',
