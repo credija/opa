@@ -1,5 +1,6 @@
 import ObjectUtils from '@/utils/object-utils';
 
+// TODO: Codificar chaves do perfil e diferenciar por perfil e não somente por instalação de navegador
 export default {
   constructor(store) {
     this.store = store;

@@ -161,7 +161,6 @@ export default {
       const messageToAdd = { 
         msg: this.chatBoxForm.message, 
         ownMessage: true, 
-        stamp: newDate.toLocaleString(this.appLocale), 
         stampDate: newDate 
       };
 

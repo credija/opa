@@ -308,13 +308,11 @@ export default {
       max: 5,
       isGroup: false,
       onMessage: function(message) {
-        const locale = ctx.store.state.app.appLocale;
         const resultId = message.getElementsByTagName('result')[0].getAttribute('id');
         const stamp = message.getElementsByTagName('delay')[0].getAttribute('stamp');
         const messageBody = message.getElementsByTagName('body')[0].textContent;
         const from = StringUtils
           .removeAfterInclChar(message.getElementsByTagName('message')[0].getAttribute('from'), '@');
-        const formattedDate = new Date(stamp).toLocaleString(locale);
         const unformattedDate = new Date(stamp);
 
         if (isFirstMessage) {
@@ -332,7 +330,6 @@ export default {
         messageList.push({ 
           msg: messageBody, 
           ownMessage, 
-          stamp: formattedDate, 
           stampDate: unformattedDate 
         });
         
