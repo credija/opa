@@ -1,16 +1,17 @@
 import ProfileConfigService from '@/services/profile-config-service';
 import Push from 'push.js';
-
 import ObjectUtils from '@/utils/object-utils';
+import CountryConfig from '@/components/country-config/country-config.vue';
 
 export default {
   name: 'ChatConfig',
-  components: {},
+  components: { 'country-config': CountryConfig },
   props: ['showChatConfig'],
   data() {
     return {
       chatConfigForm: {},
       showErrorMessage: false,
+      showCountryConfig: false,
     };
   },
   computed: {
@@ -38,6 +39,9 @@ export default {
       }
       return this.$t('config.disableDarkMode');
     },
+    selectCountryMessage() {
+      return this.$t('config.selectCountry');
+    }
   },
   mounted() {
     this.chatConfigForm = ObjectUtils.cloneObject(this.chatConfig);
@@ -84,6 +88,8 @@ export default {
         this.showErrorMessage = true;
       });
     },
-
+    openCountryDialog() {
+      this.showCountryConfig = true;
+    }
   },
 };

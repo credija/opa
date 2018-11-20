@@ -48,19 +48,18 @@ export default {
   beforeCreate() {
     if (process.browser) {
       XmppService = require('@/services/xmpp-service').default.constructor(this.$store, this.$i18n);
-      ProfileConfigService = require('@/services/profile-config-service').default.constructor(this.$store);
       ConfigService = require('@/services/config-service').default;
+      ProfileConfigService = require('@/services/profile-config-service').default.constructor(this.$store);
       ConfigService.getConfigFile().then((appConfig) => {
         this.$store.dispatch('app/updateAppConfig', appConfig);
         this.$store.dispatch('app/updateAppLocale', appConfig.VUE_APP_LOCALE);
         this.$i18n.locale = appConfig.VUE_APP_LOCALE;
+        ProfileConfigService.loadConfig();
         this.$store.dispatch('app/updateIsAppLoading', false);
       });
     }
   },
   mounted() {
-    ProfileConfigService.loadConfig();
-    
     this.$store.dispatch('chat/updateConversationList', []);
     this.$store.dispatch('chat/updateActiveConversation', null);
     this.$store.dispatch('app/updateRosterList', []);

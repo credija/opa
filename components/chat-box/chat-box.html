@@ -54,23 +54,27 @@
 
             <el-row v-if="activeConversation.oldConversation.list.length !== 0">
                 <el-row v-for="(message, key) in activeConversation.oldConversation.list" :key="key">
-                    <div class="float-right p2 m1 b-rounded message-style"
+                    <div class="float-right p1 m1 b-rounded message-style"
                         :class="{ 'bg-light-teal': chatConfig.darkMode === undefined || chatConfig.darkMode === false, 
                             'bg-primary': chatConfig.darkMode === true }"
                         v-if="message.ownMessage">
                         <p class="m0">
                             <span v-html="parseMessage(message.msg)"></span>
-                            <small class="float-right text-gray stamp-margin"> {{ message.stamp | isDateToday }}</small>
+                            <small class="float-right text-gray"> 
+                                {{ message.stampDate | isDateToday(appLocale) }}
+                            </small>
                         </p>
                     </div>
 
-                    <div class="float-left p2 m1 b-rounded message-style"
+                    <div class="float-left p1 m1 b-rounded message-style"
                         :class="{ 'bg-light-gray': chatConfig.darkMode === undefined || chatConfig.darkMode === false, 
                             'bg-dark-light': chatConfig.darkMode === true }"
                          v-if="message.ownMessage === false">
                          <p class="m0">
                             <span v-html="parseMessage(message.msg)"></span>
-                            <small class="float-right text-gray stamp-margin"> {{ message.stamp | isDateToday }}</small>
+                            <small class="float-right text-gray"> 
+                                {{ message.stampDate | isDateToday(appLocale) }}
+                            </small>
                         </p>
                     </div>
                 </el-row>
@@ -78,23 +82,27 @@
             </el-row>
 
             <el-row v-for="(message, key) in activeConversation.list" :key="key">
-                <div class="float-right p2 m1 b-rounded message-style" 
+                <div class="float-right p1 m1 b-rounded message-style" 
                     :class="{ 'bg-light-teal': chatConfig.darkMode === undefined || chatConfig.darkMode === false, 
                         'bg-primary': chatConfig.darkMode === true }"
                     v-if="message.ownMessage">
                     <p class="m0">
                         <span v-html="parseMessage(message.msg)"></span>
-                        <small class="float-right text-gray stamp-margin"> {{ message.stamp | isDateToday }}</small>
+                        <small class="float-right text-gray"> 
+                            {{ message.stampDate | isDateToday(appLocale) }}
+                        </small>
                     </p>
                 </div>
 
-                <div class="float-left p2 m1 b-rounded message-style" 
+                <div class="float-left p1 m1 b-rounded message-style" 
                     :class="{ 'bg-light-gray': chatConfig.darkMode === undefined || chatConfig.darkMode === false, 
                         'bg-dark-light': chatConfig.darkMode === true }"    
                     v-if="message.ownMessage === false">
                     <p class="m0">
                         <span v-html="parseMessage(message.msg)"></span>
-                        <small class="float-right text-gray stamp-margin"> {{ message.stamp | isDateToday }}</small>
+                        <small class="float-right text-gray"> 
+                            {{ message.stampDate | isDateToday(appLocale) }}
+                        </small>
                     </p>
                 </div>
             </el-row>

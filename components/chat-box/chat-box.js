@@ -115,12 +115,14 @@ export default {
     },
     presenceValue() {
       let presenceValue = '';
-      if (this.activeConversation.contact.presence.id === 'dnd') {
+      if (this.activeConversation.contact.presence.id === 'on') {
+        presenceValue = this.$t('profile.onlinePresence');
+      } else if (this.activeConversation.contact.presence.id === 'dnd') {
         presenceValue = this.$t('profile.busyPresence');
       } else if (this.activeConversation.contact.presence.id === 'away') {
         presenceValue = this.$t('profile.awayPresence');
       } else {
-        presenceValue = this.activeConversation.contact.presence.value;
+        presenceValue = this.$t('profile.offlinePresence');
       }
       return presenceValue;
     },

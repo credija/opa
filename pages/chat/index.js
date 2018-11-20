@@ -1,6 +1,5 @@
 import ChatBox from '@/components/chat-box/chat-box.vue';
 import LoadingApp from '@/components/loading-app/loading-app.vue';
-import ConfirmTabDialog from '@/components/confirm-tab-dialog/confirm-tab-dialog.vue';
 import ContactList from '@/components/contact-list/contact-list.vue';
 import Conversations from '@/components/conversations/conversations.vue';
 import ChatHeader from '@/components/chat-header/chat-header.vue';
@@ -16,7 +15,6 @@ export default {
   components: { 
     'chat-box': ChatBox, 
     'loading-app': LoadingApp, 
-    'confirm-tab-dialog': ConfirmTabDialog,
     'contact-list': ContactList,
     'chat-header': ChatHeader,
     'chat-config': ChatConfig,
@@ -25,16 +23,12 @@ export default {
   props: [],
   data() {
     return {
-      showConfirmTabDialog: false,
       showContactList: false,
       intervalAwayPresence: null,
       sizes: process.browser ? ScreenUtils.getSizeChat() : null,
     };
   },
   computed: {
-    chatTimestamp() {
-      return this.$store.state.app.chatTimestamp;
-    },
     xmppClient() {
       return this.$store.state.app.xmppClient;
     },
@@ -87,6 +81,12 @@ export default {
       document.body.style.msTransform = 'scale(100)';
       document.body.style.transform = 'scale(1)';
       document.body.style.zoom = screen.logicalXDPI / screen.deviceXDPI;
+
+      if (this.$store.state.chat.chatConfig.countryConfig !== undefined 
+        && this.$store.state.chat.chatConfig.countryConfig !== null) {
+        this.$i18n.locale = this.$store.state.chat.chatConfig.countryConfig;
+        this.$store.dispatch('app/updateAppLocale', this.$store.state.chat.chatConfig.countryConfig);
+      }
     }
   },
   mounted() {

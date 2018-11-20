@@ -35,8 +35,10 @@
     },
     "profile": {
         "changePhoto": "Change",
+        "onlinePresence": "Online",
         "busyPresence": "Busy",
         "awayPresence": "Away",
+        "offlinePresence": "Offline",
         "deleteAvatarTitle": "Are you sure?",
         "deleteAvatarBody": "When you confirm the deletion of the photo you will be using the default photo.",
         "cancelDeleteAvatar": "Cancel",
@@ -54,6 +56,11 @@
         "enableOfflineContacts": "Show Offline Contacts",
         "disableOfflineContacts": "Hide Offline Contacts",
         "enableDarkMode": "Enable Night Mode",
-        "disableDarkMode": "Disable Night Mode"
+        "disableDarkMode": "Disable Night Mode",
+        "selectCountry": "Select Country"
+    },
+    "dialogs": {
+        "save": "Save",
+        "cancel": "Cancel"
     }
 }

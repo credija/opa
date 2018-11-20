@@ -26,6 +26,9 @@ export default {
     chatConfig() {
       return this.$store.state.chat.chatConfig;
     },
+    appLocale() {
+      return this.$store.state.app.appLocale;
+    },
   },
   beforeCreate() {
     if (process.browser) {
@@ -65,10 +68,8 @@ export default {
     getLastMessage(conversation) {
       let lastMessage = {};
       lastMessage.msg = '';
-      if (conversation.list.length !== 0) {
-        lastMessage = ObjectUtils.cloneObject(conversation.list[conversation.list.length - 1]);
-      }
-
+      lastMessage = JSON.parse(JSON.stringify(conversation.list[conversation.list.length - 1]));
+      lastMessage.stampDate = new Date(lastMessage.stampDate);
       lastMessage.msg = MessageParser.parseLastMessageConversation(lastMessage.msg); 
       return lastMessage;
     },
