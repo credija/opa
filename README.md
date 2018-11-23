@@ -29,7 +29,17 @@ Day Mode             |  Night Mode
 
 **Opa** was born as an internal project to fill the **absence of an XMPP client** that did not need an **installation on each machine**, was **developed with current techs**, had a **modern design** and supported **common features** for a chat in a corporate environment.
 
-A demo is available here: https://www.credija.com.br/opa-demo
+
+
+Opa has a demo available which is at latest version. For testing there are two users:
+
+Username: darth
+Password: 1234
+
+Username: luke
+Password: 1234
+
+The demo is available here, have fun: https://www.credija.com.br/opa-demo
 
 ---
 
