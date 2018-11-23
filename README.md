@@ -29,7 +29,7 @@ Day Mode             |  Night Mode
 
 **Opa** was born as an internal project to fill the **absence of an XMPP client** that did not need an **installation on each machine**, was **developed with current techs**, had a **modern design** and supported **common features** for a chat in a corporate environment.
 
-A demo will be available soon.
+A demo is available here: https://www.credija.com.br/opa-demo
 
 ---
 

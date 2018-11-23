@@ -1,9 +1,18 @@
 const pkg = require('./package');
-
+const BASE_URL = process.env.BASE_URL;
 // TODO: Create page 404
-// TODO: Teste em todos navegadores para verificar performance e compatibilidade (Não havia funcionado no EDGE)
+// TODO: Teste em todos navegadores para verificar 
+// performance e compatibilidade (Não havia funcionado no EDGE)
+// TODO: Verificar porque ausente extendido está ocorrendo como aconteceu com Yuri (De aparecer Offline mas estava ausente extendido)
 module.exports = {
   mode: 'universal',
+  env: {
+    baseUrl: (BASE_URL !== undefined ? BASE_URL : ''),
+    isDev: (process.env.NODE_ENV !== 'production')
+  },
+  router: {
+    base: (BASE_URL !== undefined ? `${BASE_URL}/` : '/')
+  },
   buildDir: 'bundle',
   dev: (process.env.NODE_ENV !== 'production'),
   head: {
@@ -17,7 +26,11 @@ module.exports = {
       { src: 'https://cdn.polyfill.io/v2/polyfill.min.js' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: 'favicon/favicon-normal.png', id: 'favicon' },
+      { 
+        rel: 'icon', type: 'image/x-icon', 
+        href: `${BASE_URL !== undefined ? BASE_URL : ''}/favicon/favicon-normal.png`, 
+        id: 'favicon'
+      },
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Roboto'}
     ],
   },
@@ -45,7 +58,7 @@ module.exports = {
 
   build: {
     babel: {
-      presets: ['@nuxtjs/babel-preset-app'],
+      presets: ['@nuxt/babel-preset-app'],
       plugins: [
         [
           'component',

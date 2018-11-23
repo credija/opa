@@ -26,18 +26,18 @@ export default {
   
   faviconArray() {
     return [ 
-      { id: 0, path: '/favicon/favicon-normal.png' },
-      { id: 1, path: '/favicon/favicon-1.png' },
-      { id: 2, path: '/favicon/favicon-2.png' },
-      { id: 3, path: '/favicon/favicon-3.png' },
-      { id: 4, path: '/favicon/favicon-4.png' },
-      { id: 5, path: '/favicon/favicon-5.png' },
-      { id: 6, path: '/favicon/favicon-6.png' },
-      { id: 7, path: '/favicon/favicon-7.png' },
-      { id: 8, path: '/favicon/favicon-8.png' },
-      { id: 9, path: '/favicon/favicon-9.png' },
-      { id: 10, path: '/favicon/favicon-9-plus.png' },
-      { id: 11, path: '/favicon/favicon-bell.png' }
+      { id: 0, path: `${process.env.baseUrl}/favicon/favicon-normal.png` },
+      { id: 1, path: `${process.env.baseUrl}/favicon/favicon-1.png` },
+      { id: 2, path: `${process.env.baseUrl}/favicon/favicon-2.png` },
+      { id: 3, path: `${process.env.baseUrl}/favicon/favicon-3.png` },
+      { id: 4, path: `${process.env.baseUrl}/favicon/favicon-4.png` },
+      { id: 5, path: `${process.env.baseUrl}/favicon/favicon-5.png` },
+      { id: 6, path: `${process.env.baseUrl}/favicon/favicon-6.png` },
+      { id: 7, path: `${process.env.baseUrl}/favicon/favicon-7.png` },
+      { id: 8, path: `${process.env.baseUrl}/favicon/favicon-8.png` },
+      { id: 9, path: `${process.env.baseUrl}/favicon/favicon-9.png` },
+      { id: 10, path: `${process.env.baseUrl}/favicon/favicon-9-plus.png` },
+      { id: 11, path: `${process.env.baseUrl}/favicon/favicon-bell.png` }
     ];
   },
 

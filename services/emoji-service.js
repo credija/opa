@@ -41,7 +41,7 @@ export default {
   },
 
   localTwemoji() {
-    Twemoji.base = '/emoji/';
+    Twemoji.base = `${process.env.baseUrl}/emoji/`;
     return Twemoji;
   },
 
