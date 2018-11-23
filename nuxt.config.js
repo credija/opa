@@ -1,9 +1,19 @@
 const pkg = require('./package');
-const BASE_URL = process.env.BASE_URL;
+
+let BASE_URL = process.env.BASE_URL;
+if (BASE_URL !== undefined && 
+  BASE_URL.length === 1 
+  && BASE_URL.substr(BASE_URL.length - 1) === '/') {
+  BASE_URL = '';
+} else if (BASE_URL !== undefined && 
+    BASE_URL.length > 0 
+    && BASE_URL.substr(BASE_URL.length - 1) !== '/') {
+    BASE_URL += '/';
+  }
+
 // TODO: Create page 404
-// TODO: Teste em todos navegadores para verificar 
-// performance e compatibilidade (Não havia funcionado no EDGE)
-// TODO: Verificar porque ausente extendido está ocorrendo como aconteceu com Yuri (De aparecer Offline mas estava ausente extendido)
+// TODO: Compatibity and performance test in browsers (EDGE not working?)
+// TODO: Extended aray fix
 module.exports = {
   mode: 'universal',
   env: {
@@ -11,7 +21,7 @@ module.exports = {
     isDev: (process.env.NODE_ENV !== 'production')
   },
   router: {
-    base: (BASE_URL !== undefined ? `${BASE_URL}/` : '/')
+    base: (BASE_URL !== undefined ? BASE_URL : '')
   },
   buildDir: 'bundle',
   dev: (process.env.NODE_ENV !== 'production'),
@@ -86,6 +96,10 @@ module.exports = {
           include: '/(assets\/audio)/',
           loader: 'file-loader',
         });
+      }
+      
+      if (!ctx.isDev) {
+        config.output.publicPath = './_nuxt/'
       }
     }
   }
