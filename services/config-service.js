@@ -1,14 +1,13 @@
 import Axios from 'axios';
-const NuxtConfig = require('@/nuxt.config.js');
 
 export default {
   async getConfigFile() {
     let appConfigPath = null;
     
-    if (NuxtConfig.dev) {
-      appConfigPath = '/config/app-config-dev.json';
+    if (process.env.isDev) {
+      appConfigPath = `${process.env.baseUrl}/config/app-config-dev.json`;
     } else {
-      appConfigPath = '/config/app-config.json';
+      appConfigPath = `${process.env.baseUrl}/config/app-config.json`;
     }
 
     const appConfig = await Axios.get(appConfigPath)

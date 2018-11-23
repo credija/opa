@@ -50,7 +50,8 @@ export default {
       XmppService = require('@/services/xmpp-service').default.constructor(this.$store, this.$i18n);
       ConfigService = require('@/services/config-service').default;
       ProfileConfigService = require('@/services/profile-config-service').default.constructor(this.$store);
-      ConfigService.getConfigFile().then((appConfig) => {
+      const staticBase = this.$nuxt._router.options.base;
+      ConfigService.getConfigFile(staticBase).then((appConfig) => {
         this.$store.dispatch('app/updateAppConfig', appConfig);
         this.$store.dispatch('app/updateAppLocale', appConfig.VUE_APP_LOCALE);
         this.$i18n.locale = appConfig.VUE_APP_LOCALE;

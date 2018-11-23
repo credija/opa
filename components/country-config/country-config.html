@@ -11,7 +11,7 @@
   
   <el-row class="text-center my1" v-for="country in countryArray" :key="country">
     <el-button :type="countryConfig === country ? 'primary' : ''" @click="clickCountry(country)">
-      <img :src="'/flags/' + country + '.png'" width="80" height="48"/>
+      <img :src="'flags/' + country + '.png'" width="80" height="48"/>
     </el-button>
   </el-row>
 

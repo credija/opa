@@ -6,6 +6,7 @@
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon server/index.js --watch server",
+    "dev:ctx": "cross-env NODE_ENV=development BASE_URL=/opa-demo nodemon server/index.js --watch server",
     "build": "nuxt build",
     "build:a": "nuxt build -a",
     "start": "cross-env NODE_ENV=production node server/index.js",

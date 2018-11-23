@@ -9,7 +9,7 @@
     </span>
     <span class="text-center text-danger text-bold ml2" v-if="searchedRosterList.length === 0 && searchTerm.length > 2">
         {{ $t('chat.noContactFound') }}
-        <img src="/emoji/72x72/2639.png" width="12" height="12"/>
+        <img src="emoji/72x72/2639.png" width="12" height="12"/>
     </span>
     <transition name="slide-bt">
         <el-collapse class="px2 mt1" v-model="activeAccordion" v-show="searchTerm.length === 0" 
