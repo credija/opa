@@ -13,9 +13,8 @@ RUN yarn install
 ENV NODE_ENV=production
 
 COPY . /app
-RUN yarn build && yarn cache clean
 
 ENV HOST 0.0.0.0
 EXPOSE 3000
 
-CMD [ "yarn", "start" ]
+CMD ["sh", "entrypoint.sh"]
