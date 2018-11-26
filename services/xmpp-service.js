@@ -380,7 +380,7 @@ export default {
         const resultId = message.getElementsByTagName('result')[0].getAttribute('id');
         ctx.store.dispatch('chat/updateOldConversationLastMessageId', { 
           oldConversation: conversation.oldConversation, 
-          lastRetrievedId: resultId 
+          lastMessageId: resultId 
         });
         return true;
       },
