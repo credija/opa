@@ -79,8 +79,8 @@ Features Opa already has:
 - [x] Option to enable Day/Night mode
 - [x] Conversation history from the server. 
   - Your XMPP server must support these protocols:
-  - [MSM](https://xmpp.org/extensions/xep-0313.html)
-  - [RSM](https://xmpp.org/extensions/xep-0059.html)
+  - [MAM](https://xmpp.org/extensions/xep-0313.html) (XEP-0313: Message Archive Management)
+  - [RSM](https://xmpp.org/extensions/xep-0059.html) (XEP-0059: Result Set Management)
   - Note: The client always searches the history on the server, meaning the conversation history is not cached locally.
 
 # Getting Started
