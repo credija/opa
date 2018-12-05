@@ -47,6 +47,9 @@ export default {
     lastPresence() {
       return this.$store.state.chat.lastPresence;
     },
+    activeConversation() {
+      return this.$store.state.chat.activeConversation;
+    },
   },
   beforeCreate() {
     if (process.browser) {

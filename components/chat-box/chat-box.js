@@ -237,7 +237,6 @@ export default {
       return MessageParser.parseChatboxMessage(msg);
     },
     chatboxContentChanged() {
-      this.sendTypingSignal();
       this.chatboxHeight = this.$refs.coolTextarea.$el.clientHeight;
     },
     setMessageBoxHeight(height) {

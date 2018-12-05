@@ -115,6 +115,10 @@ export default {
         presence: PresenceEnum.getPresenceById(showValue) 
       });
     } else if (type === 'unavailable' || type === 'error') {
+      if (this.store.state.chat.activeConversation !== null) {
+        this.store.dispatch('chat/updateActiveConversationIsTyping', false);
+      }
+     
       this.store.dispatch('app/updatePresenceRosterContact', { 
         rosterObj: rosterObj, 
         presence: { id: 'off', value: 'Offline' }

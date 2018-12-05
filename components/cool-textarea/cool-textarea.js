@@ -25,11 +25,16 @@ export default {
   },
   methods: {
     updateContent(event) {
+      const isComposing = event.inputType.length !== 0;
       let content = event.target.innerHTML;
       content = MessageParser.replaceEmojiWithAltAttribute(content);
       content = MessageParser.unescapeHtml(content);
       if (content.length !== 0 && content[content.length - 1] === '\n') {
         content = content.slice(0, -1);
+      }
+
+      if (isComposing) {
+        this.$emit('sendTypingSignal');
       }
       this.$emit('update:content', content);
       this.$emit('contentChanged');
