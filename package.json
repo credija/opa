@@ -25,9 +25,9 @@
     "@nuxtjs/axios": "^5.0.0",
     "cross-env": "^5.2.0",
     "element-ui": "^2.4.9",
-    "express": "^4.16.3",
+    "express": "^4.16.4",
     "lodash.includes": "^4.3.0",
-    "nuxt": "^2.0.0",
+    "nuxt": "^2.3.4",
     "push.js": "^1.0.9",
     "remove-accents": "^0.4.2",
     "spacing-help": "0.0.4",
@@ -46,7 +46,7 @@
     "eslint-loader": "^2.0.0",
     "eslint-plugin-vue": "^4.0.0",
     "node-sass": "^4.10.0",
-    "nodemon": "^1.11.0",
+    "nodemon": "^1.18.7",
     "sass-loader": "^7.1.0"
   }
 }

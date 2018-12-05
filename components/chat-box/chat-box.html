@@ -128,6 +128,7 @@
                         :content.sync="chatBoxForm.message" 
                         ref="coolTextarea" 
                         @enterKey="submitMessage()" 
+                        @sendTypingSignal="sendTypingSignal()"
                         @contentChanged="chatboxContentChanged"></cool-textarea>
                 </div>
             </el-col>
