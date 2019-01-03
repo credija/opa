@@ -2,14 +2,18 @@ import PresenceEnum from '@/enums/presence-enum';
 import ContactDetails from '@/components/contact-details/contact-details.vue';
 import MessageParser from '@/services/message-parser';
 import CoolTextarea from '@/components/cool-textarea/cool-textarea.vue';
+import { CoolPicker } from 'cool-emoji-picker';
+import EmojiData from 'cool-emoji-picker/src/emoji-data/pt/emoji-all-groups.json';
+import EmojiGroups from 'cool-emoji-picker/src/emoji-data/emoji-groups.json';
 
-let XmppService, EmojiService = null;
+let XmppService = null;
 
 export default {
   name: 'ChatBox',
   components: { 
     'contact-details': ContactDetails,
-    'cool-textarea': CoolTextarea
+    'cool-textarea': CoolTextarea,
+    'coolpicker': CoolPicker
   },
   data() {
     return {
@@ -20,9 +24,9 @@ export default {
       signalTimeout: null,
       isTyping: false,
       showContactDetails: false,
-      emojiList: EmojiService.emojiArray(),
       chatboxHeight: 0,
       chatboxMaxHeight: 0,
+
     };
   },
   created() {
@@ -128,11 +132,22 @@ export default {
       }
       return presenceValue;
     },
+    emojiData() {
+      return EmojiData;
+    },
+    emojiGroups() {
+      return EmojiGroups;
+    },
+    searchEmojiPlaceholder() {
+      return this.$t('chatbox.searchEmojiPlaceholder');
+    },
+    searchEmojiNotFound() {
+       return this.$t('chatbox.searchEmojiNotFound');
+    }
   },
   beforeCreate() {
     if (process.browser) {
       XmppService = require('@/services/xmpp-service').default.constructor(this.$store);
-      EmojiService = require('@/services/emoji-service').default;
     }
   },
   methods: {
@@ -229,11 +244,8 @@ export default {
       this.changePresenceUserAction();
       XmppService.getOldMessages(this.activeConversation);
     },
-    getEmojiImg(emoji) {
-      return EmojiService.getEmojiImg(emoji.codepoint);
-    },
     selectEmoji(emoji) {
-      this.$refs.coolTextarea.addText(emoji.shortcut);
+      this.$refs.coolTextarea.addText(emoji);
     },
     parseMessage(msg) {
       return MessageParser.parseChatboxMessage(msg);
