@@ -12,6 +12,6 @@ export default {
       return date.toLocaleTimeString(appLocale);
     }
 
-    return date;
+    return date.toLocaleString(appLocale);
   }
 };
