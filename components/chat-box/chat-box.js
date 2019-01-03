@@ -3,6 +3,7 @@ import ContactDetails from '@/components/contact-details/contact-details.vue';
 import MessageParser from '@/services/message-parser';
 import CoolTextarea from '@/components/cool-textarea/cool-textarea.vue';
 import { CoolPicker } from 'cool-emoji-picker';
+
 import EmojiData from 'cool-emoji-picker/src/emoji-data/en/emoji-all-groups.json';
 import EmojiGroups from 'cool-emoji-picker/src/emoji-data/emoji-groups.json';
 
