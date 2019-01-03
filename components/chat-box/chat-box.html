@@ -109,20 +109,18 @@
         </el-row>
         <el-row>
             <el-col :span="2" class="text-center">
-                <no-ssr placeholder="...">
-                    <coolpicker
-                        :emojiData="emojiData" 
-                        :emojiGroups="emojiGroups"
-                        :recentEmojisFeat="true"
-                        recentEmojisStorage="local"
-                        recentEmojiStorageName="opa-recent-emojis"
-                        :searchEmojisFeat="true"
-                        :searchEmojiPlaceholder="searchEmojiPlaceholder"
-                        :searchEmojiNotFound="searchEmojiNotFound"
-                        :skinToneSelection="true"
-                        :appendToBody="true"
-                        @emojiUnicodeAdded="selectEmoji"></coolpicker>
-                </no-ssr>
+                <coolpicker
+                    :emojiData="emojiData" 
+                    :emojiGroups="emojiGroups"
+                    :recentEmojisFeat="true"
+                    recentEmojisStorage="local"
+                    recentEmojiStorageName="opa-recent-emojis"
+                    :searchEmojisFeat="true"
+                    :searchEmojiPlaceholder="searchEmojiPlaceholder"
+                    :searchEmojiNotFound="searchEmojiNotFound"
+                    :skinToneSelection="true"
+                    :appendToBody="true"
+                    @emojiUnicodeAdded="selectEmoji"></coolpicker>
             </el-col>
             <el-col :span="20" class="mt1">
                 <div class="chatbox-bg">
