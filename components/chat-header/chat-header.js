@@ -49,8 +49,6 @@ export default {
     },
     uploadProfileImage() {
       this.changePresenceUserAction();
-      const uploadInput = document.getElementById('profileimg-upload');
-      uploadInput.click();
     },
     onFileChange(e) {
       const vueContext = this;
