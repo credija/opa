@@ -4,7 +4,7 @@ import includes from 'lodash.includes';
 import RemoveAccents from 'remove-accents';
 import MessageParser from '@/services/message-parser';
 
-let XmppService = null;
+let XmppService, DocTitleService, FaviconService = null;
 
 export default {
   name: 'ContactList',
@@ -53,6 +53,8 @@ export default {
   beforeCreate() {
     if (process.browser) {
       XmppService = require('@/services/xmpp-service').default.constructor(this.$store);
+      DocTitleService = require('@/services/doc-title-service').default.constructor(this.$store);
+      FaviconService = require('@/services/favicon-service').default.constructor(this.$store);
     }
   },
   mounted() {
@@ -85,6 +87,12 @@ export default {
         };
         XmppService.setLastMessageId(conversation);
       } else {
+        if (conversation.numUnreadMsgs !== 0) {
+          const numUnreadConversation = this.$store.state.chat.numUnreadConversation;
+          this.$store.dispatch('chat/updateNumUnreadConversation', numUnreadConversation - 1);
+          FaviconService.updateFavicon();
+          DocTitleService.updateTitle();
+        }
         this.$store.dispatch('chat/clearUnreadCounterConversation', conversation);
       }
 

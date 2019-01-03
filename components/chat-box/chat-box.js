@@ -121,6 +121,8 @@ export default {
         presenceValue = this.$t('profile.busyPresence');
       } else if (this.activeConversation.contact.presence.id === 'away') {
         presenceValue = this.$t('profile.awayPresence');
+      } else if (this.activeConversation.contact.presence.id === 'xa') {
+        presenceValue = this.$t('profile.awayPresence');
       } else {
         presenceValue = this.$t('profile.offlinePresence');
       }
