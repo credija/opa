@@ -2309,6 +2309,15 @@ cookie@0.3.1, cookie@^0.3.1:
   resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.3.1.tgz#e7e0a1f9ef43b4c8ba925c5c5a96e806d16873bb"
   integrity sha1-5+Ch+e9DtMi6klxcWpboBtFoc7s=
 
+cool-emoji-picker@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/cool-emoji-picker/-/cool-emoji-picker-2.0.3.tgz#0f67a16735d651007bc7a91e424364a172c20430"
+  integrity sha512-swaprY8XsrzNwGKAqLNe3S+fbhG5vJralIPab7QR3VdajdKabPv0x2Esx3O76WFKn89tihchdgVi8j4/I2YGvw==
+  dependencies:
+    twemoji "^11.2.0"
+    vue-dragscroll "^1.8.1"
+    vue-popperjs "^1.6.1"
+
 copy-concurrently@^1.0.0:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/copy-concurrently/-/copy-concurrently-1.0.5.tgz#92297398cae34937fcafd6ec8139c18051f0b5e0"
@@ -5702,6 +5711,11 @@ pluralize@^7.0.0:
   resolved "https://registry.yarnpkg.com/pluralize/-/pluralize-7.0.0.tgz#298b89df8b93b0221dbf421ad2b1b1ea23fc6777"
   integrity sha512-ARhBOdzS3e41FbkW/XWrTEtukqqLoK5+Z/4UeDaLuSW+39JPeFgs4gCGqsrJHVZX0fUrx//4OF0K1CUGwlIFow==
 
+popper.js@^1.14.3:
+  version "1.14.6"
+  resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.14.6.tgz#ab20dd4edf9288b8b3b6531c47c361107b60b4b0"
+  integrity sha512-AGwHGQBKumlk/MDfrSOf0JHhJCImdDMcGNoqKmKkU+68GFazv3CQ6q9r7Ja1sKDZmYWTckY/uLyEznheTDycnA==
+
 posix-character-classes@^0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/posix-character-classes/-/posix-character-classes-0.1.1.tgz#01eac0fe3b5af71a2a6c02feabb8c1fef7e00eab"
@@ -8021,6 +8035,11 @@ vm-browserify@0.0.4:
   dependencies:
     indexof "0.0.1"
 
+vue-dragscroll@^1.8.1:
+  version "1.8.1"
+  resolved "https://registry.yarnpkg.com/vue-dragscroll/-/vue-dragscroll-1.8.1.tgz#cedcf4559678379e360c1a3300d48f22225be00d"
+  integrity sha512-dZFhNDKFiYs8v+IUpO8IO7HKkmhVNvTTpUUDCGot+8M6C9EUG9CBb9tilA7Uv7f1KBSYRUV/gC8bMvUlIHtv3Q==
+
 vue-eslint-parser@^2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/vue-eslint-parser/-/vue-eslint-parser-2.0.3.tgz#c268c96c6d94cfe3d938a5f7593959b0ca3360d1"
@@ -8067,6 +8086,13 @@ vue-no-ssr@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/vue-no-ssr/-/vue-no-ssr-1.1.0.tgz#b323807112f676324d9d7cfde85d7831ced11dd9"
   integrity sha512-prJ9czuPrVu0GhUZKTS/epFfM15QjLuG6wt61g0nyixPXk0g6eY7wNF4RKIqJsxomOiuSYTv3Zo8A43Vi93xfw==
+
+vue-popperjs@^1.6.1:
+  version "1.6.3"
+  resolved "https://registry.yarnpkg.com/vue-popperjs/-/vue-popperjs-1.6.3.tgz#69b00509024468be05064ce7e5aca0d39c25a809"
+  integrity sha512-D0k/PxsDoCQxYykTh26t//6Uw5hk5Yl3BDlZj2nHqB2AyD0NjKCceLbuBRlPh+O59CXYJLSW2p5QveepLwkUvg==
+  dependencies:
+    popper.js "^1.14.3"
 
 vue-router@^3.0.2:
   version "3.0.2"

@@ -108,19 +108,21 @@
             </el-row>
         </el-row>
         <el-row>
-            <el-col :span="2" class="text-center margin-chatbox-btn">
-                <el-popover
-                    placement="top"
-                    width="350"
-                    trigger="click">
-                    <span v-for="(emoji, key) in emojiList" class="clickable m1 unselectable" 
-                        @click="selectEmoji(emoji)">
-                        <span v-html="getEmojiImg(emoji)" class="bg-gray-hover pt1"></span>
-                    </span>
-                    <el-button slot="reference" size="mini" class="button-clean mb1">
-                        <font-awesome-icon icon="smile" class="icon-medium"/>
-                    </el-button>
-                </el-popover>
+            <el-col :span="2" class="text-center">
+                <no-ssr placeholder="...">
+                    <coolpicker
+                        :emojiData="emojiData" 
+                        :emojiGroups="emojiGroups"
+                        :recentEmojisFeat="true"
+                        recentEmojisStorage="local"
+                        recentEmojiStorageName="opa-recent-emojis"
+                        :searchEmojisFeat="true"
+                        :searchEmojiPlaceholder="searchEmojiPlaceholder"
+                        :searchEmojiNotFound="searchEmojiNotFound"
+                        :skinToneSelection="true"
+                        :appendToBody="true"
+                        @emojiUnicodeAdded="selectEmoji"></coolpicker>
+                </no-ssr>
             </el-col>
             <el-col :span="20" class="mt1">
                 <div class="chatbox-bg">

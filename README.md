@@ -55,7 +55,7 @@ Features Opa already has:
   - en-US | pt-BR | de-DE for the time being, but you can develop your own translation by following the [Internationalization](#internationalization) section instructions of this README.
 - [x] Responsive for desktop screens (up to 1024x768)
 - [x] One-to-one chat
-- [x] NEW! Basic Emoji support through Unicode
+- [x] NEW! Latest emoji Unicode 11 support (with skin tones, recents and search emojis support)
   - Credits to Tweemoji for the emoji arts
 - [x] NEW! Chatbox with support to rendering emojis and resizing for better text writing
 - [x] NEW! Language/Country selection

@@ -88,7 +88,7 @@ export default {
     return document.createElement('div').appendChild(document.createTextNode(msg)).parentNode.innerHTML;
   },
   convertUnicodeToTwemoji(msg) {
-    return EmojiService.localTwemoji().parse(msg);
+    return EmojiService.twemoji().parse(msg);
   },
   replaceEmojiWithAltAttribute(msg) {
     return msg.replace(/<img.*?alt="(.*?)"[^\>]+>/g, '$1');
