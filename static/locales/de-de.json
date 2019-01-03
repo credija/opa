@@ -31,9 +31,7 @@
         "loadOldMessages": "Lade alte Nachrichten...",
         "loadingOldMessages": "Alte Nachrichten werden geladen...",
         "oldMessagesLimit": "Du hast das Limit an alten Nachrichten in der Suche erreicht",
-        "oldMessagesLabel": "Alte Nachrichten",
-        "searchEmojiPlaceholder": "Suche Emojis",
-        "searchEmojiNotFound": "Emojis nicht gefunden."
+        "oldMessagesLabel": "Alte Nachrichten"
     },
     "profile": {
         "changePhoto": "Bearbeiten",
