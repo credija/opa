@@ -67,6 +67,7 @@ module.exports = {
   },
 
   build: {
+    transpile: ['cool-emoji-picker'],
     babel: {
       presets: ['@nuxt/babel-preset-app'],
       plugins: [

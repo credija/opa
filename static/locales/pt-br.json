@@ -26,9 +26,7 @@
         "loadOldMessages": "Carregar mensagens antigas...",
         "loadingOldMessages": "Carregando mensagens antigas...",
         "oldMessagesLimit": "Você atingiu o limite de pesquisa de mensagens antigas",
-        "oldMessagesLabel": "Mensagens Antigas",
-        "searchEmojiPlaceholder": "Pesquisar emojis",
-        "searchEmojiNotFound": "Emojis não encontrados."
+        "oldMessagesLabel": "Mensagens Antigas"
     },
     "contactDetails": {
         "modalTitle": "Detalhes do Contato",
