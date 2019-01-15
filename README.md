@@ -1,7 +1,7 @@
 # NOTICE - Collab Appreciated
-We are accepting resource contributions through Pull Requests, as the current development team now has little time to focus on this project, since it has achieved the main goals of the initial concept.
+We are accepting code contributions through Pull Requests, as the current development team now has little time to focus on this project  since it has achieved the main goals of the initial concept.
 
-As for what features, the decision is with you. You can follow community requests in Issues or develop a feature you would like Opa to have. It will then be reviewed by the development team for authorization and merge.
+As for what features develop, the decision is with you. You can follow community requests in Issues or develop a feature you would like Opa to have. It will then be reviewed by the development team for authorization and merge.
 
 The frameworks stack of this project is basically: StropheJS, NuxtJS (VueJS) and ElementUI (visual elements framework).
 
