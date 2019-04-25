@@ -13,7 +13,6 @@ if (BASE_URL !== undefined &&
 
 // TODO: Create page 404
 // TODO: Compatibity and performance test in browsers (EDGE not working?)
-// TODO: Extended aray fix
 module.exports = {
   mode: 'universal',
   env: {

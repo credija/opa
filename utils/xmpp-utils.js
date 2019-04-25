@@ -52,6 +52,7 @@ export default {
     }
   },
   rosterCallback(iq) {
+    console.log('iq', iq);
     const profileImageList = JSON.parse(localStorage.getItem('profileImageList'));
     if (profileImageList !== null) {
       this.store.dispatch('app/updateProfileImageList', profileImageList);
@@ -66,7 +67,7 @@ export default {
         rosterObj.username = StringUtils.removeAfterInclChar(rosterContacts[i].getAttribute('jid'), '@');
         
         if (rosterObj.username !== this.store.state.app.authUser.username) {
-          rosterObj.name = rosterContacts[i].getAttribute('name');
+          rosterObj.name = rosterContacts[i].getAttribute('name') !== null ? rosterContacts[i].getAttribute('name') : rosterObj.username;
           rosterObj.status = '';
           rosterObj.presence = { id: 'off', value: 'Offline' };
           rosterObj.group = group.childNodes[0].nodeValue;

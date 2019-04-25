@@ -47,13 +47,11 @@ export default {
     const appConfig = this.store.state.app.appConfig;
     const rosterList = this.store.state.app.rosterList;
     const client = this.store.state.app.xmppClient;
-    const authUser = this.store.state.app.authUser;
     
     for (let i = 0; i < rosterList.length; i++) {
       const check = $pres({
         type: 'probe',
         to: rosterList[i].username + `@${appConfig.VUE_APP_XMPP_SERVER_DOMAIN}`,
-        from: authUser.username
       });
       client.send(check);
     }

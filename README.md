@@ -163,7 +163,8 @@ Not Tested:
 ____
 
 Tested XMPP Servers:
-- Ignite Realtime: Openfire Server
+- Ignite Realtime: Openfire Server version 4.3.2
+- ejabberd version 18.04
 
 # Credits
 
