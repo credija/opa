@@ -2,6 +2,7 @@
 
 - [Introduction](#introduction)
 - [Features](#features)
+- [Requirements](#requirements)
 - [Getting started](#getting-started)
   - [Installation](#installation)
   - [Configuration](#configuration)
@@ -55,10 +56,10 @@ Features Opa already has:
   - en-US | pt-BR | de-DE for the time being, but you can develop your own translation by following the [Internationalization](#internationalization) section instructions of this README.
 - [x] Responsive for desktop screens (up to 1024x768)
 - [x] One-to-one chat
-- [x] NEW! Latest emoji Unicode 11 support (with skin tones and recent emojis support)
+- [x] Latest emoji Unicode 11 support (with skin tones and recent emojis support)
   - Credits to Tweemoji for the emoji arts
-- [x] NEW! Chatbox with support to rendering emojis and resizing for better text writing
-- [x] NEW! Language/Country selection
+- [x] Chatbox with support to rendering emojis and resizing for better text writing
+- [x] Language/Country selection
 - [x] Profile presence change option
 - [x] Automatic presence change when away
   - After 20 minutes without performing any action in the app
@@ -82,6 +83,12 @@ Features Opa already has:
   - [MSM](https://xmpp.org/extensions/xep-0313.html)
   - [RSM](https://xmpp.org/extensions/xep-0059.html)
   - Note: The client always searches the history on the server, meaning the conversation history is not cached locally.
+
+# Requirements
+Currently Opa uses https://cdn.polyfill.io/v2/polyfill.min.js for better support because your browser needs to support these three features:
+- https://caniuse.com/#search=es6
+- https://caniuse.com/#feat=flexbox
+- https://caniuse.com/#feat=intersectionobserver
 
 # Getting Started
 
