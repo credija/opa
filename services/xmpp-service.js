@@ -183,7 +183,8 @@ export default {
     if (presence === 'on') {
       presenceSignal = $pres();
     } else {
-      presenceSignal = $pres().c('show').t(presence);
+      presenceSignal = $pres().c('show').t(presence)
+                        .up().c('priority').t(127);
     }
     
     client.send(presenceSignal);

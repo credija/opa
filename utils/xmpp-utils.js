@@ -52,7 +52,6 @@ export default {
     }
   },
   rosterCallback(iq) {
-    console.log('iq', iq);
     const profileImageList = JSON.parse(localStorage.getItem('profileImageList'));
     if (profileImageList !== null) {
       this.store.dispatch('app/updateProfileImageList', profileImageList);
