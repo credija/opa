@@ -52,11 +52,6 @@ export default {
     }
   },
   rosterCallback(iq) {
-    const profileImageList = JSON.parse(localStorage.getItem('profileImageList'));
-    if (profileImageList !== null) {
-      this.store.dispatch('app/updateProfileImageList', profileImageList);
-    }
-
     const rosterList = [];
     const rosterContacts = iq.getElementsByTagName('item');
     if (iq.query !== null) {
@@ -66,11 +61,13 @@ export default {
         rosterObj.username = StringUtils.removeAfterInclChar(rosterContacts[i].getAttribute('jid'), '@');
         
         if (rosterObj.username !== this.store.state.app.authUser.username) {
-          rosterObj.name = rosterContacts[i].getAttribute('name');
+          rosterObj.name = rosterContacts[i].getAttribute('name') !== null ? rosterContacts[i].getAttribute('name') : rosterObj.username;
           rosterObj.status = '';
           rosterObj.presence = { id: 'off', value: 'Offline' };
           rosterObj.group = group.childNodes[0].nodeValue;
           rosterList.push(rosterObj);
+          this.store.dispatch('app/updateRosterList', rosterList);
+          XmppService.updateContactPresence(rosterObj);
         }
       }
 
@@ -79,14 +76,8 @@ export default {
         const textB = obj2.name.toUpperCase();
         return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
       });
-      
-      this.store.dispatch('app/updateRosterList', rosterList);
-      XmppService.updateRosterPresence();
 
-      const ctx = this;
-      setTimeout(function () {
-        ctx.store.dispatch('app/updateIsAppLoading', false);
-      }, 500);
+      localStorage.setItem(btoa(`cached-roster-${this.store.state.app.authUser.username}`), btoa(JSON.stringify(rosterList)));
     }
   },
   presenceHandler(presence) {
@@ -106,7 +97,7 @@ export default {
       return true;
     }
     
-    XmppService.profileImageCreator(presence);
+    XmppService.profileImageService(presence);
     
     if (show !== undefined) {
       const showValue = show.textContent;
@@ -293,16 +284,43 @@ export default {
 
     return true;
   },
-  updateUserAvatar(username) {
-    const appConfig = this.store.state.app.appConfig;
-    const client = this.store.state.app.xmppClient;
+  avatarCallback(iq) {
+    const profileImageList = this.store.state.app.profileImageList;
 
-    const avatarIq = $iq({ 
-      type: 'get',
-      to: username + `@${appConfig.VUE_APP_XMPP_SERVER_DOMAIN}` 
-    })
-      .c('vCard', { xmlns: 'vcard-temp' });
-    client.sendIQ(avatarIq, XmppService.avatarCallback.bind(this));
+    const from = StringUtils.removeAfterInclChar(iq.getAttribute('from'), '@');
+    const vCardElement = iq.getElementsByTagName('vCard')[0];
+    const photoTag = vCardElement.getElementsByTagName('PHOTO')[0];
+
+    let profileImageObj = profileImageList.find(profileImage => 
+      profileImage.username.toUpperCase() === from.toUpperCase());
+
+    if (profileImageObj === undefined) {
+      profileImageObj = { 
+        username: from, 
+        hash: null,
+        type: null, 
+        bin: null,
+      };
+      this.store.dispatch('app/addProfileImageToList', profileImageObj);
+    }
+
+    let photoType;
+    let photoBin;
+    if (photoTag !== undefined) {
+      photoType = photoTag.getElementsByTagName('TYPE')[0].textContent;
+      photoBin = photoTag.getElementsByTagName('BINVAL')[0].textContent;
+      this.store.dispatch('app/updateProfileImageBin', { 
+        profileImage: profileImageObj, 
+        type: photoType,
+        bin: photoBin, 
+      });
+    } else {
+      this.store.dispatch('app/updateProfileImageBin', { 
+        profileImage: profileImageObj, 
+        type: undefined,
+        bin: undefined, 
+      });
+    }
   },
   vCardLoggedUser(iq) {
     const authUser = this.store.state.app.authUser;

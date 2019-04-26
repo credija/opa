@@ -2,13 +2,11 @@ import PresenceEnum from '@/enums/presence-enum';
 import ArrayUtils from '@/utils/array-utils';
 import includes from 'lodash.includes';
 import RemoveAccents from 'remove-accents';
-import MessageParser from '@/services/message-parser';
 
 let XmppService, DocTitleService, FaviconService = null;
 
 export default {
   name: 'ContactList',
-  components: {},
   props: ['showContactList'],
   watch: {
     showContactList: function (newVal) {
@@ -142,6 +140,12 @@ export default {
         const contactSearchInput = document.getElementById('contact-search');
         if (contactSearchInput) contactSearchInput.focus();
       });
+    },
+
+    getProfileAvatar(username) {
+      if (this.profileImageSrc(username) === null) {
+        XmppService.updateUserAvatar(username);
+      }
     }
   },
 };

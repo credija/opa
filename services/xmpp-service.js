@@ -41,19 +41,35 @@ export default {
     client.addHandler(XmppUtils.messageHandler.bind(this), null, 'message', null, null, null);
     client.send($pres());
     this.store.dispatch('chat/updateLastPresence', 'on');
+
+    const cachedRoster = localStorage.getItem(btoa(`cached-roster-${this.store.state.app.authUser.username}`));
+    if (cachedRoster !== null) this.store.dispatch('app/updateRosterList', JSON.parse(atob(cachedRoster)));
+    const ctx = this;
+    setTimeout(function () {
+      ctx.store.dispatch('app/updateIsAppLoading', false);
+    }, 500);
+  },
+
+  updateContactPresence(contact) {
+    const appConfig = this.store.state.app.appConfig;
+    const client = this.store.state.app.xmppClient;
+    
+    const check = $pres({
+      type: 'probe',
+      to: contact.username + `@${appConfig.VUE_APP_XMPP_SERVER_DOMAIN}`,
+    });
+    client.send(check);
   },
 
   updateRosterPresence() {
     const appConfig = this.store.state.app.appConfig;
     const rosterList = this.store.state.app.rosterList;
     const client = this.store.state.app.xmppClient;
-    const authUser = this.store.state.app.authUser;
     
     for (let i = 0; i < rosterList.length; i++) {
       const check = $pres({
         type: 'probe',
         to: rosterList[i].username + `@${appConfig.VUE_APP_XMPP_SERVER_DOMAIN}`,
-        from: authUser.username
       });
       client.send(check);
     }
@@ -87,82 +103,41 @@ export default {
 
     client.send(chatSignal);
   },
-  // TODO: Resgatar fotos dos usuários por demanda, a medida que o contato for visto pelo usuário
-  // TODO: Verificar porque as vezes não está atualizando a foto cacheada etc...
-  profileImageCreator(presence) {
+  profileImageService(presence) {
     const profileImageList = this.store.state.app.profileImageList;
 
     const from = StringUtils.removeAfterInclChar(presence.getAttribute('from'), '@');
     const photo = presence.getElementsByTagName('x')[0];
-    let photoId = null;
+    let photoUpdate = null;
     if (photo !== undefined) {
-      photoId = photo.getElementsByTagName('photo')[0].textContent;
+      photoUpdate = photo.getElementsByTagName('photo')[0].textContent;
     }
 
-    const profileImageObj = profileImageList.find(profileImage => 
+    let profileImageObj = profileImageList.find(profileImage => 
       profileImage.username.toUpperCase() === from.toUpperCase());
-      
-    if (profileImageObj === undefined) {
-      this.store.dispatch('app/addProfileImageToList', { 
-        username: from, 
-        hash: photoId, 
-        type: null, 
-        bin: null 
-      });
-      localStorage.setItem('profileImageList', JSON.stringify(profileImageList));
-      XmppUtils.constructor(this.store).updateUserAvatar(from);
-    } else if (profileImageObj.hash !== photoId) {
-      if (photoId === null) {
-        this.store.dispatch('app/updateProfileImageHash', { 
-          profileImage: profileImageObj, 
-          hash: 'null_hash', 
-        });
-        localStorage.setItem('profileImageList', JSON.stringify(profileImageList));
-      } else {
-        this.store.dispatch('app/updateProfileImageHash', { 
-          profileImage: profileImageObj, 
-          hash: photoId, 
-        });
-        localStorage.setItem('profileImageList', JSON.stringify(profileImageList));
-      }
-      
-      XmppUtils.constructor(this.store).updateUserAvatar(from);
+    if (profileImageObj === undefined && photoUpdate !== 'photo-deleted') {
+      this.updateUserAvatar(from);
+    } else if (photoUpdate === 'photo-deleted') {
+      this.store.dispatch('app/removeProfileImageFromList', profileImageObj);
+    } else if (photoUpdate !== profileImageObj.hash) {
+      this.store.dispatch('app/updateProfileImageHash', { profileImage: profileImageObj, hash: photoUpdate });
+      this.updateUserAvatar(profileImageObj.username);
     }
   },
-
-  avatarCallback(iq) {
-    const profileImageList = this.store.state.app.profileImageList;
-
-    const from = StringUtils.removeAfterInclChar(iq.getAttribute('from'), '@');
-    const vCardElement = iq.getElementsByTagName('vCard')[0];
-    const photoTag = vCardElement.getElementsByTagName('PHOTO')[0];
-
-    const profileImageObj = profileImageList.find(profileImage => 
-      profileImage.username.toUpperCase() === from.toUpperCase());
-
-    let photoType;
-    let photoBin;
-    if (photoTag !== undefined) {
-      photoType = photoTag.getElementsByTagName('TYPE')[0].textContent;
-      photoBin = photoTag.getElementsByTagName('BINVAL')[0].textContent;
-      this.store.dispatch('app/updateProfileImageBin', { 
-        profileImage: profileImageObj, 
-        type: photoType,
-        bin: photoBin, 
-      });
-    } else {
-      this.store.dispatch('app/updateProfileImageBin', { 
-        profileImage: profileImageObj, 
-        type: undefined,
-        bin: undefined, 
-      });
-    }
-  },
-
-  updateLoggedUserVcard() {
+  updateUserAvatar(username) {
     const appConfig = this.store.state.app.appConfig;
     const client = this.store.state.app.xmppClient;
 
+    const avatarIq = $iq({ 
+      type: 'get',
+      to: username + `@${appConfig.VUE_APP_XMPP_SERVER_DOMAIN}` 
+    })
+      .c('vCard', { xmlns: 'vcard-temp' });
+    client.sendIQ(avatarIq, XmppUtils.avatarCallback.bind(this));
+  },
+  updateLoggedUserVcard() {
+    const appConfig = this.store.state.app.appConfig;
+    const client = this.store.state.app.xmppClient;
     const clientUsername = StringUtils.removeAfterInclChar(client.jid, '@');
 
     this.store.dispatch('app/updateAuthUser', { 
@@ -185,7 +160,8 @@ export default {
     if (presence === 'on') {
       presenceSignal = $pres();
     } else {
-      presenceSignal = $pres().c('show').t(presence);
+      presenceSignal = $pres().c('show').t(presence)
+                        .up().c('priority').t(127);
     }
     
     client.send(presenceSignal);
@@ -247,7 +223,7 @@ export default {
 
     const updateAvatarPres = $pres()
       .c('x', { xmlns: 'vcard-temp:x:update' })
-      .c('photo', {}, StringUtils.randomIdGenerator())
+      .c('photo', {}, 'photo-deleted')
       .up()
       .c('show')
       .t(authUser.presence.id);

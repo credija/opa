@@ -7,7 +7,7 @@ import ScreenUtils from '@/utils/screen-utils';
 import ChatConfig from '@/components/chat-config/chat-config.vue';
 import PresenceEnum from '@/enums/presence-enum';
 
-let XmppService, DateUtils = null;
+let XmppService, ProfileConfigService, DateUtils = null;
 
 export default {
   middleware: 'authenticated',
@@ -55,6 +55,7 @@ export default {
     if (process.browser) {
       XmppService = require('@/services/xmpp-service').default.constructor(this.$store);
       DateUtils = require('@/utils/date-utils').default.constructor(this.$store);
+      ProfileConfigService = require('@/services/profile-config-service').default.constructor(this.$store);
 
       // Show confirm close message
       const ctx = this;
@@ -84,6 +85,8 @@ export default {
       document.body.style.msTransform = 'scale(100)';
       document.body.style.transform = 'scale(1)';
       document.body.style.zoom = screen.logicalXDPI / screen.deviceXDPI;
+
+      ProfileConfigService.loadConfig();
 
       if (this.$store.state.chat.chatConfig.countryConfig !== undefined 
         && this.$store.state.chat.chatConfig.countryConfig !== null) {

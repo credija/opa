@@ -34,7 +34,7 @@ export default ({ store }) => {
     setTimeout(function () {
       const messageBox = document.getElementById('message-box');
       if (messageBox !== undefined) {
-        messageBox.scrollTop = messageBox.scrollHeight;
+        messageBox.scrollTop = messageBox.scrollHeight !== null ? messageBox.scrollHeight : 0;
       }
     });
   }

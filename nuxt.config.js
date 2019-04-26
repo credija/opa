@@ -13,7 +13,6 @@ if (BASE_URL !== undefined &&
 
 // TODO: Create page 404
 // TODO: Compatibity and performance test in browsers (EDGE not working?)
-// TODO: Extended aray fix
 module.exports = {
   mode: 'universal',
   env: {
@@ -56,6 +55,7 @@ module.exports = {
     '@/plugins/element-ui',
     '@/plugins/vue-fontawesome',
     '@/plugins/i18n',
+    { src: '@/plugins/vue-intersect', ssr: false },
     { src: '@/plugins/global-mixins', ssr: false },
     { src: '@/plugins/filters', ssr: false },
   ],

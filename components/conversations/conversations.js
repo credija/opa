@@ -6,7 +6,6 @@ let XmppService, DocTitleService, FaviconService = null;
 
 export default {
   name: 'Conversations',
-  components: {},
   props: [],
   data() {
     return {
@@ -104,6 +103,11 @@ export default {
       }
 
       return bolOwnMessage;
+    },
+    getProfileAvatar(username) {
+      if (this.profileImageSrc(username) === null) {
+        XmppService.updateUserAvatar(username);
+      }
     }
   },
 };

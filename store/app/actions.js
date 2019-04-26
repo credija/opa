@@ -90,6 +90,11 @@ const actions = {
   addProfileImageToList({ commit }, profileImage) {
     commit(types.ADD_PROFILE_IMAGE_TO_LIST, { profileImage });
   },
+  removeProfileImageFromList({ commit }, profileImage) {
+    commit(types.REMOVE_PROFILE_IMAGE_FROM_LIST, {
+      profileImage
+    });
+  },
 };
 
 export default actions;

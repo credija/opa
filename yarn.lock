@@ -8062,6 +8062,11 @@ vue-i18n@^8.3.1:
   resolved "https://registry.yarnpkg.com/vue-i18n/-/vue-i18n-8.4.0.tgz#bc3437ff8f5f389c57235ced602e9d7bfd87995c"
   integrity sha512-MiBI1v2pY22aAEbNrcy7GX9qigoUQE9PbmrAydrBuYNRwn0RbD1RZpMemtmGW3Ju6LBA1yn7TZOPa3lxWrT0Eg==
 
+vue-intersect@^1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/vue-intersect/-/vue-intersect-1.1.3.tgz#34d57c76ab1ca04392ec382366db1a2cec1c7f9d"
+  integrity sha512-8ry42W6zHrpCpWtIiCMsYVBmEdQf9upAZnIFh8ffpCFbfhQcOOtX2xpwyzPaVAoW2MSZuSDGjaKK6Cy1z+Ap8w==
+
 vue-loader@^15.4.2:
   version "15.4.2"
   resolved "https://registry.yarnpkg.com/vue-loader/-/vue-loader-15.4.2.tgz#812bb26e447dd3b84c485eb634190d914ce125e2"

@@ -1,5 +1,5 @@
 import LoadingApp from '@/components/loading-app/loading-app.vue';
-let XmppService, ProfileConfigService, ConfigService = null;
+let XmppService, ConfigService = null;
 
 export default {
   name: 'Login',
@@ -49,13 +49,19 @@ export default {
     if (process.browser) {
       XmppService = require('@/services/xmpp-service').default.constructor(this.$store, this.$i18n);
       ConfigService = require('@/services/config-service').default;
-      ProfileConfigService = require('@/services/profile-config-service').default.constructor(this.$store);
+     
       const staticBase = this.$nuxt._router.options.base;
       ConfigService.getConfigFile(staticBase).then((appConfig) => {
         this.$store.dispatch('app/updateAppConfig', appConfig);
         this.$store.dispatch('app/updateAppLocale', appConfig.VUE_APP_LOCALE);
-        this.$i18n.locale = appConfig.VUE_APP_LOCALE;
-        ProfileConfigService.loadConfig();
+
+        if (typeof navigator.language === 'string' 
+          && Object.keys(this.$i18n.messages).includes(navigator.language.toLowerCase())) {
+          this.$i18n.locale = navigator.language.toLowerCase();
+        } else {
+          this.$i18n.locale = appConfig.VUE_APP_LOCALE;
+        }
+       
         this.$store.dispatch('app/updateIsAppLoading', false);
       });
     }
