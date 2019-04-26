@@ -29,25 +29,34 @@ export default {
   },
 
   getRoster() {
+    const cachedRoster = localStorage.getItem(btoa(`cached-roster-${this.store.state.app.authUser.username}`));
+    if (cachedRoster !== null) {
+      this.store.dispatch('app/updateRosterList', JSON.parse(atob(cachedRoster)));
+      const ctx = this;
+      this.store.state.app.rosterList.forEach(function(rosterObj){
+        ctx.updateContactPresence(rosterObj);
+      });
+    }
+
     const client = this.store.state.app.xmppClient;
     const iq = $iq({
       type: 'get'
     }).c('query', {
       xmlns: 'jabber:iq:roster'
     });
-    client.sendIQ(iq, XmppUtils.rosterCallback.bind(this));
+
+    client.sendIQ(iq, XmppUtils.rosterCallback.bind(ctt));
     client.addHandler(XmppUtils.presenceHandler.bind(this), null, 'presence');
     this.translation = this.i18n;
     client.addHandler(XmppUtils.messageHandler.bind(this), null, 'message', null, null, null);
     client.send($pres());
     this.store.dispatch('chat/updateLastPresence', 'on');
 
-    const cachedRoster = localStorage.getItem(btoa(`cached-roster-${this.store.state.app.authUser.username}`));
-    if (cachedRoster !== null) this.store.dispatch('app/updateRosterList', JSON.parse(atob(cachedRoster)));
+    
     const ctx = this;
     setTimeout(function () {
       ctx.store.dispatch('app/updateIsAppLoading', false);
-    }, 500);
+    }, 1000);
   },
 
   updateContactPresence(contact) {

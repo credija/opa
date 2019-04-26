@@ -14,5 +14,5 @@
   </p>
   <p class="text-bold text-center"> {{ $t('contactDetails.nameLabel') }}: {{ activeContact.name }}</p>
   <p class="text-bold text-center" v-if="activeContact.status.length !== 0">Status: {{ activeContact.status }}</p>
-  <p class="text-bold text-center">{{ $t('contactDetails.groupLabel') }}: {{ activeContact.group }}</p>
+  <p class="text-bold text-center" v-if="activeContact.group !== 'UNKNOWN'">{{ $t('contactDetails.groupLabel') }}: {{ activeContact.group }}</p>
 </el-dialog>

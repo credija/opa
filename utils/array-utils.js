@@ -6,9 +6,9 @@ export default {
     for (let i = 0; i < rosterArray.length; i++) {
       const findGroup = arrayByGroup.find(rosterGroup => 
         rosterGroup.group.toUpperCase() === rosterArray[i].group.toUpperCase());
-      if (findGroup === undefined) {
+      if (findGroup === undefined && rosterArray[i].group !== 'UNKNOWN') {
         arrayByGroup.push({ group: rosterArray[i].group, contacts: [rosterArray[i]] });
-      } else {
+      } else if(findGroup !== undefined) {
         findGroup.contacts.push(rosterArray[i]);
       }
     }

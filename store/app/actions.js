@@ -60,17 +60,22 @@ const actions = {
       rosterList
     });
   },
+  updateRosterObj({ commit }, rosterObjects) {
+    const { oldRosterObj, newRosterObj } = rosterObjects;
+    commit(types.UPDATE_ROSTER_OBJ, { oldRosterObj, newRosterObj });
+  },
   updatePresenceRosterContact({ commit }, updatePresenceRosterContact) {
     const { rosterObj, presence } = updatePresenceRosterContact;
-    commit(types.UPDATE_PRESENCE_ROSTER_CONTACT, {
-      rosterObj, presence
-    });
+    commit(types.UPDATE_PRESENCE_ROSTER_CONTACT, { rosterObj, presence });
   },
   updateStatusRosterContact({ commit }, updateStatusRosterContact) {
     const { rosterObj, status } = updateStatusRosterContact;
     commit(types.UPDATE_STATUS_ROSTER_CONTACT, {
       rosterObj, status
     });
+  },
+  addToRosterList({ commit }, rosterObj) {
+    commit(types.ADD_TO_ROSTER_LIST, rosterObj);
   },
 
   // Profile Image
