@@ -113,7 +113,8 @@ export default {
           .filter(obj => includes(
             RemoveAccents.remove(obj.name.toUpperCase()), 
             RemoveAccents.remove(this.searchTerm.toUpperCase())
-          ));
+          ) && 
+          obj.group !== 'UNKNOWN');
       } else {
         this.searchedRosterList = [];
       }

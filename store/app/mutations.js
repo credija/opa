@@ -41,11 +41,20 @@ const mutations = {
   [types.UPDATE_ROSTER_LIST](state, { rosterList }) {
     state.rosterList = rosterList;
   },
+  [types.UPDATE_ROSTER_OBJ](state, { oldRosterObj, newRosterObj }) {
+    Vue.set(oldRosterObj, 'username', newRosterObj.username);
+    Vue.set(oldRosterObj, 'name', newRosterObj.name);
+    Vue.set(oldRosterObj, 'status', newRosterObj.status);
+    Vue.set(oldRosterObj, 'group', newRosterObj.group);
+  },
   [types.UPDATE_PRESENCE_ROSTER_CONTACT](state, { rosterObj, presence }) {
     Vue.set(rosterObj, 'presence', presence);
   },
   [types.UPDATE_STATUS_ROSTER_CONTACT](state, { rosterObj, status }) {
     Vue.set(rosterObj, 'status', status);
+  },
+  [types.ADD_TO_ROSTER_LIST](state, rosterObj) {
+    state.rosterList.push(rosterObj);
   },
   
   // Profile Image

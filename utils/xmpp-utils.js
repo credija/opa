@@ -52,22 +52,31 @@ export default {
     }
   },
   rosterCallback(iq) {
-    const rosterList = [];
+    let rosterList = this.store.state.app.rosterList;
+
     const rosterContacts = iq.getElementsByTagName('item');
     if (iq.query !== null) {
       for (let i = 0; i < rosterContacts.length; i++) {
         const rosterObj = {};
         const group = rosterContacts[i].getElementsByTagName('group')[0];
         rosterObj.username = StringUtils.removeAfterInclChar(rosterContacts[i].getAttribute('jid'), '@');
+
+        const cachedRosterObj = rosterList.find(cachedRosterObj => 
+          cachedRosterObj.username.toUpperCase() === rosterObj.username.toUpperCase());
         
         if (rosterObj.username !== this.store.state.app.authUser.username) {
           rosterObj.name = rosterContacts[i].getAttribute('name') !== null ? rosterContacts[i].getAttribute('name') : rosterObj.username;
           rosterObj.status = '';
           rosterObj.presence = { id: 'off', value: 'Offline' };
           rosterObj.group = group.childNodes[0].nodeValue;
-          rosterList.push(rosterObj);
-          this.store.dispatch('app/updateRosterList', rosterList);
-          XmppService.updateContactPresence(rosterObj);
+
+          if (cachedRosterObj !== undefined) {
+            this.store.dispatch('app/updateRosterObj', {oldRosterObj: cachedRosterObj, newRosterObj: rosterObj});
+          } else {
+            rosterList.push(rosterObj);
+            this.store.dispatch('app/updateRosterList', rosterList);
+            XmppService.updateContactPresence(rosterObj);
+          }
         }
       }
 
@@ -98,9 +107,10 @@ export default {
     }
     
     XmppService.profileImageService(presence);
-    
+
     if (show !== undefined) {
       const showValue = show.textContent;
+      
       this.store.dispatch('app/updatePresenceRosterContact', { 
         rosterObj: rosterObj, 
         presence: PresenceEnum.getPresenceById(showValue) 
@@ -208,8 +218,19 @@ export default {
           } 
         });
       } else {
-        const rosterObj = rosterList.find(roster => 
+        let rosterObj = rosterList.find(roster => 
           roster.username.toUpperCase() === from.toUpperCase());
+        if (rosterObj === undefined) {
+          rosterObj = {};
+          rosterObj.username = from;
+          rosterObj.name = from;
+          rosterObj.status = '';
+          rosterObj.presence = { id: 'off', value: 'Offline' };
+          rosterObj.group = 'UNKNOWN';
+          this.store.dispatch('app/addToRosterList', rosterObj);
+          XmppService.updateContactPresence(rosterObj);
+        }
+
         conversation = { 
           contact: rosterObj, 
           list: [], 
@@ -224,7 +245,7 @@ export default {
             list: []
           }
         };
-        
+
         XmppService.setLastMessageId(conversation);
 
         this.store.dispatch('chat/addMessageToConversation', { 
