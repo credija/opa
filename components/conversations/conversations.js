@@ -1,13 +1,11 @@
 import PresenceEnum from '@/enums/presence-enum';
 import ObjectUtils from '@/utils/object-utils';
 import MessageParser from '@/services/message-parser';
-import Intersect from 'vue-intersect';
 
 let XmppService, DocTitleService, FaviconService = null;
 
 export default {
   name: 'Conversations',
-  components: { Intersect },
   props: [],
   data() {
     return {

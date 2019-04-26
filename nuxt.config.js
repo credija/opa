@@ -55,6 +55,7 @@ module.exports = {
     '@/plugins/element-ui',
     '@/plugins/vue-fontawesome',
     '@/plugins/i18n',
+    { src: '@/plugins/vue-intersect', ssr: false },
     { src: '@/plugins/global-mixins', ssr: false },
     { src: '@/plugins/filters', ssr: false },
   ],

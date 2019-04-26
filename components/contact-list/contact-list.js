@@ -2,14 +2,11 @@ import PresenceEnum from '@/enums/presence-enum';
 import ArrayUtils from '@/utils/array-utils';
 import includes from 'lodash.includes';
 import RemoveAccents from 'remove-accents';
-import MessageParser from '@/services/message-parser';
-import Intersect from 'vue-intersect';
 
 let XmppService, DocTitleService, FaviconService = null;
 
 export default {
   name: 'ContactList',
-  components: { Intersect },
   props: ['showContactList'],
   watch: {
     showContactList: function (newVal) {

@@ -42,8 +42,8 @@ export default {
     client.send($pres());
     this.store.dispatch('chat/updateLastPresence', 'on');
 
-    const cachedRoster = localStorage.getItem('cached-roster');
-    if (cachedRoster !== null) this.store.dispatch('app/updateRosterList', JSON.parse(cachedRoster));
+    const cachedRoster = localStorage.getItem(btoa(`cached-roster-${this.store.state.app.authUser.username}`));
+    if (cachedRoster !== null) this.store.dispatch('app/updateRosterList', JSON.parse(atob(cachedRoster)));
     const ctx = this;
     setTimeout(function () {
       ctx.store.dispatch('app/updateIsAppLoading', false);
@@ -138,7 +138,6 @@ export default {
   updateLoggedUserVcard() {
     const appConfig = this.store.state.app.appConfig;
     const client = this.store.state.app.xmppClient;
-
     const clientUsername = StringUtils.removeAfterInclChar(client.jid, '@');
 
     this.store.dispatch('app/updateAuthUser', { 

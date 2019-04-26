@@ -1,17 +1,6 @@
 /* eslint-disable */
 import { Strophe, $iq } from 'strophe.js';
 
-/* XEP-0313: Message Archive Management
- * Copyright (C) 2012 Kim Alvefur
- *
- * This file is MIT/X11 licensed. Please see the
- * LICENSE.txt file in the source package for more information.
- *
- * Modified by: Chris Tunbridge (github.com/Destreyf/)
- * Updated to support v0.3 of the XMPP XEP-0313 standard
- * http://xmpp.org/extensions/xep-0313.html
- *
- */
 Strophe.addConnectionPlugin('mam', {
     _c: null,
     _p: [ 'with', 'start', 'end' ],

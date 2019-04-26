@@ -89,6 +89,7 @@ Currently Opa uses https://cdn.polyfill.io/v2/polyfill.min.js for better support
 - https://caniuse.com/#search=es6
 - https://caniuse.com/#feat=flexbox
 - https://caniuse.com/#feat=intersectionobserver
+- https://caniuse.com/#feat=atob-btoa
 
 # Getting Started
 

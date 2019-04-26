@@ -77,7 +77,7 @@ export default {
         return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
       });
 
-      localStorage.setItem('cached-roster', JSON.stringify(rosterList));
+      localStorage.setItem(btoa(`cached-roster-${this.store.state.app.authUser.username}`), btoa(JSON.stringify(rosterList)));
     }
   },
   presenceHandler(presence) {
