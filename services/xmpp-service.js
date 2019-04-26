@@ -41,6 +41,13 @@ export default {
     client.addHandler(XmppUtils.messageHandler.bind(this), null, 'message', null, null, null);
     client.send($pres());
     this.store.dispatch('chat/updateLastPresence', 'on');
+
+    const cachedRoster = localStorage.getItem('cached-roster');
+    if (cachedRoster !== null) this.store.dispatch('app/updateRosterList', JSON.parse(cachedRoster));
+    const ctx = this;
+    setTimeout(function () {
+      ctx.store.dispatch('app/updateIsAppLoading', false);
+    }, 500);
   },
 
   updateContactPresence(contact) {

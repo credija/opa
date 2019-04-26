@@ -5,7 +5,7 @@ export default {
   props: ['content'],
   data() {
     return {
-      savedRange: window.getSelection() != null ? window.getSelection().getRangeAt(0) : null,
+      savedRange: window.getSelection().rangeCount > 0 ? window.getSelection().getRangeAt(0) : null,
     }
   },
   computed: {

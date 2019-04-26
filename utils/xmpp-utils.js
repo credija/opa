@@ -77,10 +77,7 @@ export default {
         return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
       });
 
-      const ctx = this;
-      setTimeout(function () {
-        ctx.store.dispatch('app/updateIsAppLoading', false);
-      }, 500);
+      localStorage.setItem('cached-roster', JSON.stringify(rosterList));
     }
   },
   presenceHandler(presence) {

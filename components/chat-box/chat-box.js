@@ -9,6 +9,7 @@ import EmojiGroups from 'cool-emoji-picker/src/emoji-data/emoji-groups.json';
 
 let XmppService = null;
 
+// TODO: Melhorar performance quando forem muitas conversas
 export default {
   name: 'ChatBox',
   components: { 
