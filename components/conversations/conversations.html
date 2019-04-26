@@ -13,15 +13,19 @@
             @mouseover.native="dispatchHappyEmoji"
             @mouseleave.native="dispatchThinkingEmoji">
             <el-col :span="4">
-                <img v-if="profileImageSrc(conversation.contact.username) !== null" class="b-full-circle img-fit b4" 
-                :src="profileImageSrc(conversation.contact.username)" width="48" height="48"
-                :class="getPresenceBorderColor(conversation.contact.presence.id)"/>
-
-                <div class="user-icon-mini b-full-circle b4 clickable text-center v-align" 
-                    :class="getPresenceBorderColor(conversation.contact.presence.id)"
-                    v-if="profileImageSrc(conversation.contact.username) === null">
-                    <font-awesome-icon icon="user" class="ml2"/>
-                </div>
+                <intersect @enter="getProfileAvatar(conversation.contact.username)">
+                    <div id="conversationAvatar">
+                        <img v-if="profileImageSrc(conversation.contact.username) !== null" class="b-full-circle img-fit b4 fade-in" 
+                        :src="profileImageSrc(conversation.contact.username)" width="48" height="48"
+                        :class="getPresenceBorderColor(conversation.contact.presence.id)"/>
+        
+                        <div class="user-icon-mini b-full-circle b4 clickable text-center v-align" 
+                            :class="getPresenceBorderColor(conversation.contact.presence.id)"
+                            v-if="profileImageSrc(conversation.contact.username) === null">
+                            <font-awesome-icon icon="user" class="ml2"/>
+                        </div>
+                    </div>
+                </intersect>
             </el-col>
             <el-col :span="20" class="unselectable">
                 <el-row class="ml2 my1">

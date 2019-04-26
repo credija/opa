@@ -31,7 +31,8 @@
     "strophe.js": "^1.3.0",
     "strophejs-plugin-rsm": "0.0.2",
     "twemoji": "^11.2.0",
-    "vue-i18n": "^8.3.1"
+    "vue-i18n": "^8.3.1",
+    "vue-intersect": "^1.1.3"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.8",

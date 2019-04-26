@@ -62,6 +62,13 @@ const mutations = {
   [types.ADD_PROFILE_IMAGE_TO_LIST](state, { profileImage }) {
     state.profileImageList.push(profileImage);
   },
+  [types.REMOVE_PROFILE_IMAGE_FROM_LIST](state, { profileImage }) {
+    const objIndex = state.profileImageList.findIndex(o => o.username === profileImage.username);
+
+    if(objIndex > -1) {
+      state.profileImageList = state.profileImageList.slice(objIndex, 1);
+    }
+  },
 };
 
 export default mutations;

@@ -25,15 +25,18 @@
                     :class="{ 'dark-theme': chatConfig.darkMode === true }"
                     @click.native="openConversation(contact)">
                     <el-col :span="4">
-                        <img v-if="profileImageSrc(contact.username) !== null" class="b-full-circle img-fit b4 mt1" 
-                        :src="profileImageSrc(contact.username)" width="48" height="48"
-                        :class="getPresenceBorderColor(contact.presence.id)"/>
-            
-                        <div class="user-icon-mini b-full-circle b4 clickable text-center v-align" 
-                            :class="getPresenceBorderColor(contact.presence.id)"
-                            v-if="profileImageSrc(contact.username) === null">
-                            <font-awesome-icon icon="user" class="ml2"/>
-                        </div>
+                        <intersect @enter="getProfileAvatar(contact.username)">
+                            <div id="contactAvatar">
+                                <img v-if="profileImageSrc(contact.username) !== null" class="b-full-circle img-fit b4 mt1 fade-in" 
+                                :src="profileImageSrc(contact.username)" width="48" height="48"
+                                :class="getPresenceBorderColor(contact.presence.id)"/>
+                                <div class="user-icon-mini b-full-circle b4 clickable text-center v-align" 
+                                    :class="getPresenceBorderColor(contact.presence.id)"
+                                    v-if="profileImageSrc(contact.username) === null">
+                                    <font-awesome-icon icon="user" class="ml2"/>
+                                </div>
+                            </div>
+                        </intersect>
                     </el-col>
                     <el-col :span="20">
                         <strong class="ml2">{{ contact.name }}</strong>
