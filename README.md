@@ -50,39 +50,7 @@ Has some feature in mind, suggestion or come across a bug? Open an [Issue](https
 
 # Features
 
-Features Opa already has:
-- [x] BOSH/WebSocket support
-- [x] Multi-language support 
-  - en-US | pt-BR | de-DE for the time being, but you can develop your own translation by following the [Internationalization](#internationalization) section instructions of this README.
-- [x] Responsive for desktop screens (up to 1024x768)
-- [x] One-to-one chat
-- [x] Latest emoji Unicode 11 support (with skin tones and recent emojis support)
-  - Credits to Tweemoji for the emoji arts
-- [x] Chatbox with support to rendering emojis and resizing for better text writing
-- [x] Language/Country selection
-- [x] Profile presence change option
-- [x] Automatic presence change when away
-  - After 20 minutes without performing any action in the app
-- [x] Profile avatar change and delete option. 
-  - Your XMPP server must support [v-card-temp](https://xmpp.org/extensions/xep-0054.html).
-
-- [x] Contacts organized by group (Like Pidgin)
-- [x] Contacts details. 
-  - Your XMPP server must support [v-card-temp](https://xmpp.org/extensions/xep-0054.html).
-- [x] Contacts search
-
-- [x] Browser tab icon change when has a new message
-- [x] Browser desktop notification 
-  - 1-minute interval.
-- [x] Sound desktop notification 
-  - 1-minute interval.
-- [x] Option to show/hide offline contacts
-- [x] Option to enable Day/Night mode
-- [x] Conversation history from the server. 
-  - Your XMPP server must support these protocols:
-  - [MSM](https://xmpp.org/extensions/xep-0313.html)
-  - [RSM](https://xmpp.org/extensions/xep-0059.html)
-  - Note: The client always searches the history on the server, meaning the conversation history is not cached locally.
+Check the features here: https://github.com/credija/opa/wiki/Features
 
 # Requirements
 Currently Opa uses https://cdn.polyfill.io/v2/polyfill.min.js for better support because your browser needs to support these three features:
