@@ -2,7 +2,7 @@ import Vue from 'vue';
 import { 
   Container, Main, Form, FormItem, Col, Row, 
   Alert, Input, Button, Card, Loading, MessageBox, Dialog, 
-  Collapse, CollapseItem, Popover, Select, Option, Notification
+  Collapse, CollapseItem, Popover, Select, Option, Notification, Badge
 } from 'element-ui';
 import lang from 'element-ui/lib/locale/lang/en';
 import locale from 'element-ui/lib/locale';
@@ -28,6 +28,7 @@ export default () => {
   Vue.use(Popover);
   Vue.use(Select);
   Vue.use(Option);
+  Vue.use(Badge);
 
   Vue.prototype.$notify = Notification;
   Vue.prototype.$confirm = MessageBox.confirm;
