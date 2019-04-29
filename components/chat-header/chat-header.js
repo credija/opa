@@ -31,6 +31,9 @@ export default {
     chatConfig() {
       return this.$store.state.chat.chatConfig;
     },
+    numUnreadConversation() {
+      return this.$store.state.chat.numUnreadConversation;
+    }
   },
   beforeCreate() {
     if (process.browser) {

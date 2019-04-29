@@ -1,10 +1,3 @@
-# NOTICE - Collab Appreciated
-We are accepting code contributions through Pull Requests, as the current development team now has little time to focus on this project  since it has achieved the main goals of the initial concept.
-
-As for what features develop, the decision is with you. You can follow community requests in Issues or develop a feature you would like Opa to have. It will then be reviewed by the development team for authorization and merge.
-
-The frameworks stack of this project is basically: StropheJS, NuxtJS (VueJS) and ElementUI (visual elements framework).
-
 # Opa - A XMPP Chat Client for the Web
 
 - [Introduction](#introduction)
@@ -25,19 +18,13 @@ The frameworks stack of this project is basically: StropheJS, NuxtJS (VueJS) and
 
 **Opa** is an **open-source XMPP chat client for the Web (SSR)** entirely built on top of **Vue**, **NuxtJS** and **ElementUI** that follows the coolest trends out there ~~bye bye Flash and Desktop clients~~! 
 
-![alt text](https://i.imgur.com/9wQHz8j.png "Landing Page Opa")
-
 _**Trivia**_: "Opa", among many meanings in Brazil, is also used informally as a greeting!
 
-**Opa** boasts a modern design having a clean interface that offers a good user experience. The interface is inspired by numerous web apps that already exist in the Javascript environment, such as **WhatsApp Web**, **Telegram Web**, **Discord**, **Rocket Chat**, etc...
+---
 
-Day Mode             |  Night Mode
-:-------------------------:|:-------------------------:
-![](https://i.imgur.com/gQ4MXuk.png "Opa Day Mode")  |  ![](https://i.imgur.com/YxrEoKz.png "Opa Night Mode")
+**Opa** boasts a modern design having a clean interface that offers a good user experience. The interface is inspired by numerous web apps that already exist in the Javascript environment, such as **WhatsApp Web**, **Telegram Web**, **Discord**, **Rocket Chat**, etc... It was born as an internal project to fill the **absence of an XMPP client** that did not need an **installation on each machine**, was **developed with current techs**, had a **modern design** and supported **common features** for a chat in a corporate environment.
 
-**Opa** was born as an internal project to fill the **absence of an XMPP client** that did not need an **installation on each machine**, was **developed with current techs**, had a **modern design** and supported **common features** for a chat in a corporate environment.
-
-
+---
 
 Opa has a demo available which is at latest version. For testing there are two users:
 
@@ -57,39 +44,7 @@ Has some feature in mind, suggestion or come across a bug? Open an [Issue](https
 
 # Features
 
-Features Opa already has:
-- [x] BOSH/WebSocket support
-- [x] Multi-language support 
-  - en-US | pt-BR | de-DE for the time being, but you can develop your own translation by following the [Internationalization](#internationalization) section instructions of this README.
-- [x] Responsive for desktop screens (up to 1024x768)
-- [x] One-to-one chat
-- [x] Latest emoji Unicode 11 support (with skin tones and recent emojis support)
-  - Credits to Tweemoji for the emoji arts
-- [x] Chatbox with support to rendering emojis and resizing for better text writing
-- [x] Language/Country selection
-- [x] Profile presence change option
-- [x] Automatic presence change when away
-  - After 20 minutes without performing any action in the app
-- [x] Profile avatar change and delete option. 
-  - Your XMPP server must support [v-card-temp](https://xmpp.org/extensions/xep-0054.html).
-
-- [x] Contacts organized by group (Like Pidgin)
-- [x] Contacts details. 
-  - Your XMPP server must support [v-card-temp](https://xmpp.org/extensions/xep-0054.html).
-- [x] Contacts search
-
-- [x] Browser tab icon change when has a new message
-- [x] Browser desktop notification 
-  - 1-minute interval.
-- [x] Sound desktop notification 
-  - 1-minute interval.
-- [x] Option to show/hide offline contacts
-- [x] Option to enable Day/Night mode
-- [x] Conversation history from the server. 
-  - Your XMPP server must support these protocols:
-  - [MAM](https://xmpp.org/extensions/xep-0313.html) (XEP-0313: Message Archive Management)
-  - [RSM](https://xmpp.org/extensions/xep-0059.html) (XEP-0059: Result Set Management)
-  - Note: The client always searches the history on the server, meaning the conversation history is not cached locally.
+Check the features here: https://github.com/credija/opa/wiki/Features
 
 # Requirements
 Currently Opa uses https://cdn.polyfill.io/v2/polyfill.min.js for better support because your browser needs to support these three features:
@@ -110,7 +65,6 @@ Following this you have two ways of running this app:
 
 ## Installation
 ### NodeJS (From Source)
-![alt text](https://nodejs.org/static/images/logos/nodejs-new-pantone-black.png "NodeJS Logo")
 The installation with NodeJS will need you to install the package manager [Yarn](https://yarnpkg.com/pt-BR/). You can install Yarn on an NodeJS environment with this command:
 ```
 npm install yarn -g
@@ -127,7 +81,6 @@ yarn build && yarn start
 You will, however, need to connect to your XMPP server. To do that you need to overwrite the /your-project-clone-folder/static/config/app-config.json (explanation of each option in the config file is in [Configuration](#configuration) section).
 
 ### Docker
-![alt text](https://www.docker.com/sites/default/files/social/docker_twitter_share_new.png "Docker Logo")
 
 The installation with Docker is very straightforward. You will, however, need to connect to your XMPP server. To do that you need to overwrite the /app/static/config/app-config.json (explanation of each option in the config file is in [Configuration](#configuration) section):
 ```

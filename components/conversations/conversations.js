@@ -105,9 +105,7 @@ export default {
       return bolOwnMessage;
     },
     getProfileAvatar(username) {
-      if (this.profileImageSrc(username) === null) {
-        XmppService.updateUserAvatar(username);
-      }
+      XmppService.updateUserAvatar(username);
     }
   },
 };

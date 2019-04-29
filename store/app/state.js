@@ -7,7 +7,7 @@ export const state = () => ({
   xmppClient: null,
   authUser: '',
   rosterList: [],
-  rosterFirstLoad: true,
+  isLoadingRoster: true,
   profileImageList: [],
   chatTimestamp: Date.now(),
 });

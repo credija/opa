@@ -38,6 +38,11 @@ export default {
       });
     }
 
+    const cachedAvatars = localStorage.getItem(btoa(`cached-avatars-${this.store.state.app.authUser.username}`));
+    if (cachedAvatars !== null) {
+      this.store.dispatch('app/updateProfileImageList', JSON.parse(atob(cachedAvatars)));
+    }
+
     const client = this.store.state.app.xmppClient;
     const iq = $iq({
       type: 'get'
@@ -45,7 +50,7 @@ export default {
       xmlns: 'jabber:iq:roster'
     });
 
-    client.sendIQ(iq, XmppUtils.rosterCallback.bind(ctt));
+    client.sendIQ(iq, XmppUtils.rosterCallback.bind(this));
     client.addHandler(XmppUtils.presenceHandler.bind(this), null, 'presence');
     this.translation = this.i18n;
     client.addHandler(XmppUtils.messageHandler.bind(this), null, 'message', null, null, null);
@@ -170,7 +175,7 @@ export default {
       presenceSignal = $pres();
     } else {
       presenceSignal = $pres().c('show').t(presence);
-    //                    .up().c('priority').t(127);
+    // TODO: Presence config per user                   .up().c('priority').t(127);
     }
     
     client.send(presenceSignal);

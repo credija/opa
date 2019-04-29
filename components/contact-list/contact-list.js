@@ -31,6 +31,9 @@ export default {
     rosterList() {
       return this.$store.state.app.rosterList;
     },
+    isLoadingRoster() {
+      return this.$store.state.app.isLoadingRoster;
+    },
     conversationList() {
       return this.$store.state.chat.conversationList;
     },
@@ -144,9 +147,7 @@ export default {
     },
 
     getProfileAvatar(username) {
-      if (this.profileImageSrc(username) === null) {
-        XmppService.updateUserAvatar(username);
-      }
+      XmppService.updateUserAvatar(username);
     }
   },
 };

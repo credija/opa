@@ -86,8 +86,15 @@ export default {
         return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
       });
 
-      localStorage.setItem(btoa(`cached-roster-${this.store.state.app.authUser.username}`), btoa(JSON.stringify(rosterList)));
+      const cachedRosterList = JSON.parse(JSON.stringify(rosterList));
+      cachedRosterList.forEach(function(roster){
+        roster.presence = { id: 'off', value: 'Offline' };
+      });
+
+      localStorage.setItem(btoa(`cached-roster-${this.store.state.app.authUser.username}`), btoa(JSON.stringify(cachedRosterList)));
     }
+
+    this.store.dispatch('app/updateIsLoadingRoster', false);
   },
   presenceHandler(presence) {
     const appConfig = this.store.state.app.appConfig;
@@ -306,7 +313,7 @@ export default {
     return true;
   },
   avatarCallback(iq) {
-    const profileImageList = this.store.state.app.profileImageList;
+    let profileImageList = this.store.state.app.profileImageList;
 
     const from = StringUtils.removeAfterInclChar(iq.getAttribute('from'), '@');
     const vCardElement = iq.getElementsByTagName('vCard')[0];
@@ -330,11 +337,13 @@ export default {
     if (photoTag !== undefined) {
       photoType = photoTag.getElementsByTagName('TYPE')[0].textContent;
       photoBin = photoTag.getElementsByTagName('BINVAL')[0].textContent;
-      this.store.dispatch('app/updateProfileImageBin', { 
-        profileImage: profileImageObj, 
-        type: photoType,
-        bin: photoBin, 
-      });
+      if (photoBin !== profileImageObj.bin) {
+        this.store.dispatch('app/updateProfileImageBin', { 
+          profileImage: profileImageObj, 
+          type: photoType,
+          bin: photoBin, 
+        });
+      }
     } else {
       this.store.dispatch('app/updateProfileImageBin', { 
         profileImage: profileImageObj, 
@@ -342,6 +351,10 @@ export default {
         bin: undefined, 
       });
     }
+
+    // Saves in LocalStorage for better caching
+    profileImageList = this.store.state.app.profileImageList;
+    localStorage.setItem(btoa(`cached-avatars-${this.store.state.app.authUser.username}`), btoa(JSON.stringify(profileImageList)));
   },
   vCardLoggedUser(iq) {
     const authUser = this.store.state.app.authUser;

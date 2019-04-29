@@ -8,8 +8,7 @@
                     <img v-if="profileImageSrc !== null" 
                         class="b-full-circle img-fit b1" 
                         :src="profileImageSrc" 
-                        width="80" height="80"
-                        />
+                        width="80" height="80"/>
                     <input type="file" :v-model="profileImgUpload" id="profileimg-upload" 
                         accept="image/x-png,image/jpeg" @change="onFileChange" class="hidden"/>
                     <div class="user-icon b-full-circle b1 clickable text-center v-align" 
@@ -49,7 +48,7 @@
                     </el-option>
                 </el-select>
             </el-col>
-            <el-col :span="1" :offset="3">
+            <el-col :span="4">
                 <el-popover
                     placement="bottom"
                     width="150"
@@ -63,18 +62,20 @@
                         <font-awesome-icon icon="comment" class="icon-medium"/>
                     </el-button>
                 </el-popover>
-    
-                <el-popover
-                    placement="bottom"
-                    width="150"
-                    trigger="hover"
-                    :content="$t('chat.back')"
-                    v-if="showContactList">
-                    <el-button slot="reference" type="primary" circle class="float-right mt2"
-                        @click="emitSwitchActiveMenu()">
-                        <font-awesome-icon icon="undo" class="icon-medium"/>
-                    </el-button>
-                </el-popover>
+                
+                <el-badge :value="numUnreadConversation" :max="99" v-if="showContactList" class="float-right mt2" 
+                    :hidden="numUnreadConversation === 0">
+                    <el-popover
+                        placement="bottom"
+                        width="150"
+                        trigger="hover"
+                        :content="$t('chat.back')">
+                            <el-button slot="reference" type="primary" circle
+                                @click="emitSwitchActiveMenu()">
+                                <font-awesome-icon icon="undo" class="icon-medium"/>
+                            </el-button>
+                    </el-popover>
+                </el-badge>
             </el-col>
         </div>
         <div v-if="isDisconnected" class="text-center">
