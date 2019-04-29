@@ -18,19 +18,13 @@
 
 **Opa** is an **open-source XMPP chat client for the Web (SSR)** entirely built on top of **Vue**, **NuxtJS** and **ElementUI** that follows the coolest trends out there ~~bye bye Flash and Desktop clients~~! 
 
-![alt text](https://i.imgur.com/9wQHz8j.png "Landing Page Opa")
-
 _**Trivia**_: "Opa", among many meanings in Brazil, is also used informally as a greeting!
 
-**Opa** boasts a modern design having a clean interface that offers a good user experience. The interface is inspired by numerous web apps that already exist in the Javascript environment, such as **WhatsApp Web**, **Telegram Web**, **Discord**, **Rocket Chat**, etc...
+---
 
-Day Mode             |  Night Mode
-:-------------------------:|:-------------------------:
-![](https://i.imgur.com/gQ4MXuk.png "Opa Day Mode")  |  ![](https://i.imgur.com/YxrEoKz.png "Opa Night Mode")
+**Opa** boasts a modern design having a clean interface that offers a good user experience. The interface is inspired by numerous web apps that already exist in the Javascript environment, such as **WhatsApp Web**, **Telegram Web**, **Discord**, **Rocket Chat**, etc... It was born as an internal project to fill the **absence of an XMPP client** that did not need an **installation on each machine**, was **developed with current techs**, had a **modern design** and supported **common features** for a chat in a corporate environment.
 
-**Opa** was born as an internal project to fill the **absence of an XMPP client** that did not need an **installation on each machine**, was **developed with current techs**, had a **modern design** and supported **common features** for a chat in a corporate environment.
-
-
+---
 
 Opa has a demo available which is at latest version. For testing there are two users:
 
@@ -71,7 +65,6 @@ Following this you have two ways of running this app:
 
 ## Installation
 ### NodeJS (From Source)
-![alt text](https://nodejs.org/static/images/logos/nodejs-new-pantone-black.png "NodeJS Logo")
 The installation with NodeJS will need you to install the package manager [Yarn](https://yarnpkg.com/pt-BR/). You can install Yarn on an NodeJS environment with this command:
 ```
 npm install yarn -g
@@ -88,7 +81,6 @@ yarn build && yarn start
 You will, however, need to connect to your XMPP server. To do that you need to overwrite the /your-project-clone-folder/static/config/app-config.json (explanation of each option in the config file is in [Configuration](#configuration) section).
 
 ### Docker
-![alt text](https://www.docker.com/sites/default/files/social/docker_twitter_share_new.png "Docker Logo")
 
 The installation with Docker is very straightforward. You will, however, need to connect to your XMPP server. To do that you need to overwrite the /app/static/config/app-config.json (explanation of each option in the config file is in [Configuration](#configuration) section):
 ```
