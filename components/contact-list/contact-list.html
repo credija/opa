@@ -1,16 +1,26 @@
 <div class="contact-list">
-    <el-input :placeholder="$t('chat.searchPlaceholder')" v-model="searchTerm" 
+    <el-input :placeholder="$t('contacts.searchPlaceholder')" v-model="searchTerm" 
         @keyup.native="searchContactByName()" class="mt2 mb1 b-rounded-25" 
+        :disabled="rosterListByGroup.length === 0"
         id="contact-search"></el-input>
+
     <span class="text-center text-danger text-bold ml2" v-if="searchedRosterList.length === 0 
         && searchTerm.length < 3 
         && searchTerm.length !== 0">
-        {{ $t('chat.min3Characters') }}
+        {{ $t('contacts.min3Characters') }}
     </span>
     <span class="text-center text-danger text-bold ml2" v-if="searchedRosterList.length === 0 && searchTerm.length > 2">
-        {{ $t('chat.noContactFound') }}
+        {{ $t('contacts.noContactFound') }}
         <img src="emoji/72x72/2639.png" width="12" height="12"/>
     </span>
+
+    <span class="text-center text-primary text-bold ml2" v-if="isLoadingRoster && rosterListByGroup.length === 0">
+        {{ $t('contacts.loadingContacts') }}
+    </span>
+    <span class="text-center text-primary text-bold ml2" v-if="isLoadingRoster === false && rosterListByGroup.length === 0">
+        {{ $t('contacts.noAvailableContacts') }}
+    </span>
+    
     <transition name="slide-bt">
         <el-collapse class="px2 mt1" v-model="activeAccordion" v-show="searchTerm.length === 0" 
             :class="{ 'dark-theme': chatConfig.darkMode === true, 'dark-border': chatConfig.darkMode === true }" accordion>

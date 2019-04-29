@@ -86,8 +86,15 @@ export default {
         return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
       });
 
-      localStorage.setItem(btoa(`cached-roster-${this.store.state.app.authUser.username}`), btoa(JSON.stringify(rosterList)));
+      const cachedRosterList = JSON.parse(JSON.stringify(rosterList));
+      cachedRosterList.forEach(function(roster){
+        roster.presence = { id: 'off', value: 'Offline' };
+      });
+
+      localStorage.setItem(btoa(`cached-roster-${this.store.state.app.authUser.username}`), btoa(JSON.stringify(cachedRosterList)));
     }
+
+    this.store.dispatch('app/updateIsLoadingRoster', false);
   },
   presenceHandler(presence) {
     const appConfig = this.store.state.app.appConfig;

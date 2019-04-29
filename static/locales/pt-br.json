@@ -14,9 +14,6 @@
         "noConversation": "Você ainda não possui conversas.",
         "openNewConversation": "Abrir Nova Conversa",
         "back": "Voltar",
-        "searchPlaceholder": "Pesquisar Contato",
-        "min3Characters": "Digite no mínimo 3 caracteres.",
-        "noContactFound": "Nenhum contato encontrado.",
         "adminMessageTitle": "Mensagem do Administrador"
     },
     "chatbox": {
@@ -27,6 +24,13 @@
         "loadingOldMessages": "Carregando mensagens antigas...",
         "oldMessagesLimit": "Você atingiu o limite de pesquisa de mensagens antigas",
         "oldMessagesLabel": "Mensagens Antigas"
+    },
+    "contacts": {
+        "searchPlaceholder": "Pesquisar Contato",
+        "min3Characters": "Digite no mínimo 3 caracteres.",
+        "noContactFound": "Nenhum contato encontrado.",
+        "loadingContacts": "Carregando contatos...",
+        "noAvailableContacts": "Você não possui contatos."
     },
     "contactDetails": {
         "modalTitle": "Detalhes do Contato",

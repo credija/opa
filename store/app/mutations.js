@@ -56,6 +56,9 @@ const mutations = {
   [types.ADD_TO_ROSTER_LIST](state, rosterObj) {
     state.rosterList.push(rosterObj);
   },
+  [types.UPDATE_IS_LOADING_ROSTER](state, bol) {
+    state.isLoadingRoster = bol;
+  },
   
   // Profile Image
   [types.UPDATE_PROFILE_IMAGE_LIST](state, { profileImageList }) {

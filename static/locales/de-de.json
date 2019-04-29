@@ -14,9 +14,6 @@
         "noConversation": "Du hast bisher noch keine Konversationen",
         "openNewConversation": "Neuen Chat öffnen",
         "back": "Zurück",
-        "searchPlaceholder": "Kontakte suchen",
-        "min3Characters": "Bitte gebe mindestens 3 Zeichen ein.",
-        "noContactFound": "Keine Kontakte gefunden",
         "adminMessageTitle": "Admin Nachricht"
     },
     "contactDetails": {
@@ -32,6 +29,13 @@
         "loadingOldMessages": "Alte Nachrichten werden geladen...",
         "oldMessagesLimit": "Du hast das Limit an alten Nachrichten in der Suche erreicht",
         "oldMessagesLabel": "Alte Nachrichten"
+    },
+    "contacts": {
+        "searchPlaceholder": "Kontakte suchen",
+        "min3Characters": "Bitte gebe mindestens 3 Zeichen ein.",
+        "noContactFound": "Keine Kontakte gefunden",
+        "loadingContacts": "Kontakte werden geladen...",
+        "noAvailableContacts": "Sie haben keine Kontakte."
     },
     "profile": {
         "changePhoto": "Bearbeiten",

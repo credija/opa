@@ -77,6 +77,9 @@ const actions = {
   addToRosterList({ commit }, rosterObj) {
     commit(types.ADD_TO_ROSTER_LIST, rosterObj);
   },
+  updateIsLoadingRoster({ commit }, bol) {
+    commit(types.UPDATE_IS_LOADING_ROSTER, bol);
+  },
 
   // Profile Image
   updateProfileImageList({ commit }, profileImageList) {
