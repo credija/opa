@@ -147,9 +147,7 @@ export default {
     },
 
     getProfileAvatar(username) {
-      if (this.profileImageSrc(username) === null) {
-        XmppService.updateUserAvatar(username);
-      }
+      XmppService.updateUserAvatar(username);
     }
   },
 };

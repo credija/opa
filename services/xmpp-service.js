@@ -38,6 +38,11 @@ export default {
       });
     }
 
+    const cachedAvatars = localStorage.getItem(btoa(`cached-avatars-${this.store.state.app.authUser.username}`));
+    if (cachedAvatars !== null) {
+      this.store.dispatch('app/updateProfileImageList', JSON.parse(atob(cachedAvatars)));
+    }
+
     const client = this.store.state.app.xmppClient;
     const iq = $iq({
       type: 'get'
