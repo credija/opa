@@ -108,6 +108,8 @@ export default {
           this.$nuxt.$emit('COOL_TEXTAREA_FOCUS');
         }
       });
+
+      this.$store.dispatch('chat/updateLockAutoLoadOldMessages', false);
       this.scrollMessageBoxToBottom();
     },
     searchContactByName() {

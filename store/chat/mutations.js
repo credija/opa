@@ -44,8 +44,8 @@ const mutations = {
   },
 
   // Conversation
-  [types.ADD_MESSAGE_TO_CONVERSATION](state, { messageList, messageToAdd }) {
-    messageList.push(messageToAdd);
+  [types.ADD_MESSAGE_TO_CONVERSATION](state, { conversation, messageToAdd }) {
+    conversation.list.push(messageToAdd);
   },
   [types.CLEAR_UNREAD_COUNTER_CONVERSATION](state, { conversation }) {
     Vue.set(conversation, 'numUnreadMsgs', 0);
@@ -84,6 +84,16 @@ const mutations = {
   },
   [types.ADD_MESSAGE_LIST_TO_OLD_CONVERSATION](state, { oldConversation, messageList }) {
     oldConversation.list = messageList.concat(oldConversation.list);
+  },
+  [types.UPDATE_LOCK_AUTO_LOAD_OLD_MESSAGES](state, { bool }) {
+    state.lockAutoLoadOldMessages = bool;
+  },
+  [types.CLEAR_OLD_CONVERSATION](state, { oldConversation }) {
+    Vue.set(oldConversation, 'lastStamp', null);
+    Vue.set(oldConversation, 'lastMessageId', '');
+    Vue.set(oldConversation, 'lastRetrievedId', '');
+    Vue.set(oldConversation, 'isLoading', false);
+    Vue.set(oldConversation, 'list', []);
   },
 };
 

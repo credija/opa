@@ -7,7 +7,8 @@ export const state = () => ({
   numUnreadConversation: 0,
   lastMessageSentStamp: new Date(),
   isPresenceAway: false,
-  lastPresence: 'off'
+  lastPresence: 'off',
+  lockAutoLoadOldMessages: false,
 });
 
 export default state;

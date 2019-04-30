@@ -28,7 +28,8 @@
         "loadOldMessages": "Lade alte Nachrichten...",
         "loadingOldMessages": "Alte Nachrichten werden geladen...",
         "oldMessagesLimit": "Du hast das Limit an alten Nachrichten in der Suche erreicht",
-        "oldMessagesLabel": "Alte Nachrichten"
+        "oldMessagesLabel": "Alte Nachrichten",
+        "loadingMessages": "Nachrichten werden geladen..."
     },
     "contacts": {
         "searchPlaceholder": "Kontakte suchen",

@@ -62,6 +62,7 @@ export default {
           this.$nuxt.$emit('COOL_TEXTAREA_FOCUS');
         }
       });
+      
       this.scrollMessageBoxToBottom();
     },
     getLastMessage(conversation) {

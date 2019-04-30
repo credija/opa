@@ -217,7 +217,7 @@ export default {
         }
 
         this.store.dispatch('chat/addMessageToConversation', { 
-          messageList: conversation.list, 
+          conversation: conversation, 
           messageToAdd: { 
             msg: msgContent, 
             ownMessage: false, 
@@ -254,9 +254,9 @@ export default {
         };
 
         XmppService.setLastMessageId(conversation);
-
+        
         this.store.dispatch('chat/addMessageToConversation', { 
-          messageList: conversation.list, 
+          conversation: conversation, 
           messageToAdd: { 
             msg: msgContent, 
             ownMessage: false,

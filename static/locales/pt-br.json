@@ -23,7 +23,8 @@
         "loadOldMessages": "Carregar mensagens antigas...",
         "loadingOldMessages": "Carregando mensagens antigas...",
         "oldMessagesLimit": "Você atingiu o limite de pesquisa de mensagens antigas",
-        "oldMessagesLabel": "Mensagens Antigas"
+        "oldMessagesLabel": "Mensagens Antigas",
+        "loadingMessages": "Carregando mensagens..."
     },
     "contacts": {
         "searchPlaceholder": "Pesquisar Contato",

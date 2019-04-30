@@ -56,8 +56,8 @@ const actions = {
 
   // Conversation
   addMessageToConversation({ commit }, addMessageToConversation) {
-    const { messageList, messageToAdd } = addMessageToConversation;
-    commit(types.ADD_MESSAGE_TO_CONVERSATION, { messageList, messageToAdd });
+    const { conversation, messageToAdd } = addMessageToConversation;
+    commit(types.ADD_MESSAGE_TO_CONVERSATION, { conversation, messageToAdd });
   },
   clearUnreadCounterConversation({ commit }, conversation) {
     commit(types.CLEAR_UNREAD_COUNTER_CONVERSATION, { conversation });
@@ -108,6 +108,16 @@ const actions = {
   addMessageListToOldConversation({ commit }, addMessageListToOldConversation) {
     const { oldConversation, messageList } = addMessageListToOldConversation;
     commit(types.ADD_MESSAGE_LIST_TO_OLD_CONVERSATION, { oldConversation, messageList });
+  },
+  updateLockAutoLoadOldMessages({ commit }, bool) {
+    commit(types.UPDATE_LOCK_AUTO_LOAD_OLD_MESSAGES, {
+      bool
+    });
+  },
+  clearOldConversation({ commit }, oldConversation) {
+    commit(types.CLEAR_OLD_CONVERSATION, {
+      oldConversation
+    });
   },
 };
 

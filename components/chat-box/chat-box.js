@@ -119,6 +119,9 @@ export default {
     appLocale() {
       return this.$store.state.app.appLocale;
     },
+    lockAutoLoadOldMessages() {
+      return this.$store.state.chat.lockAutoLoadOldMessages;
+    },
     presenceValue() {
       let presenceValue = '';
       if (this.activeConversation.contact.presence.id === 'on') {
@@ -179,12 +182,12 @@ export default {
 
       if (conversation !== undefined) {
         this.$store.dispatch('chat/addMessageToConversation', { 
-          messageList: conversation.list, 
+          conversation: conversation, 
           messageToAdd: messageToAdd 
         });
       } else {
         this.$store.dispatch('chat/addMessageToConversation', {
-          messageList: this.activeConversation.list, 
+          conversation: this.activeConversation, 
           messageToAdd: messageToAdd 
         });
         this.$store.dispatch('chat/addConversationToList', this.activeConversation);
@@ -205,6 +208,7 @@ export default {
       this.saveChatboxState();
       this.changePresenceUserAction();
       XmppService.sendChatSignal(this.activeConversation.contact.username, 'paused');
+      this.$store.dispatch('chat/clearOldConversation', this.activeConversation.oldConversation);
       this.$store.dispatch('chat/updateActiveConversation', null);
     },
     closeActiveConversation() {
@@ -236,9 +240,9 @@ export default {
       this.changePresenceUserAction();
       this.showContactDetails = false;
     },
-    loadOldMessages() {
+    loadOldMessages(bolOpenConversation) {
       this.changePresenceUserAction();
-      XmppService.getOldMessages(this.activeConversation);
+      XmppService.getOldMessages(this.activeConversation, bolOpenConversation);
     },
     selectEmoji(emoji) {
       this.$refs.coolTextarea.addText(emoji);
@@ -256,6 +260,12 @@ export default {
         messageBox.style.minHeight = height + 'px';
         messageBox.style.maxHeight = height + 'px';
       }
-    }
+    },
+    autoLoadOldMessages() {
+      this.changePresenceUserAction();
+      if (this.lockAutoLoadOldMessages === false) {
+        XmppService.getOldMessages(this.activeConversation);
+      }
+    },
   },
 };
