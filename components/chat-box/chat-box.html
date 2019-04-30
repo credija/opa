@@ -40,12 +40,11 @@
                 'dark-theme': chatConfig.darkMode === true,
                 'dark-border': chatConfig.darkMode === true}">
             <el-row class="text-center my1" v-if="activeConversation.oldConversation.noResult !== true">
-                <el-button @click="loadOldMessages()"
-                    :disabled="isDisconnected"
-                    v-if="activeConversation.oldConversation.isLoading !== true">{{ $t('chatbox.loadOldMessages') }}</el-button>
-                <el-button @click="loadOldMessages()"
-                    v-if="activeConversation.oldConversation.isLoading === true" 
-                    :disabled="true">{{ $t('chatbox.loadingOldMessages') }}</el-button>
+                <intersect @enter="autoLoadOldMessages()">
+                    <el-button class="unclickable" round plain>
+                        <font-awesome-icon icon="sync" class="icon-medium text-primary" spin></font-awesome-icon>
+                    </el-button>
+                </intersect>
             </el-row>
 
             <el-row class="text-center my1" v-if="activeConversation.oldConversation.noResult === true">
@@ -78,7 +77,6 @@
                         </p>
                     </div>
                 </el-row>
-                <el-row class="middle-text bb1 mt1 mb3 mx7"><span class="text-bold">{{ $t('chatbox.oldMessagesLabel') }}</span></el-row>
             </el-row>
 
             <el-row v-for="(message, key) in activeConversation.list" :key="key">

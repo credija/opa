@@ -244,15 +244,20 @@ export default {
     client.send(updateAvatarPres);
   },
 
-  getOldMessages(conversation) {
+  getOldMessages(conversation, bolOpenConversation) {
+    this.store.dispatch('chat/updateLockAutoLoadOldMessages', true);
     const ctx = this;
 
     const appConfig = this.store.state.app.appConfig;
     const client = this.store.state.app.xmppClient;
     const authUser = this.store.state.app.authUser;
 
-    const messageBox = document.getElementById('message-box');
-    const scrollHeight = messageBox.scrollHeight;
+    let messageBox = document.getElementById('message-box');
+    let scrollHeight = null;
+    if (messageBox) {
+      scrollHeight = messageBox.scrollHeight;
+    }
+
     const startOfTime = new Date(1970, 0, 1).toISOString();
 
     if (Number(conversation.oldConversation.lastRetrievedId) 
@@ -287,15 +292,15 @@ export default {
       bool: true 
     });
 
-    let isFirstMessage = true;
-    const messageList = [];
-    
+    let messageList = [];
+    const resultIdList = [];
+
     client.mam.query(authUser.username + `@${appConfig.VUE_APP_XMPP_SERVER_DOMAIN}`, {
       with: conversation.contact.username + `@${appConfig.VUE_APP_XMPP_SERVER_DOMAIN}`,
       start: startOfTime,
       end: conversation.oldConversation.lastStamp,
       before: conversation.oldConversation.lastRetrievedId,
-      max: 5,
+      max: 15,
       isGroup: false,
       onMessage: function(message) {
         const resultId = message.getElementsByTagName('result')[0].getAttribute('id');
@@ -304,14 +309,6 @@ export default {
         const from = StringUtils
           .removeAfterInclChar(message.getElementsByTagName('message')[0].getAttribute('from'), '@');
         const unformattedDate = new Date(stamp);
-
-        if (isFirstMessage) {
-          ctx.store.dispatch('chat/updateOldConversationLastRetrievedId', { 
-            oldConversation: conversation.oldConversation, 
-            lastRetrievedId: resultId 
-          });
-          isFirstMessage = false;
-        }
 
         let ownMessage = false;
         if (from === authUser.username) {
@@ -322,10 +319,20 @@ export default {
           ownMessage, 
           stampDate: unformattedDate 
         });
+        resultIdList.push(resultId);
         
         return true;
       },
-      onComplete: function() {
+      onComplete: function(response) {
+        const resultId = response.getElementsByTagName('first')[0].textContent;
+        const foundIndex = resultIdList.indexOf(resultId);
+        messageList = messageList.slice(foundIndex, messageList.length);
+
+        ctx.store.dispatch('chat/updateOldConversationLastRetrievedId', { 
+          oldConversation: conversation.oldConversation, 
+          lastRetrievedId: resultId 
+        });
+
         ctx.store.dispatch('chat/updateOldConversationIsLoading', { 
           oldConversation: conversation.oldConversation, 
           bool: false 
@@ -342,11 +349,17 @@ export default {
             messageList: messageList 
           });
         }
+
         setTimeout(function () {
-          if (messageBox !== undefined) {
+          if (bolOpenConversation) {
+            messageBox = document.getElementById('message-box');
+            messageBox.scrollTop = messageBox.scrollHeight;
+          } else {
             messageBox.scrollTop = messageBox.scrollHeight - scrollHeight;
           }
         });
+
+        ctx.store.dispatch('chat/updateLockAutoLoadOldMessages', false);
       },
     });
   },
@@ -366,15 +379,15 @@ export default {
       end: new Date().toISOString(),
       max: 1,
       isGroup: false,
-      onMessage: function(message) {
-        const resultId = message.getElementsByTagName('result')[0].getAttribute('id');
+      onMessage: function() {
+        return true;
+      },
+      onComplete: function(response) {
+        const resultId = response.getElementsByTagName('first')[0].textContent;
         ctx.store.dispatch('chat/updateOldConversationLastMessageId', { 
           oldConversation: conversation.oldConversation, 
           lastMessageId: resultId 
         });
-        return true;
-      },
-      onComplete: function() {
         return true;
       },
     });

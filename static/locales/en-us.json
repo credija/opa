@@ -28,7 +28,8 @@
         "loadOldMessages": "Load old messages...",
         "loadingOldMessages": "Loading old messages...",
         "oldMessagesLimit": "You have reached the old message search limit",
-        "oldMessagesLabel": "Old Messages"
+        "oldMessagesLabel": "Old Messages",
+        "loadingMessages": "Loading messages..."
     },
     "contacts": {
         "searchPlaceholder": "Search Contact",
