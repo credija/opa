@@ -2,6 +2,7 @@ import Vue from 'vue'
 import XmppService from '@/services/xmpp-service';
 import PresenceEnum from '@/enums/presence-enum';
 import MessageParser from '@/services/message-parser';
+import ArrayUtils from '@/utils/array-utils';
 
 export default ({ store }) => {
   Vue.prototype.dispatchHappyEmoji = () => { store.dispatch('chat/updateChatboxEmoji', 'happy') };

@@ -224,7 +224,7 @@ small {
 }
 
 .text-primary {
-    color: teal;
+    color: teal !important;
 }
 
 .text-warning {
@@ -337,6 +337,10 @@ a {
 }
 
 // Background Relatives
+.bg-semi-transparent {
+    background:rgba(255, 255, 255, 0.8) !important;
+}
+
 .bg-alert {
     background-color: #ffcdd2 !important;
 }
@@ -510,6 +514,14 @@ img.emoji {
     overflow: hidden;
 }
 
+// Fade In/Out
+.fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to {
+    opacity: 0;
+}
+
 // Enter Right to Left / Exit Left
 .slide-rl-leave-active,
 .slide-rl-enter-active {
@@ -558,3 +570,23 @@ img.emoji {
     -webkit-animation-name: fadeIn;
     animation-name: fadeIn;
  }
+
+// Abosolute Styles
+.absolute-top {
+    position: absolute;
+    left: 50%;
+    margin-top: 10px;
+}
+
+// Z-INDEX
+.z-index-1 {
+    z-index: 1;
+}
+
+.z-index-2 {
+    z-index: 2;
+}
+
+.z-index-3 {
+    z-index: 3;
+}

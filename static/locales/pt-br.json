@@ -67,5 +67,9 @@
     "dialogs": {
         "save": "Salvar",
         "cancel": "Cancelar"
+    },
+    "date": {
+        "today": "Hoje",
+        "yesterday": "Ontem"
     }
 }

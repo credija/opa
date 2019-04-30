@@ -94,6 +94,7 @@ const mutations = {
     Vue.set(oldConversation, 'lastRetrievedId', '');
     Vue.set(oldConversation, 'isLoading', false);
     Vue.set(oldConversation, 'list', []);
+    Vue.set(oldConversation, 'noResult', false);
   },
 };
 

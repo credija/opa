@@ -47,10 +47,9 @@ export default {
         DocTitleService.updateTitle();
       }
 
-      this.saveChatboxState();
-
       if (this.activeConversation !== null) {
         XmppService.sendChatSignal(this.activeConversation.contact.username, 'paused');
+        this.saveChatboxState();
       }
 
       this.$store.dispatch('chat/clearUnreadCounterConversation', conversation);

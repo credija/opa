@@ -9,7 +9,6 @@ import EmojiGroups from 'cool-emoji-picker/src/emoji-data/emoji-groups.json';
 
 let XmppService = null;
 
-// TODO: Performance when has many conversations
 export default {
   name: 'ChatBox',
   components: { 
@@ -28,7 +27,9 @@ export default {
       showContactDetails: false,
       chatboxHeight: 0,
       chatboxMaxHeight: 0,
-
+      
+      stampDateList: [],
+      dateLabel: this.$t('date.today'),
     };
   },
   created() {
@@ -79,6 +80,10 @@ export default {
 
       this.scrollMessageBoxToBottom();
     },
+    activeConversation: function () {
+      this.stampDateList = [];
+      this.dateLabel = this.$t('date.today');
+    },
   },
   computed: {
     xmppClient() {
@@ -97,15 +102,18 @@ export default {
       return this.$store.state.chat.conversationList;
     },
     profileImageSrc() {
-      const profileImageList = this.$store.state.app.profileImageList;
-      const profileImageObj = profileImageList.find(profileImage => 
-        profileImage.username.toUpperCase() === this.activeContact.username.toUpperCase());
-      let imgSrc = null;
-      if (profileImageObj !== undefined 
-        && profileImageObj.bin) {
-        imgSrc = 'data:' + profileImageObj.type + ';base64,' + profileImageObj.bin;
+      if (this.activeContact !== null) {
+        const profileImageList = this.$store.state.app.profileImageList;
+        const profileImageObj = profileImageList.find(profileImage => 
+          profileImage.username.toUpperCase() === this.activeContact.username.toUpperCase());
+        let imgSrc = null;
+        if (profileImageObj !== undefined 
+          && profileImageObj.bin) {
+          imgSrc = 'data:' + profileImageObj.type + ';base64,' + profileImageObj.bin;
+        }
+        return imgSrc;
       }
-      return imgSrc;
+      return null;
     },
     isDisconnected() {
       return this.$store.state.app.isDisconnected;
@@ -265,6 +273,37 @@ export default {
       this.changePresenceUserAction();
       if (this.lockAutoLoadOldMessages === false) {
         XmppService.getOldMessages(this.activeConversation);
+      }
+    },
+    addToStampDateList(stampDate) {
+      this.stampDateList.push(stampDate);
+      this.stampDateList = this.stampDateList.sort(function(a,b){
+        return a - b;
+      });
+      this.setDateLabel();
+    },
+    removeFromStampDateList(stampDate) {
+      this.stampDateList = this.stampDateList.filter(item => item !== stampDate);
+      this.setDateLabel();
+    },
+    setDateLabel() {
+      const firstStamp = this.stampDateList[0];
+
+      if (firstStamp === undefined) return this.$t('date.today');
+
+      const today = new Date;
+      const yesterday = new Date; yesterday.setDate(today.getDate() - 1);
+
+      if(firstStamp.getDate() === today.getDate() &&
+        firstStamp.getMonth() === today.getMonth() &&
+        firstStamp.getFullYear() === today.getFullYear()) {
+        this.dateLabel = this.$t('date.today');
+      } else if (firstStamp.getDate() === yesterday.getDate() &&
+      firstStamp.getMonth() === yesterday.getMonth() &&
+      firstStamp.getFullYear() === yesterday.getFullYear()) {
+        this.dateLabel = this.$t('date.yesterday');
+      } else {
+        this.dateLabel = firstStamp.toLocaleDateString(this.appLocale);
       }
     },
   },
