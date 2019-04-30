@@ -97,7 +97,9 @@ export default {
         this.$store.dispatch('chat/clearUnreadCounterConversation', conversation);
       }
 
-      this.saveChatboxState();
+      if (this.activeConversation !== null) {
+        this.saveChatboxState();
+      }
 
       this.$store.dispatch('chat/updateActiveConversation', conversation);
       this.$emit('switchActiveMenu');

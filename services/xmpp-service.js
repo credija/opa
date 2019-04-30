@@ -277,6 +277,7 @@ export default {
           bool: true 
         });
       }, 300);
+      this.store.dispatch('chat/updateLockAutoLoadOldMessages', false);
       return;
     }
 
@@ -319,6 +320,7 @@ export default {
           ownMessage, 
           stampDate: unformattedDate 
         });
+        
         resultIdList.push(resultId);
         
         return true;
