@@ -27,9 +27,6 @@ export default {
       showContactDetails: false,
       chatboxHeight: 0,
       chatboxMaxHeight: 0,
-      
-      stampDateList: [],
-      dateLabel: this.$t('date.today'),
     };
   },
   created() {
@@ -79,10 +76,6 @@ export default {
       }
 
       this.scrollMessageBoxToBottom();
-    },
-    activeConversation: function () {
-      this.stampDateList = [];
-      this.dateLabel = this.$t('date.today');
     },
   },
   computed: {
@@ -274,37 +267,6 @@ export default {
       if (this.lockAutoLoadOldMessages === false) {
         XmppService.getOldMessages(this.activeConversation);
       }
-    },
-    addToStampDateList(stampDate) {
-      this.stampDateList.push(stampDate);
-      this.stampDateList = this.stampDateList.sort(function(a,b){
-        return a - b;
-      });
-      this.setDateLabel();
-    },
-    removeFromStampDateList(stampDate) {
-      this.stampDateList = this.stampDateList.filter(item => item !== stampDate);
-      this.setDateLabel();
-    },
-    setDateLabel() {
-      const firstStamp = this.stampDateList[0];
-
-      if (firstStamp === undefined) return this.$t('date.today');
-
-      const today = new Date;
-      const yesterday = new Date; yesterday.setDate(today.getDate() - 1);
-
-      if(firstStamp.getDate() === today.getDate() &&
-        firstStamp.getMonth() === today.getMonth() &&
-        firstStamp.getFullYear() === today.getFullYear()) {
-        this.dateLabel = this.$t('date.today');
-      } else if (firstStamp.getDate() === yesterday.getDate() &&
-      firstStamp.getMonth() === yesterday.getMonth() &&
-      firstStamp.getFullYear() === yesterday.getFullYear()) {
-        this.dateLabel = this.$t('date.yesterday');
-      } else {
-        this.dateLabel = firstStamp.toLocaleDateString(this.appLocale);
-      }
-    },
+    }
   },
 };

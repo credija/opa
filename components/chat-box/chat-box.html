@@ -39,15 +39,6 @@
             </el-col>
         </el-row>
         
-        <el-row>
-            <el-card class="absolute-top z-index-2 p1 fade-in text-bold text-primary b-rounded bg-semi-transparent" 
-                v-show="activeConversation && 
-                (activeConversation.oldConversation.list.length !== 0 
-                || activeConversation.list.length !== 0)">
-                {{ dateLabel }}
-            </el-card>
-        </el-row>
-
         <el-row class="by1 size-conversation px3 z-index-1" id="message-box" 
             :class="{ 'bg-white': chatConfig.darkMode === undefined || chatConfig.darkMode === false, 
                 'dark-theme': chatConfig.darkMode === true,
@@ -67,65 +58,61 @@
 
             <el-row v-if="activeConversation && activeConversation.oldConversation.list.length !== 0">
                 <el-row v-for="(message, key) in activeConversation.oldConversation.list" :key="key">
-                    <intersect @enter="addToStampDateList(message.stampDate)" @leave="removeFromStampDateList(message.stampDate)">
-                        <div id="oldMessages">
-                            <div class="float-right p1 m1 b-rounded message-style"
-                                :class="{ 'bg-light-teal': chatConfig.darkMode === undefined || chatConfig.darkMode === false, 
-                                    'bg-primary': chatConfig.darkMode === true }"
-                                v-if="message.ownMessage">
-                                <p class="m0">
-                                    <span v-html="parseMessage(message.msg)"></span>
-                                    <small class="float-right text-gray"> 
-                                        {{ message.stampDate | isDateToday(appLocale) }}
-                                    </small>
-                                </p>
-                            </div>
-        
-                            <div class="float-left p1 m1 b-rounded message-style"
-                                :class="{ 'bg-light-gray': chatConfig.darkMode === undefined || chatConfig.darkMode === false, 
-                                    'bg-dark-light': chatConfig.darkMode === true }"
-                                 v-if="message.ownMessage === false">
-                                 <p class="m0">
-                                    <span v-html="parseMessage(message.msg)"></span>
-                                    <small class="float-right text-gray"> 
-                                        {{ message.stampDate | isDateToday(appLocale) }}
-                                    </small>
-                                </p>
-                            </div>
+                    <div id="oldMessages">
+                        <div class="float-right p1 m1 b-rounded message-style"
+                            :class="{ 'bg-light-teal': chatConfig.darkMode === undefined || chatConfig.darkMode === false, 
+                                'bg-primary': chatConfig.darkMode === true }"
+                            v-if="message.ownMessage">
+                            <p class="m0">
+                                <span v-html="parseMessage(message.msg)"></span>
+                                <small class="float-right text-gray"> 
+                                    {{ message.stampDate | isDateToday(appLocale) }}
+                                </small>
+                            </p>
                         </div>
-                    </intersect>
+    
+                        <div class="float-left p1 m1 b-rounded message-style"
+                            :class="{ 'bg-light-gray': chatConfig.darkMode === undefined || chatConfig.darkMode === false, 
+                                'bg-dark-light': chatConfig.darkMode === true }"
+                                v-if="message.ownMessage === false">
+                                <p class="m0">
+                                <span v-html="parseMessage(message.msg)"></span>
+                                <small class="float-right text-gray"> 
+                                    {{ message.stampDate | isDateToday(appLocale) }}
+                                </small>
+                            </p>
+                        </div>
+                    </div>
                 </el-row>
             </el-row>
 
             <el-row v-if="activeConversation && activeConversation.list.length !== 0">
                 <el-row v-for="(message, key) in activeConversation.list" :key="key">
-                    <intersect @enter="addToStampDateList(message.stampDate)" @leave="removeFromStampDateList(message.stampDate)">
-                        <div id="newMessages">
-                            <div class="float-right p1 m1 b-rounded message-style" 
-                                :class="{ 'bg-light-teal': chatConfig.darkMode === undefined || chatConfig.darkMode === false, 
-                                    'bg-primary': chatConfig.darkMode === true }"
-                                v-if="message.ownMessage">
-                                <p class="m0">
-                                    <span v-html="parseMessage(message.msg)"></span>
-                                    <small class="float-right text-gray"> 
-                                        {{ message.stampDate | isDateToday(appLocale) }}
-                                    </small>
-                                </p>
-                            </div>
-    
-                            <div class="float-left p1 m1 b-rounded message-style" 
-                                :class="{ 'bg-light-gray': chatConfig.darkMode === undefined || chatConfig.darkMode === false, 
-                                    'bg-dark-light': chatConfig.darkMode === true }"    
-                                v-if="message.ownMessage === false">
-                                <p class="m0">
-                                    <span v-html="parseMessage(message.msg)"></span>
-                                    <small class="float-right text-gray"> 
-                                        {{ message.stampDate | isDateToday(appLocale) }}
-                                    </small>
-                                </p>
-                            </div>
+                    <div id="newMessages">
+                        <div class="float-right p1 m1 b-rounded message-style" 
+                            :class="{ 'bg-light-teal': chatConfig.darkMode === undefined || chatConfig.darkMode === false, 
+                                'bg-primary': chatConfig.darkMode === true }"
+                            v-if="message.ownMessage">
+                            <p class="m0">
+                                <span v-html="parseMessage(message.msg)"></span>
+                                <small class="float-right text-gray"> 
+                                    {{ message.stampDate | isDateToday(appLocale) }}
+                                </small>
+                            </p>
                         </div>
-                    </intersect>
+
+                        <div class="float-left p1 m1 b-rounded message-style" 
+                            :class="{ 'bg-light-gray': chatConfig.darkMode === undefined || chatConfig.darkMode === false, 
+                                'bg-dark-light': chatConfig.darkMode === true }"    
+                            v-if="message.ownMessage === false">
+                            <p class="m0">
+                                <span v-html="parseMessage(message.msg)"></span>
+                                <small class="float-right text-gray"> 
+                                    {{ message.stampDate | isDateToday(appLocale) }}
+                                </small>
+                            </p>
+                        </div>
+                    </div>
                 </el-row>
             </el-row>
             
