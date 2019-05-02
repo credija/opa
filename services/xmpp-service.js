@@ -326,8 +326,14 @@ export default {
         return true;
       },
       onComplete: function(response) {
-        const resultId = response.getElementsByTagName('first')[0].textContent;
-        const foundIndex = resultIdList.indexOf(resultId);
+        const firstIdNode = response.getElementsByTagName('first')[0];
+        let resultId = null;
+        let foundIndex = 0;
+        if (firstIdNode !== undefined) {
+          resultId = firstIdNode.textContent;
+          foundIndex = resultIdList.indexOf(resultId);
+        }
+        
         messageList = messageList.slice(foundIndex, messageList.length);
 
         ctx.store.dispatch('chat/updateOldConversationLastRetrievedId', { 
@@ -385,7 +391,11 @@ export default {
         return true;
       },
       onComplete: function(response) {
-        const resultId = response.getElementsByTagName('first')[0].textContent;
+        const firstIdNode = response.getElementsByTagName('first')[0];
+        let resultId = null;
+        if (firstIdNode !== undefined) {
+          resultId = firstIdNode.textContent;
+        }
         ctx.store.dispatch('chat/updateOldConversationLastMessageId', { 
           oldConversation: conversation.oldConversation, 
           lastMessageId: resultId 
