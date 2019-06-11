@@ -47,7 +47,7 @@ Has some feature in mind, suggestion or come across a bug? Open an [Issue](https
 Check the features here: https://github.com/credija/opa/wiki/Features
 
 # Requirements
-Currently Opa uses https://cdn.polyfill.io/v2/polyfill.min.js for better support because your browser needs to support these three features:
+Currently Opa uses https://polyfill.io/v3/polyfill.min.js?flags=gated for better support because your browser needs to support these three features:
 - https://caniuse.com/#search=es6
 - https://caniuse.com/#feat=flexbox
 - https://caniuse.com/#feat=intersectionobserver

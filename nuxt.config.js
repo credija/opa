@@ -32,7 +32,7 @@ module.exports = {
       { hid: 'description', name: 'description', content: pkg.description }
     ],
     script: [
-      { src: 'https://cdn.polyfill.io/v2/polyfill.min.js' }
+      { src: 'https://polyfill.io/v3/polyfill.min.js?flags=gated' }
     ],
     link: [
       { 
