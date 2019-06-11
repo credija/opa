@@ -70,9 +70,6 @@ const mutations = {
   [types.UPDATE_OLD_CONVERSATION_LAST_STAMP](state, { oldConversation, lastStamp }) {
     Vue.set(oldConversation, 'lastStamp', lastStamp);
   },
-  [types.UPDATE_OLD_CONVERSATION_IS_LOADING](state, { oldConversation, bool }) {
-    Vue.set(oldConversation, 'isLoading', bool);
-  },
   [types.UPDATE_OLD_CONVERSATION_NO_RESULT](state, { oldConversation, bool }) {
     Vue.set(oldConversation, 'noResult', bool);
   },

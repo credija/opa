@@ -89,10 +89,6 @@ const actions = {
     const { oldConversation, lastStamp } = updateOldConversationLastStamp;
     commit(types.UPDATE_OLD_CONVERSATION_LAST_STAMP, { oldConversation, lastStamp });
   },
-  updateOldConversationIsLoading({ commit }, updateOldConversationIsLoading) {
-    const { oldConversation, bool } = updateOldConversationIsLoading;
-    commit(types.UPDATE_OLD_CONVERSATION_IS_LOADING, { oldConversation, bool });
-  },
   updateOldConversationNoResult({ commit }, updateOldConversationNoResult) {
     const { oldConversation, bool } = updateOldConversationNoResult;
     commit(types.UPDATE_OLD_CONVERSATION_NO_RESULT, { oldConversation, bool });

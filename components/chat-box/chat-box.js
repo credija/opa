@@ -241,10 +241,6 @@ export default {
       this.changePresenceUserAction();
       this.showContactDetails = false;
     },
-    loadOldMessages(bolOpenConversation) {
-      this.changePresenceUserAction();
-      XmppService.getOldMessages(this.activeConversation, bolOpenConversation);
-    },
     selectEmoji(emoji) {
       this.$refs.coolTextarea.addText(emoji);
     },
@@ -265,7 +261,11 @@ export default {
     autoLoadOldMessages() {
       this.changePresenceUserAction();
       if (this.lockAutoLoadOldMessages === false) {
-        XmppService.getOldMessages(this.activeConversation);
+        XmppService.getOldMessages(this.activeConversation).then((res) => {
+          if (res.length < 15) {
+            return XmppService.getOldMessages(this.activeConversation);
+          }
+        });
       }
     }
   },
