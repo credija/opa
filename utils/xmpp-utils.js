@@ -134,7 +134,7 @@ export default {
       setTimeout(function () {
         const check = $pres({
           type: 'probe',
-          to: rosterObj.username + `@${appConfig.VUE_APP_XMPP_SERVER_DOMAIN}`
+          to: rosterObj.username + `@${appConfig.XMPP_SERVER_DOMAIN}`
         });
         client.send(check);
       }, 5000);

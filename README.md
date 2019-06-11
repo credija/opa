@@ -96,9 +96,9 @@ Note: If you want to use a XMPP server in Docker we recommend our Openfire build
 ## Configuration
 
 To connect to an XMPP server you will need to overwrite the [app-config.json](https://github.com/credija/opa/blob/master/static/config/app-config.json). The options are these:
-- **VUE_APP_XMPP_SERVER_ADDRESS**: The address for the HTTP/S BOSH or WSS WebSocket connection.
-- **VUE_APP_XMPP_SERVER_DOMAIN**: Your chat domain.
-- **VUE_APP_LOCALE**: The locale needs to be set in the format "language-country", like "en-us", "pt-br", etc since this value will be used to format date through the app.
+- **XMPP_SERVER_ADDRESS**: The address for the HTTP/S BOSH or WSS WebSocket connection.
+- **XMPP_SERVER_DOMAIN**: Your chat domain.
+- **APP_LOCALE**: The locale needs to be set in the format "language-country", like "en-us", "pt-br", etc since this value will be used to format date through the app.
 
 ## Internationalization
 
@@ -114,7 +114,7 @@ If you want to test Opa but it doesn't have your language you can develop your o
 
 Once finished send a [pull request](https://github.com/credija/opa/pulls) on the develop branch with your translation so we can add it to Opa.
 
-**Note:** It's important to remember that the file needs to follow the 'language-country.json' format which is the same used in the **VUE_APP_LOCALE** option.
+**Note:** It's important to remember that the file needs to follow the 'language-country.json' format which is the same used in the **APP_LOCALE** option.
 
 ## Compatibility
 

@@ -17,11 +17,11 @@ export default {
 
     let conn = null;
     let usernameCred = username.toLowerCase();
-    if (!usernameCred.includes(`@${appConfig.VUE_APP_XMPP_SERVER_DOMAIN}`)) {
-      usernameCred += `@${appConfig.VUE_APP_XMPP_SERVER_DOMAIN}`;
+    if (!usernameCred.includes(`@${appConfig.XMPP_SERVER_DOMAIN}`)) {
+      usernameCred += `@${appConfig.XMPP_SERVER_DOMAIN}`;
     }
 
-    const connUrl = appConfig.VUE_APP_XMPP_SERVER_ADDRESS;
+    const connUrl = appConfig.XMPP_SERVER_ADDRESS;
     conn = new Strophe.Connection(connUrl);
     this.store.dispatch('app/updateXmppClient', conn);
     
@@ -70,7 +70,7 @@ export default {
     
     const check = $pres({
       type: 'probe',
-      to: contact.username + `@${appConfig.VUE_APP_XMPP_SERVER_DOMAIN}`,
+      to: contact.username + `@${appConfig.XMPP_SERVER_DOMAIN}`,
     });
     client.send(check);
   },
@@ -83,7 +83,7 @@ export default {
     for (let i = 0; i < rosterList.length; i++) {
       const check = $pres({
         type: 'probe',
-        to: rosterList[i].username + `@${appConfig.VUE_APP_XMPP_SERVER_DOMAIN}`,
+        to: rosterList[i].username + `@${appConfig.XMPP_SERVER_DOMAIN}`,
       });
       client.send(check);
     }
@@ -94,7 +94,7 @@ export default {
     const client = this.store.state.app.xmppClient;
 
     const m = $msg({
-      to: to + `@${appConfig.VUE_APP_XMPP_SERVER_DOMAIN}`,
+      to: to + `@${appConfig.XMPP_SERVER_DOMAIN}`,
       type: 'chat'
     })
       .c('stamp')
@@ -110,7 +110,7 @@ export default {
     const client = this.store.state.app.xmppClient;
 
     const chatSignal = $msg({ 
-      to: jid + `@${appConfig.VUE_APP_XMPP_SERVER_DOMAIN}`, 
+      to: jid + `@${appConfig.XMPP_SERVER_DOMAIN}`, 
       type: 'chat' 
     })
       .c(notification, { xmlns: Strophe.NS.CHATSTATES });
@@ -144,7 +144,7 @@ export default {
 
     const avatarIq = $iq({ 
       type: 'get',
-      to: username + `@${appConfig.VUE_APP_XMPP_SERVER_DOMAIN}` 
+      to: username + `@${appConfig.XMPP_SERVER_DOMAIN}` 
     })
       .c('vCard', { xmlns: 'vcard-temp' });
     client.sendIQ(avatarIq, XmppUtils.avatarCallback.bind(this));
@@ -161,7 +161,7 @@ export default {
 
     const avatarIq = $iq({ 
       type: 'get',
-      to: clientUsername + `@${appConfig.VUE_APP_XMPP_SERVER_DOMAIN}` 
+      to: clientUsername + `@${appConfig.XMPP_SERVER_DOMAIN}` 
     })
       .c('vCard', { xmlns: 'vcard-temp' });
     client.sendIQ(avatarIq, XmppUtils.vCardLoggedUser.bind(this));
@@ -283,8 +283,8 @@ export default {
         let messageList = [];
         const resultIdList = [];
     
-        client.mam.query(authUser.username + `@${appConfig.VUE_APP_XMPP_SERVER_DOMAIN}`, {
-          with: conversation.contact.username + `@${appConfig.VUE_APP_XMPP_SERVER_DOMAIN}`,
+        client.mam.query(authUser.username + `@${appConfig.XMPP_SERVER_DOMAIN}`, {
+          with: conversation.contact.username + `@${appConfig.XMPP_SERVER_DOMAIN}`,
           start: startOfTime,
           end: conversation.oldConversation.lastStamp,
           before: conversation.oldConversation.lastRetrievedId,
@@ -365,8 +365,8 @@ export default {
 
         const startOfTime = new Date(1970, 0, 1).toISOString();
 
-        client.mam.query(authUser.username + `@${appConfig.VUE_APP_XMPP_SERVER_DOMAIN}`, {
-          with: conversation.contact.username + `@${appConfig.VUE_APP_XMPP_SERVER_DOMAIN}`,
+        client.mam.query(authUser.username + `@${appConfig.XMPP_SERVER_DOMAIN}`, {
+          with: conversation.contact.username + `@${appConfig.XMPP_SERVER_DOMAIN}`,
           start: startOfTime,
           end: new Date().toISOString(),
           max: 1,

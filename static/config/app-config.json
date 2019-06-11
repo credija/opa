@@ -1,5 +1,5 @@
 {
-    "VUE_APP_XMPP_SERVER_ADDRESS": "http://www.credija.com.br/openfire-demo/http-bind",
-    "VUE_APP_XMPP_SERVER_DOMAIN": "chat",
-    "VUE_APP_LOCALE": "en-us"
+    "XMPP_SERVER_ADDRESS": "http://www.credija.com.br/openfire-demo/http-bind",
+    "XMPP_SERVER_DOMAIN": "chat",
+    "APP_LOCALE": "en-us"
 }
