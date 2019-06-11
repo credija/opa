@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.0.0",
-    "cool-emoji-picker": "^2.0.3",
+    "cool-emoji-picker": "^3.0.1",
     "cross-env": "^5.2.0",
     "element-ui": "^2.4.9",
     "express": "^4.16.4",
