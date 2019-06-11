@@ -7757,11 +7757,6 @@ twemoji-parser@12.0.0:
   resolved "https://registry.yarnpkg.com/twemoji-parser/-/twemoji-parser-12.0.0.tgz#870ea374b495595baa3bddb719e902b39ea7ccd1"
   integrity sha512-JWZHBY32zKXo6GQ/JIQGLbbSQ5a3k+NHh5VkQ5AJFA++6cr+EtErj1aG8H4K7x8GwQ9/YzArNBQ06ryvKZL+WQ==
 
-twemoji@^11.2.0:
-  version "11.2.0"
-  resolved "https://registry.yarnpkg.com/twemoji/-/twemoji-11.2.0.tgz#3627c3607321bb784bcfb5b65b3b21309c031fa3"
-  integrity sha512-DgTadXkRHugun6mjUf1k3ni04WC4jHOX1bN5MjuCM3nwRyIMdXIr8FmWzW5mEIZjht5jD3NaEyXC4j3POdQwyQ==
-
 twemoji@^12.0.4:
   version "12.0.4"
   resolved "https://registry.yarnpkg.com/twemoji/-/twemoji-12.0.4.tgz#f247bb32141a8fa9486ce87eae7abd2c6188eaed"
