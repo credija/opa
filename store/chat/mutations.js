@@ -32,6 +32,12 @@ const mutations = {
   [types.UPDATE_CONVERSATION_LIST](state, { conversationList }) {
     state.conversationList = conversationList;
   },
+  [types.REORDER_CONVERSATION_LIST](state, { conversation }) {
+    conversation.list.sort(function(a, b) {
+      var dateA = new Date(a.stampDate), dateB = new Date(b.stampDate);
+      return dateA - dateB;
+    });
+  },
   [types.REMOVE_CONVERSATION_FROM_LIST](state, { conversation }) {
     state.conversationList = state.conversationList.filter(conv => 
       conv.contact.username !== conversation.contact.username);

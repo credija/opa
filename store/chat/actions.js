@@ -47,6 +47,9 @@ const actions = {
       conversationList
     });
   },
+  reorderConversationList({ commit }, conversation) {
+    commit(types.REORDER_CONVERSATION_LIST, { conversation });
+  },
   removeConversationFromList({ commit }, conversation) {
     commit(types.REMOVE_CONVERSATION_FROM_LIST, { conversation });
   },

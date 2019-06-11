@@ -224,6 +224,7 @@ export default {
             stampDate: newDate 
           } 
         });
+
       } else {
         let rosterObj = rosterList.find(roster => 
           roster.username.toUpperCase() === from.toUpperCase());
@@ -256,7 +257,7 @@ export default {
         XmppService.setLastMessageId(conversation);
         
         this.store.dispatch('chat/addMessageToConversation', { 
-          conversation: conversation, 
+          conversation: conversation,
           messageToAdd: { 
             msg: msgContent, 
             ownMessage: false,
@@ -287,6 +288,8 @@ export default {
           DocTitleService.constructor(this.store).updateTitle();
         }
       }
+
+      if (delay !== undefined) this.store.dispatch('chat/reorderConversationList', conversation);
 
       if (!bolFirstConversation) {
         this.store.dispatch('chat/reorderConversationByConversation', conversation);
