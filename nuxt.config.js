@@ -67,19 +67,7 @@ module.exports = {
   },
 
   build: {
-    transpile: ['cool-emoji-picker'],
-    babel: {
-      presets: ['@nuxt/babel-preset-app'],
-      plugins: [
-        [
-          'component',
-          {
-            libraryName: 'element-ui',
-            styleLibraryName: 'theme-chalk'
-          }
-        ]
-      ]
-    },
+    transpile: ['cool-emoji-picker', /^element-ui/],
     extend(config, ctx) {
       // Run ESLint on save
       if (ctx.isDev && ctx.isClient) {
