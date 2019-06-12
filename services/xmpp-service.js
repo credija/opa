@@ -17,11 +17,11 @@ export default {
 
     let conn = null;
     let usernameCred = username.toLowerCase();
-    if (!usernameCred.includes(`@${appConfig.VUE_APP_XMPP_SERVER_DOMAIN}`)) {
-      usernameCred += `@${appConfig.VUE_APP_XMPP_SERVER_DOMAIN}`;
+    if (!usernameCred.includes(`@${appConfig.XMPP_SERVER_DOMAIN}`)) {
+      usernameCred += `@${appConfig.XMPP_SERVER_DOMAIN}`;
     }
 
-    const connUrl = appConfig.VUE_APP_XMPP_SERVER_ADDRESS;
+    const connUrl = appConfig.XMPP_SERVER_ADDRESS;
     conn = new Strophe.Connection(connUrl);
     this.store.dispatch('app/updateXmppClient', conn);
     
@@ -70,7 +70,7 @@ export default {
     
     const check = $pres({
       type: 'probe',
-      to: contact.username + `@${appConfig.VUE_APP_XMPP_SERVER_DOMAIN}`,
+      to: contact.username + `@${appConfig.XMPP_SERVER_DOMAIN}`,
     });
     client.send(check);
   },
@@ -83,7 +83,7 @@ export default {
     for (let i = 0; i < rosterList.length; i++) {
       const check = $pres({
         type: 'probe',
-        to: rosterList[i].username + `@${appConfig.VUE_APP_XMPP_SERVER_DOMAIN}`,
+        to: rosterList[i].username + `@${appConfig.XMPP_SERVER_DOMAIN}`,
       });
       client.send(check);
     }
@@ -94,7 +94,7 @@ export default {
     const client = this.store.state.app.xmppClient;
 
     const m = $msg({
-      to: to + `@${appConfig.VUE_APP_XMPP_SERVER_DOMAIN}`,
+      to: to + `@${appConfig.XMPP_SERVER_DOMAIN}`,
       type: 'chat'
     })
       .c('stamp')
@@ -110,7 +110,7 @@ export default {
     const client = this.store.state.app.xmppClient;
 
     const chatSignal = $msg({ 
-      to: jid + `@${appConfig.VUE_APP_XMPP_SERVER_DOMAIN}`, 
+      to: jid + `@${appConfig.XMPP_SERVER_DOMAIN}`, 
       type: 'chat' 
     })
       .c(notification, { xmlns: Strophe.NS.CHATSTATES });
@@ -144,7 +144,7 @@ export default {
 
     const avatarIq = $iq({ 
       type: 'get',
-      to: username + `@${appConfig.VUE_APP_XMPP_SERVER_DOMAIN}` 
+      to: username + `@${appConfig.XMPP_SERVER_DOMAIN}` 
     })
       .c('vCard', { xmlns: 'vcard-temp' });
     client.sendIQ(avatarIq, XmppUtils.avatarCallback.bind(this));
@@ -161,7 +161,7 @@ export default {
 
     const avatarIq = $iq({ 
       type: 'get',
-      to: clientUsername + `@${appConfig.VUE_APP_XMPP_SERVER_DOMAIN}` 
+      to: clientUsername + `@${appConfig.XMPP_SERVER_DOMAIN}` 
     })
       .c('vCard', { xmlns: 'vcard-temp' });
     client.sendIQ(avatarIq, XmppUtils.vCardLoggedUser.bind(this));
@@ -245,153 +245,153 @@ export default {
   },
 
   getOldMessages(conversation, bolOpenConversation) {
-    this.store.dispatch('chat/updateLockAutoLoadOldMessages', true);
-    const ctx = this;
-
-    const appConfig = this.store.state.app.appConfig;
-    const client = this.store.state.app.xmppClient;
-    const authUser = this.store.state.app.authUser;
-
-    let messageBox = document.getElementById('message-box');
-    let scrollHeight = null;
-    if (messageBox) {
-      scrollHeight = messageBox.scrollHeight;
-    }
-
-    const startOfTime = new Date(1970, 0, 1).toISOString();
-
-    if (Number(conversation.oldConversation.lastRetrievedId) 
-      === Number(conversation.oldConversation.lastMessageId) 
-    && Number(conversation.oldConversation.lastMessageId) !== 0) {
-      this.store.dispatch('chat/updateOldConversationIsLoading', { 
-        oldConversation: conversation.oldConversation, 
-        bool: true 
-      });
-      setTimeout(() => {
-        this.store.dispatch('chat/updateOldConversationIsLoading', { 
-          oldConversation: conversation.oldConversation, 
-          bool: false 
-        });
-        this.store.dispatch('chat/updateOldConversationNoResult', { 
-          oldConversation: conversation.oldConversation, 
-          bool: true 
-        });
-      }, 300);
-      this.store.dispatch('chat/updateLockAutoLoadOldMessages', false);
-      return;
-    }
-
-    if (conversation.oldConversation.lastStamp === null) {
-      this.store.dispatch('chat/updateOldConversationLastStamp', { 
-        oldConversation: conversation.oldConversation, 
-        lastStamp: new Date().toISOString()
-      });
-    }
-
-    this.store.dispatch('chat/updateOldConversationIsLoading', { 
-      oldConversation: conversation.oldConversation, 
-      bool: true 
-    });
-
-    let messageList = [];
-    const resultIdList = [];
-
-    client.mam.query(authUser.username + `@${appConfig.VUE_APP_XMPP_SERVER_DOMAIN}`, {
-      with: conversation.contact.username + `@${appConfig.VUE_APP_XMPP_SERVER_DOMAIN}`,
-      start: startOfTime,
-      end: conversation.oldConversation.lastStamp,
-      before: conversation.oldConversation.lastRetrievedId,
-      max: 15,
-      isGroup: false,
-      onMessage: function(message) {
-        const resultId = message.getElementsByTagName('result')[0].getAttribute('id');
-        const stamp = message.getElementsByTagName('delay')[0].getAttribute('stamp');
-        const messageBody = message.getElementsByTagName('body')[0].textContent;
-        const from = StringUtils
-          .removeAfterInclChar(message.getElementsByTagName('message')[0].getAttribute('from'), '@');
-        const unformattedDate = new Date(stamp);
-
-        let ownMessage = false;
-        if (from === authUser.username) {
-          ownMessage = true;
+    return new Promise(
+      (resolve, reject) => {
+        const ctx = this;
+    
+        const appConfig = this.store.state.app.appConfig;
+        const client = this.store.state.app.xmppClient;
+        const authUser = this.store.state.app.authUser;
+    
+        let messageBox = document.getElementById('message-box');
+        let scrollHeight = null;
+        if (messageBox) {
+          scrollHeight = messageBox.scrollHeight;
         }
-        messageList.push({ 
-          msg: messageBody, 
-          ownMessage, 
-          stampDate: unformattedDate 
-        });
-        
-        resultIdList.push(resultId);
-        
-        return true;
-      },
-      onComplete: function(response) {
-        const resultId = response.getElementsByTagName('first')[0].textContent;
-        const foundIndex = resultIdList.indexOf(resultId);
-        messageList = messageList.slice(foundIndex, messageList.length);
-
-        ctx.store.dispatch('chat/updateOldConversationLastRetrievedId', { 
-          oldConversation: conversation.oldConversation, 
-          lastRetrievedId: resultId 
-        });
-
-        ctx.store.dispatch('chat/updateOldConversationIsLoading', { 
-          oldConversation: conversation.oldConversation, 
-          bool: false 
-        });
-
-        if (messageList.length === 0) {
-          ctx.store.dispatch('chat/updateOldConversationNoResult', { 
+    
+        const startOfTime = new Date(1970, 0, 1).toISOString();
+    
+        if (Number(conversation.oldConversation.lastRetrievedId) 
+          === Number(conversation.oldConversation.lastMessageId) 
+        || conversation.oldConversation.lastMessageId === -1) {
+          setTimeout(() => {
+            this.store.dispatch('chat/updateOldConversationNoResult', { 
+              oldConversation: conversation.oldConversation, 
+              bool: true 
+            });
+          }, 300);
+          return;
+        }
+    
+        if (conversation.oldConversation.lastStamp === null) {
+          this.store.dispatch('chat/updateOldConversationLastStamp', { 
             oldConversation: conversation.oldConversation, 
-            bool: true 
-          });
-        } else {
-          ctx.store.dispatch('chat/addMessageListToOldConversation', { 
-            oldConversation: conversation.oldConversation, 
-            messageList: messageList 
+            lastStamp: new Date().toISOString()
           });
         }
-
-        setTimeout(function () {
-          if (bolOpenConversation) {
-            messageBox = document.getElementById('message-box');
-            messageBox.scrollTop = messageBox.scrollHeight;
-          } else {
-            messageBox.scrollTop = messageBox.scrollHeight - scrollHeight;
-          }
+    
+        let messageList = [];
+        const resultIdList = [];
+    
+        client.mam.query(authUser.username + `@${appConfig.XMPP_SERVER_DOMAIN}`, {
+          with: conversation.contact.username + `@${appConfig.XMPP_SERVER_DOMAIN}`,
+          start: startOfTime,
+          end: conversation.oldConversation.lastStamp,
+          before: conversation.oldConversation.lastRetrievedId,
+          max: 15,
+          isGroup: false,
+          onMessage: function(message) {
+            const resultId = message.getElementsByTagName('result')[0].getAttribute('id');
+            const stamp = message.getElementsByTagName('delay')[0].getAttribute('stamp');
+            const messageBody = message.getElementsByTagName('body')[0].textContent;
+            const from = StringUtils
+              .removeAfterInclChar(message.getElementsByTagName('message')[0].getAttribute('from'), '@');
+            const unformattedDate = new Date(stamp);
+    
+            let ownMessage = false;
+            if (from === authUser.username) {
+              ownMessage = true;
+            }
+            messageList.push({ 
+              msg: messageBody, 
+              ownMessage, 
+              stampDate: unformattedDate 
+            });
+            
+            resultIdList.push(resultId);
+            
+            return true;
+          },
+          onComplete: function(response) {
+            const firstIdNode = response.getElementsByTagName('first')[0];
+            let resultId = null;
+            let foundIndex = 0;
+            if (firstIdNode !== undefined) {
+              resultId = firstIdNode.textContent;
+              foundIndex = resultIdList.indexOf(resultId);
+            }
+            
+            messageList = messageList.slice(foundIndex, messageList.length);
+    
+            ctx.store.dispatch('chat/updateOldConversationLastRetrievedId', { 
+              oldConversation: conversation.oldConversation, 
+              lastRetrievedId: resultId 
+            });
+    
+            if (messageList.length === 0) {
+              ctx.store.dispatch('chat/updateOldConversationNoResult', { 
+                oldConversation: conversation.oldConversation, 
+                bool: true 
+              });
+            } else {
+              ctx.store.dispatch('chat/addMessageListToOldConversation', { 
+                oldConversation: conversation.oldConversation, 
+                messageList: messageList 
+              });
+            }
+    
+            setTimeout(function () {
+              if (bolOpenConversation) {
+                messageBox = document.getElementById('message-box');
+                messageBox.scrollTop = messageBox.scrollHeight;
+              } else {
+                messageBox.scrollTop = messageBox.scrollHeight - scrollHeight;
+              }
+            });
+            resolve(messageList);
+          },
         });
-
-        ctx.store.dispatch('chat/updateLockAutoLoadOldMessages', false);
-      },
     });
   },
 
   setLastMessageId(conversation) {
-    const ctx = this;
+    return new Promise(
+      (resolve, reject) => {
+        const ctx = this;
 
-    const appConfig = this.store.state.app.appConfig;
-    const client = this.store.state.app.xmppClient;
-    const authUser = this.store.state.app.authUser;
+        const appConfig = this.store.state.app.appConfig;
+        const client = this.store.state.app.xmppClient;
+        const authUser = this.store.state.app.authUser;
 
-    const startOfTime = new Date(1970, 0, 1).toISOString();
+        const startOfTime = new Date(1970, 0, 1).toISOString();
 
-    client.mam.query(authUser.username + `@${appConfig.VUE_APP_XMPP_SERVER_DOMAIN}`, {
-      with: conversation.contact.username + `@${appConfig.VUE_APP_XMPP_SERVER_DOMAIN}`,
-      start: startOfTime,
-      end: new Date().toISOString(),
-      max: 1,
-      isGroup: false,
-      onMessage: function() {
-        return true;
-      },
-      onComplete: function(response) {
-        const resultId = response.getElementsByTagName('first')[0].textContent;
-        ctx.store.dispatch('chat/updateOldConversationLastMessageId', { 
-          oldConversation: conversation.oldConversation, 
-          lastMessageId: resultId 
+        client.mam.query(authUser.username + `@${appConfig.XMPP_SERVER_DOMAIN}`, {
+          with: conversation.contact.username + `@${appConfig.XMPP_SERVER_DOMAIN}`,
+          start: startOfTime,
+          end: new Date().toISOString(),
+          max: 1,
+          isGroup: false,
+          onMessage: function() {
+            return true;
+          },
+          onComplete: function(response) {
+            const firstIdNode = response.getElementsByTagName('first')[0];
+            let resultId = -1;
+            if (firstIdNode !== undefined) {
+              resultId = firstIdNode.textContent;
+            } else {
+              ctx.store.dispatch('chat/updateOldConversationNoResult', { 
+                oldConversation: conversation.oldConversation, 
+                bool: true 
+              });
+            }
+            ctx.store.dispatch('chat/updateOldConversationLastMessageId', { 
+              oldConversation: conversation.oldConversation, 
+              lastMessageId: resultId 
+            });
+            resolve(true);
+          },
         });
-        return true;
-      },
     });
-  }
+  },
 };

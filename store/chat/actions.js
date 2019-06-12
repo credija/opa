@@ -47,6 +47,9 @@ const actions = {
       conversationList
     });
   },
+  reorderConversationList({ commit }, conversation) {
+    commit(types.REORDER_CONVERSATION_LIST, { conversation });
+  },
   removeConversationFromList({ commit }, conversation) {
     commit(types.REMOVE_CONVERSATION_FROM_LIST, { conversation });
   },
@@ -88,10 +91,6 @@ const actions = {
   updateOldConversationLastStamp({ commit }, updateOldConversationLastStamp) {
     const { oldConversation, lastStamp } = updateOldConversationLastStamp;
     commit(types.UPDATE_OLD_CONVERSATION_LAST_STAMP, { oldConversation, lastStamp });
-  },
-  updateOldConversationIsLoading({ commit }, updateOldConversationIsLoading) {
-    const { oldConversation, bool } = updateOldConversationIsLoading;
-    commit(types.UPDATE_OLD_CONVERSATION_IS_LOADING, { oldConversation, bool });
   },
   updateOldConversationNoResult({ commit }, updateOldConversationNoResult) {
     const { oldConversation, bool } = updateOldConversationNoResult;

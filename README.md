@@ -47,7 +47,7 @@ Has some feature in mind, suggestion or come across a bug? Open an [Issue](https
 Check the features here: https://github.com/credija/opa/wiki/Features
 
 # Requirements
-Currently Opa uses https://cdn.polyfill.io/v2/polyfill.min.js for better support because your browser needs to support these three features:
+Currently Opa uses https://polyfill.io/v3/polyfill.min.js?flags=gated for better support because your browser needs to support these three features:
 - https://caniuse.com/#search=es6
 - https://caniuse.com/#feat=flexbox
 - https://caniuse.com/#feat=intersectionobserver
@@ -96,9 +96,9 @@ Note: If you want to use a XMPP server in Docker we recommend our Openfire build
 ## Configuration
 
 To connect to an XMPP server you will need to overwrite the [app-config.json](https://github.com/credija/opa/blob/master/static/config/app-config.json). The options are these:
-- **VUE_APP_XMPP_SERVER_ADDRESS**: The address for the HTTP/S BOSH or WSS WebSocket connection.
-- **VUE_APP_XMPP_SERVER_DOMAIN**: Your chat domain.
-- **VUE_APP_LOCALE**: The locale needs to be set in the format "language-country", like "en-us", "pt-br", etc since this value will be used to format date through the app.
+- **XMPP_SERVER_ADDRESS**: The address for the HTTP/S BOSH or WSS WebSocket connection.
+- **XMPP_SERVER_DOMAIN**: Your chat domain.
+- **APP_LOCALE**: The locale needs to be set in the format "language-country", like "en-us", "pt-br", etc since this value will be used to format date through the app.
 
 ## Internationalization
 
@@ -114,7 +114,7 @@ If you want to test Opa but it doesn't have your language you can develop your o
 
 Once finished send a [pull request](https://github.com/credija/opa/pulls) on the develop branch with your translation so we can add it to Opa.
 
-**Note:** It's important to remember that the file needs to follow the 'language-country.json' format which is the same used in the **VUE_APP_LOCALE** option.
+**Note:** It's important to remember that the file needs to follow the 'language-country.json' format which is the same used in the **APP_LOCALE** option.
 
 ## Compatibility
 

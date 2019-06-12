@@ -134,7 +134,7 @@ export default {
       setTimeout(function () {
         const check = $pres({
           type: 'probe',
-          to: rosterObj.username + `@${appConfig.VUE_APP_XMPP_SERVER_DOMAIN}`
+          to: rosterObj.username + `@${appConfig.XMPP_SERVER_DOMAIN}`
         });
         client.send(check);
       }, 5000);
@@ -224,6 +224,7 @@ export default {
             stampDate: newDate 
           } 
         });
+
       } else {
         let rosterObj = rosterList.find(roster => 
           roster.username.toUpperCase() === from.toUpperCase());
@@ -256,7 +257,7 @@ export default {
         XmppService.setLastMessageId(conversation);
         
         this.store.dispatch('chat/addMessageToConversation', { 
-          conversation: conversation, 
+          conversation: conversation,
           messageToAdd: { 
             msg: msgContent, 
             ownMessage: false,
@@ -287,6 +288,8 @@ export default {
           DocTitleService.constructor(this.store).updateTitle();
         }
       }
+
+      if (delay !== undefined) this.store.dispatch('chat/reorderConversationList', conversation);
 
       if (!bolFirstConversation) {
         this.store.dispatch('chat/reorderConversationByConversation', conversation);

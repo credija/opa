@@ -53,13 +53,13 @@ export default {
       const staticBase = this.$nuxt._router.options.base;
       ConfigService.getConfigFile(staticBase).then((appConfig) => {
         this.$store.dispatch('app/updateAppConfig', appConfig);
-        this.$store.dispatch('app/updateAppLocale', appConfig.VUE_APP_LOCALE);
+        this.$store.dispatch('app/updateAppLocale', appConfig.APP_LOCALE);
 
         if (typeof navigator.language === 'string' 
           && Object.keys(this.$i18n.messages).includes(navigator.language.toLowerCase())) {
           this.$i18n.locale = navigator.language.toLowerCase();
         } else {
-          this.$i18n.locale = appConfig.VUE_APP_LOCALE;
+          this.$i18n.locale = appConfig.APP_LOCALE;
         }
        
         this.$store.dispatch('app/updateIsAppLoading', false);

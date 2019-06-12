@@ -25,7 +25,7 @@ export default {
     if (this.chatConfigForm.countryConfig !== undefined) {
       this.countryConfig = this.chatConfigForm.countryConfig;
     } else {
-      this.countryConfig = this.appConfig.VUE_APP_LOCALE;
+      this.countryConfig = this.appConfig.APP_LOCALE;
     }
   },
   methods: {

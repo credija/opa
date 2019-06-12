@@ -86,7 +86,25 @@ export default {
             list: []
           }
         };
-        XmppService.setLastMessageId(conversation);
+        this.$store.dispatch('chat/updateLockAutoLoadOldMessages', true);
+        this.setNewConversation(conversation);
+        XmppService.setLastMessageId(conversation)
+          .then(() => {
+            return XmppService.getOldMessages(conversation, true);
+          })
+          .then((res) => {
+            if (res.length < 15) {
+              this.emitCoolTextareaFocus();
+              this.$store.dispatch('chat/updateLockAutoLoadOldMessages', false);
+              return XmppService.getOldMessages(conversation);
+            } else {
+              return Promise.resolve(true);
+            }
+          })
+          .then(() => {
+            this.emitCoolTextareaFocus();
+            this.$store.dispatch('chat/updateLockAutoLoadOldMessages', false);
+          });
       } else {
         if (conversation.numUnreadMsgs !== 0) {
           const numUnreadConversation = this.$store.state.chat.numUnreadConversation;
@@ -95,8 +113,12 @@ export default {
           DocTitleService.updateTitle();
         }
         this.$store.dispatch('chat/clearUnreadCounterConversation', conversation);
+        this.$store.dispatch('chat/updateLockAutoLoadOldMessages', false);
+        this.setNewConversation(conversation);
+        this.emitCoolTextareaFocus();
       }
-
+    },
+    setNewConversation(conversation) {
       if (this.activeConversation !== null) {
         this.saveChatboxState();
       }
@@ -104,15 +126,15 @@ export default {
       this.$store.dispatch('chat/updateActiveConversation', conversation);
       this.$emit('switchActiveMenu');
 
+      this.scrollMessageBoxToBottom();
+    },
+    emitCoolTextareaFocus() {
       setTimeout(function () {
         const coolTextarea = document.getElementById('cool-textarea');
         if (coolTextarea) {
           this.$nuxt.$emit('COOL_TEXTAREA_FOCUS');
         }
       });
-
-      this.$store.dispatch('chat/updateLockAutoLoadOldMessages', false);
-      this.scrollMessageBoxToBottom();
     },
     searchContactByName() {
       if (this.searchTerm.length > 2) {
