@@ -118,6 +118,11 @@ const actions = {
       oldConversation
     });
   },
+
+  // Chat Store
+  resetChatStore({ commit }) {
+    commit(types.RESET_CHAT_STORE);
+  },
 };
 
 export default actions;

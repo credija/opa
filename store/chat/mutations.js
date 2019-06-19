@@ -99,6 +99,19 @@ const mutations = {
     Vue.set(oldConversation, 'list', []);
     Vue.set(oldConversation, 'noResult', false);
   },
+
+  // Chat State
+  [types.RESET_CHAT_STORE](state) {
+    state.conversationList = [];
+    state.activeConversation = null;
+    state.chatboxEmoji = 'confused';
+    state.lastNotification = new Date();
+    state.numUnreadConversation = 0;
+    state.lastMessageSentStamp = new Date();
+    state.isPresenceAway = false;
+    state.lastPresence = 'off';
+    state.lockAutoLoadOldMessages = false;
+  },
 };
 
 export default mutations;

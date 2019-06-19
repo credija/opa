@@ -1,5 +1,6 @@
 import PresenceEnum from '@/enums/presence-enum';
-
+import FaviconService from '@/services/favicon-service';
+import DocTitleService from '@/services/doc-title-service';
 let XmppService = null;
 
 export default {
@@ -91,6 +92,9 @@ export default {
       )
         .then(() => {
           this.$store.dispatch('app/updateIsAppLoading', true);
+          this.$store.dispatch('chat/resetChatStore');
+          FaviconService.updateFavicon();
+          DocTitleService.updateTitle();
           this.$router.push('/');
         })
         .catch(() => {});
