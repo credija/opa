@@ -2351,14 +2351,13 @@ cookie@^0.3.1:
   resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.3.1.tgz#e7e0a1f9ef43b4c8ba925c5c5a96e806d16873bb"
   integrity sha1-5+Ch+e9DtMi6klxcWpboBtFoc7s=
 
-cool-emoji-picker@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/cool-emoji-picker/-/cool-emoji-picker-3.0.1.tgz#30bde92d7037d0f1afefec32aa75c20e2b32731a"
-  integrity sha512-24W6/9pafT7IU1HmSItsocpXZuZSMQXRlxno11euYLxP/DMXbsmpWsiDRzMuEXT24C4QzhS2GDcDgE7jknjU2Q==
+cool-emoji-picker@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/cool-emoji-picker/-/cool-emoji-picker-3.1.0.tgz#a2b07d33ae615016dcb2fe09fc20548c20fd0c82"
+  integrity sha512-eBJsYutKjfJfYljnWym+LWfEnt261R9z5FYWN1FeHBRwrODFv9K22wMWo8B0SFdbB+rJK2qxsdVBR3I60yMhbQ==
   dependencies:
     twemoji "^12.0.4"
     v-tooltip "^2.0.2"
-    vue-dragscroll "^1.8.3"
 
 copy-concurrently@^1.0.0:
   version "1.0.5"
@@ -8257,11 +8256,6 @@ vm-browserify@0.0.4:
   integrity sha1-XX6kW7755Kb/ZflUOOCofDV9WnM=
   dependencies:
     indexof "0.0.1"
-
-vue-dragscroll@^1.8.3:
-  version "1.8.3"
-  resolved "https://registry.yarnpkg.com/vue-dragscroll/-/vue-dragscroll-1.8.3.tgz#ddde45d2bf5f02c1d27a748f6f0a3fd4950913cb"
-  integrity sha512-Rp9FquSwgleZVwQ/2w1zRsfBBCFfTwbpFR2xPvi+Y2GV5RQ/1rVfZoKtncqxMwrXHAdHaTtDraYSh1Lc10dLqA==
 
 vue-eslint-parser@^5.0.0:
   version "5.0.0"
