@@ -47,9 +47,6 @@ const actions = {
       conversationList
     });
   },
-  reorderConversationList({ commit }, conversation) {
-    commit(types.REORDER_CONVERSATION_LIST, { conversation });
-  },
   removeConversationFromList({ commit }, conversation) {
     commit(types.REMOVE_CONVERSATION_FROM_LIST, { conversation });
   },
@@ -103,10 +100,6 @@ const actions = {
   updateOldConversationLastMessageId({ commit }, updateOldConversationLastMessageId) {
     const { oldConversation, lastMessageId } = updateOldConversationLastMessageId;
     commit(types.UPDATE_OLD_CONVERSATION_LAST_MESSAGE_ID, { oldConversation, lastMessageId });
-  },
-  addMessageListToOldConversation({ commit }, addMessageListToOldConversation) {
-    const { oldConversation, messageList } = addMessageListToOldConversation;
-    commit(types.ADD_MESSAGE_LIST_TO_OLD_CONVERSATION, { oldConversation, messageList });
   },
   updateLockAutoLoadOldMessages({ commit }, bool) {
     commit(types.UPDATE_LOCK_AUTO_LOAD_OLD_MESSAGES, {

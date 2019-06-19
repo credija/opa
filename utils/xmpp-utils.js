@@ -172,7 +172,6 @@ export default {
     const type = msg.getAttribute('type');
     const body = msg.getElementsByTagName('body')[0];
     const stamp = msg.getElementsByTagName('stamp')[0];
-    const delay = msg.getElementsByTagName('delay')[0];
     const composing = msg.getElementsByTagName('composing')[0];
     const paused = msg.getElementsByTagName('paused')[0];
 
@@ -183,8 +182,7 @@ export default {
       const msgContent = MessageParser.parseAdminMessage(body.textContent);
       let newDate = new Date();
 
-      if (delay !== undefined) newDate = new Date(delay.getAttribute('stamp'));
-      else if (stamp !== undefined) newDate = new Date(stamp.textContent);
+      if (stamp !== undefined) newDate = new Date(stamp.textContent);
 
       MessageBox.alert(`${newDate.toLocaleString(locale)}:<br> ` + 
       `<p style="word-wrap: break-word !important; white-space: pre-wrap !important;">${msgContent}</p>`, 
@@ -198,8 +196,7 @@ export default {
     } else if (type === 'chat' && body !== undefined) {
       const msgContent = body.textContent;
       let newDate = new Date();
-      if (delay !== undefined) newDate = new Date(delay.getAttribute('stamp'));
-      else if (stamp !== undefined) newDate = new Date(stamp.textContent);
+      if (stamp !== undefined) newDate = new Date(stamp.textContent);
 
       if (conversation !== undefined) {
         if (conversation.contact.username 
@@ -221,6 +218,7 @@ export default {
           messageToAdd: { 
             msg: msgContent, 
             ownMessage: false, 
+            from,
             stampDate: newDate 
           } 
         });
@@ -261,6 +259,7 @@ export default {
           messageToAdd: { 
             msg: msgContent, 
             ownMessage: false,
+            from,
             stampDate: newDate
           }
         });
@@ -288,8 +287,6 @@ export default {
           DocTitleService.constructor(this.store).updateTitle();
         }
       }
-
-      if (delay !== undefined) this.store.dispatch('chat/reorderConversationList', conversation);
 
       if (!bolFirstConversation) {
         this.store.dispatch('chat/reorderConversationByConversation', conversation);

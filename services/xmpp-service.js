@@ -57,7 +57,6 @@ export default {
     client.send($pres());
     this.store.dispatch('chat/updateLastPresence', 'on');
 
-    
     const ctx = this;
     setTimeout(function () {
       ctx.store.dispatch('app/updateIsAppLoading', false);
@@ -292,19 +291,19 @@ export default {
           isGroup: false,
           onMessage: function(message) {
             const resultId = message.getElementsByTagName('result')[0].getAttribute('id');
-            const stamp = message.getElementsByTagName('delay')[0].getAttribute('stamp');
+            const stamp = message.getElementsByTagName('stamp')[0].textContent;
             const messageBody = message.getElementsByTagName('body')[0].textContent;
             const from = StringUtils
               .removeAfterInclChar(message.getElementsByTagName('message')[0].getAttribute('from'), '@');
             const unformattedDate = new Date(stamp);
-    
             let ownMessage = false;
             if (from === authUser.username) {
               ownMessage = true;
             }
             messageList.push({ 
               msg: messageBody, 
-              ownMessage, 
+              ownMessage,
+              from,
               stampDate: unformattedDate 
             });
             
@@ -334,10 +333,12 @@ export default {
                 bool: true 
               });
             } else {
-              ctx.store.dispatch('chat/addMessageListToOldConversation', { 
-                oldConversation: conversation.oldConversation, 
-                messageList: messageList 
-              });
+              for (let index = 0; index < messageList.length; index++) {
+                ctx.store.dispatch('chat/addMessageToConversation', { 
+                  conversation: conversation, 
+                  messageToAdd: messageList[index] 
+                });
+              }
             }
     
             setTimeout(function () {

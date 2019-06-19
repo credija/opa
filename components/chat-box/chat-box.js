@@ -27,6 +27,7 @@ export default {
       showContactDetails: false,
       chatboxHeight: 0,
       chatboxMaxHeight: 0,
+      showAutoloading: false,
     };
   },
   created() {
@@ -77,10 +78,20 @@ export default {
 
       this.scrollMessageBoxToBottom();
     },
+    activeConversation: function () {
+      this.showAutoloading = false;
+      this.$nextTick().then(() => {
+        const ctx = this;
+        setTimeout(function(){ ctx.showAutoloading = true; }, 0);
+      });
+    },
   },
   computed: {
     xmppClient() {
       return this.$store.state.app.xmppClient;
+    },
+    authUser() {
+      return this.$store.state.app.authUser;
     },
     activeContact() {
       if (this.activeConversation !== null) {
@@ -178,6 +189,7 @@ export default {
       const messageToAdd = { 
         msg: this.chatBoxForm.message, 
         ownMessage: true, 
+        from: this.authUser.username,
         stampDate: newDate 
       };
 
@@ -261,11 +273,12 @@ export default {
     autoLoadOldMessages() {
       this.changePresenceUserAction();
       if (this.lockAutoLoadOldMessages === false) {
-        XmppService.getOldMessages(this.activeConversation).then((res) => {
-          if (res.length < 15) {
-            return XmppService.getOldMessages(this.activeConversation);
-          }
-        });
+        XmppService.getOldMessages(this.activeConversation)
+          .then((res) => {
+            if (res.length < 15) {
+              return XmppService.getOldMessages(this.activeConversation);
+            }
+          });
       }
     }
   },
