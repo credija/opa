@@ -5,6 +5,7 @@ import DocTitleService from '@/services/doc-title-service';
 import PresenceEnum from '@/enums/presence-enum';
 import StringUtils from '@/utils/string-utils';
 import ObjectUtils from '@/utils/object-utils';
+import CacheUtils from '@/utils/cache-utils';
 import MessageParser from '@/services/message-parser';
 import { Strophe, $iq, $pres } from 'strophe.js';
 import { MessageBox } from 'element-ui';
@@ -24,6 +25,7 @@ export default {
         this.store.dispatch('app/updateIsAppLoading', true);
         this.store.dispatch('app/updateIsDisconnected', false);
         this.store.dispatch('app/updateIsLogging', false);
+        this.store.dispatch('chat/updateDelayIncomingMessages', true);
         XmppService.updateLoggedUserVcard();
         $nuxt.$router.push('/chat');
         XmppService.getRoster();
@@ -158,6 +160,7 @@ export default {
   messageHandler(msg) {
     const context = this;
     const fromAttr = msg.getAttribute('from');
+    
     if (fromAttr === null) return true;
 
     const locale = this.store.state.app.appLocale;
@@ -174,6 +177,11 @@ export default {
     const stamp = msg.getElementsByTagName('stamp')[0];
     const composing = msg.getElementsByTagName('composing')[0];
     const paused = msg.getElementsByTagName('paused')[0];
+
+    if (this.store.state.chat.delayIncomingMessages) {
+      this.store.dispatch('chat/addMessageToDelayedList', msg);
+      return true;
+    }
 
     let conversation = conversationList.find(conversationFind => 
       conversationFind.contact.username.toUpperCase() === from.toUpperCase());
@@ -291,6 +299,8 @@ export default {
       if (!bolFirstConversation) {
         this.store.dispatch('chat/reorderConversationByConversation', conversation);
       }
+
+      CacheUtils.saveConversationList(this.store.state.app.authUser.username, this.store.state.chat.conversationList);
 
       const ctx = this;
       setTimeout(function () {

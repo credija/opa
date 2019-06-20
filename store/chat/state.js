@@ -1,5 +1,7 @@
 export const state = () => ({
   conversationList: [],
+  delayedMessageList: [],
+  delayIncomingMessages: false,
   activeConversation: null,
   chatboxEmoji: 'confused',
   lastNotification: new Date(),

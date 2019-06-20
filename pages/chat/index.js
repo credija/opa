@@ -65,7 +65,7 @@ export default {
         }
       };
 
-      // Delete credentials from LocalStorage when close tab
+      // Actions when close tab
       window.onunload = function() {
         if (ctx.$router.currentRoute.path === '/chat') {
           const client = ctx.$store.state.app.xmppClient;

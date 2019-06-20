@@ -88,18 +88,17 @@ export default {
         };
         this.$store.dispatch('chat/updateLockAutoLoadOldMessages', true);
         this.setNewConversation(conversation);
+        
+        // Lock autoload feature as a workaround for setLastMessageId and getOldMessages concurrently
         XmppService.setLastMessageId(conversation)
           .then(() => {
             return XmppService.getOldMessages(conversation, true);
           })
           .then((res) => {
             if (res.length < 15) {
-              this.emitCoolTextareaFocus();
-              this.$store.dispatch('chat/updateLockAutoLoadOldMessages', false);
-              return XmppService.getOldMessages(conversation);
-            } else {
-              return Promise.resolve(true);
+              XmppService.getOldMessages(conversation);
             }
+            return Promise.resolve(true);
           })
           .then(() => {
             this.emitCoolTextareaFocus();

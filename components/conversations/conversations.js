@@ -1,6 +1,7 @@
 import PresenceEnum from '@/enums/presence-enum';
 import ObjectUtils from '@/utils/object-utils';
 import MessageParser from '@/services/message-parser';
+import CacheUtils from '@/utils/cache-utils';
 
 let XmppService, DocTitleService, FaviconService = null;
 
@@ -13,6 +14,9 @@ export default {
     };
   },
   computed: {
+    authUser() {
+      return this.$store.state.app.authUser;
+    },
     conversationList() {
       return this.$store.state.chat.conversationList;
     },
@@ -39,20 +43,20 @@ export default {
   methods: {
     onClickConversation(conversation) {
       this.changePresenceUserAction();
-      
+
       if (conversation.numUnreadMsgs !== 0) {
         const numUnreadConversation = this.$store.state.chat.numUnreadConversation;
         this.$store.dispatch('chat/updateNumUnreadConversation', numUnreadConversation - 1);
         FaviconService.updateFavicon();
         DocTitleService.updateTitle();
+        this.$store.dispatch('chat/clearUnreadCounterConversation', conversation);
+        CacheUtils.saveConversationList(this.authUser.username, this.conversationList);
       }
 
       if (this.activeConversation !== null) {
         XmppService.sendChatSignal(this.activeConversation.contact.username, 'paused');
         this.saveChatboxState();
       }
-
-      this.$store.dispatch('chat/clearUnreadCounterConversation', conversation);
       
       this.$store.dispatch('chat/updateActiveConversation', conversation);
       setTimeout(function () {
@@ -67,9 +71,12 @@ export default {
     getLastMessage(conversation) {
       let lastMessage = {};
       lastMessage.msg = '';
-      lastMessage = JSON.parse(JSON.stringify(conversation.list[conversation.list.length - 1]));
-      lastMessage.stampDate = new Date(lastMessage.stampDate);
-      lastMessage.msg = MessageParser.parseLastMessageConversation(lastMessage.msg); 
+      if (conversation.list.length !== 0) {
+        lastMessage = JSON.parse(JSON.stringify(conversation.list[conversation.list.length - 1]));
+        lastMessage.stampDate = new Date(lastMessage.stampDate);
+        lastMessage.msg = MessageParser.parseLastMessageConversation(lastMessage.msg); 
+      }
+      
       return lastMessage;
     },
     getPresenceBorderColor(idPresence) {

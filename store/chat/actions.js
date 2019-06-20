@@ -80,6 +80,13 @@ const actions = {
     });
   },
 
+  addMessageToDelayedList({ commit }, msg) {
+    commit(types.ADD_MESSAGE_TO_DELAYED_LIST, { msg });
+  },
+  updateDelayIncomingMessages({ commit }, bool) {
+    commit(types.UPDATE_DELAY_INCOMING_MESSAGES, { bool });
+  },
+
   // Old Conversation
   updateOldConversation({ commit }, updateOldConversation) {
     const { conversation, oldConversation } = updateOldConversation;

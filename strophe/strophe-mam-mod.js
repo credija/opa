@@ -38,6 +38,7 @@ Strophe.addConnectionPlugin('mam', {
         delete options.onMessage;
         var onComplete = options.onComplete;
         delete options.onComplete;
+        
         iq.cnode(new Strophe.RSM(options).toXML());
         var _c = this._c;
         var handler = _c.addHandler(onMessage, Strophe.NS.MAM, 'message', null);

@@ -7,6 +7,7 @@ import { CoolPicker } from 'cool-emoji-picker';
 import EmojiData from 'cool-emoji-picker/src/emoji-data/en/emoji-all-groups.json';
 import EmojiGroups from 'cool-emoji-picker/src/emoji-data/emoji-groups.json';
 
+import CacheUtils from '@/utils/cache-utils';
 let XmppService = null;
 
 export default {
@@ -207,6 +208,7 @@ export default {
       }
 
       this.$store.dispatch('chat/reorderConversationByConversation', this.activeConversation);
+      CacheUtils.saveConversationList(this.authUser.username, this.conversationList);
 
       this.chatBoxForm.message = '';
       this.scrollMessageBoxToBottom();
@@ -228,6 +230,7 @@ export default {
       this.changePresenceUserAction();
       XmppService.sendChatSignal(this.activeConversation.contact.username, 'paused');
       this.$store.dispatch('chat/removeConversationFromList', this.activeConversation);
+      CacheUtils.saveConversationList(this.authUser.username, this.conversationList);
       this.$store.dispatch('chat/updateActiveConversation', null);
     },
     sendTypingSignal() {
@@ -276,7 +279,7 @@ export default {
         XmppService.getOldMessages(this.activeConversation)
           .then((res) => {
             if (res.length < 15) {
-              return XmppService.getOldMessages(this.activeConversation);
+              XmppService.getOldMessages(this.activeConversation);
             }
           });
       }

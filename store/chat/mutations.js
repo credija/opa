@@ -43,6 +43,13 @@ const mutations = {
     state.conversationList = reorderedConversations;
   },
 
+  [types.ADD_MESSAGE_TO_DELAYED_LIST](state, { msg }) {
+    state.delayedMessageList.push(msg);
+  },
+  [types.UPDATE_DELAY_INCOMING_MESSAGES](state, { bool }) {
+    state.delayIncomingMessages = bool;
+  },
+
   // Conversation
   [types.ADD_MESSAGE_TO_CONVERSATION](state, { conversation, messageToAdd }) {
     const duplicateMessage = conversation.list.find(message => 

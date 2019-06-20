@@ -2,6 +2,7 @@ import XmppUtils from '@/utils/xmpp-utils';
 import { Strophe, $iq, $pres, $msg } from 'strophe.js';
 import StringUtils from '@/utils/string-utils';
 import FormatUtils from '@/utils/format-utils';
+import CacheUtils from '@/utils/cache-utils';
 import 'strophejs-plugin-rsm';
 import '@/strophe/strophe-mam-mod';
 
@@ -29,13 +30,19 @@ export default {
   },
 
   getRoster() {
+    let setAppLoading = true;
     const cachedRoster = localStorage.getItem(btoa(`cached-roster-${this.store.state.app.authUser.username}`));
     if (cachedRoster !== null) {
-      this.store.dispatch('app/updateRosterList', JSON.parse(atob(cachedRoster)));
+      const parsedCachedRoster = JSON.parse(atob(cachedRoster));
+      this.store.dispatch('app/updateRosterList', parsedCachedRoster);
       const ctx = this;
       this.store.state.app.rosterList.forEach(function(rosterObj){
         ctx.updateContactPresence(rosterObj);
       });
+      setAppLoading = false;
+      CacheUtils.loadConversationList(this.store.state.app.authUser.username, parsedCachedRoster, this.store);
+    } else {
+      this.store.dispatch('chat/updateDelayIncomingMessages', false);
     }
 
     const cachedAvatars = localStorage.getItem(btoa(`cached-avatars-${this.store.state.app.authUser.username}`));
@@ -58,9 +65,11 @@ export default {
     this.store.dispatch('chat/updateLastPresence', 'on');
 
     const ctx = this;
-    setTimeout(function () {
-      ctx.store.dispatch('app/updateIsAppLoading', false);
-    }, 1000);
+    if (setAppLoading) {
+      setTimeout(function () {
+        ctx.store.dispatch('app/updateIsAppLoading', false);
+      }, 1000);
+    }
   },
 
   updateContactPresence(contact) {
@@ -281,7 +290,7 @@ export default {
     
         let messageList = [];
         const resultIdList = [];
-    
+
         client.mam.query(authUser.username + `@${appConfig.XMPP_SERVER_DOMAIN}`, {
           with: conversation.contact.username + `@${appConfig.XMPP_SERVER_DOMAIN}`,
           start: startOfTime,
@@ -308,7 +317,7 @@ export default {
             });
             
             resultIdList.push(resultId);
-            
+
             return true;
           },
           onComplete: function(response) {
@@ -390,8 +399,8 @@ export default {
               oldConversation: conversation.oldConversation, 
               lastMessageId: resultId 
             });
-            resolve(true);
-          },
+            resolve(firstIdNode);
+          }
         });
     });
   },
