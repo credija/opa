@@ -9,7 +9,7 @@ export const state = () => ({
   rosterList: [],
   isLoadingRoster: true,
   profileImageList: [],
-  chatTimestamp: Date.now(),
+  chatTimestamp: Date.now()
 });
 
 export default state;

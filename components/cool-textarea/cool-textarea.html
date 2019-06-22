@@ -1,10 +1,12 @@
-<div id="cool-textarea" 
-    class="cool-textarea" contenteditable="true" 
-    @input="updateContent"
-    @paste="onPaste"
-    @keydown.enter="enterKey"
-    @keydown.shift.enter="shiftEnterKey"
-    @mouseup="saveSelection" 
-    @keyup="saveSelection" 
-    @focus="restoreSelection">
-</div>
+<div
+  id="cool-textarea"
+  class="cool-textarea"
+  contenteditable="true"
+  @input="updateContent"
+  @paste="onPaste"
+  @keydown.enter="enterKey"
+  @keydown.shift.enter="shiftEnterKey"
+  @mouseup="saveSelection"
+  @keyup="saveSelection"
+  @focus="restoreSelection"
+></div>

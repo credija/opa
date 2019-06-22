@@ -37,7 +37,7 @@ const actions = {
       chatTimestamp
     });
   },
-  
+
   // Auth User
   updateAuthUser({ commit }, authUser) {
     commit(types.UPDATE_AUTH_USER, {
@@ -71,7 +71,8 @@ const actions = {
   updateStatusRosterContact({ commit }, updateStatusRosterContact) {
     const { rosterObj, status } = updateStatusRosterContact;
     commit(types.UPDATE_STATUS_ROSTER_CONTACT, {
-      rosterObj, status
+      rosterObj,
+      status
     });
   },
   addToRosterList({ commit }, rosterObj) {
@@ -102,7 +103,7 @@ const actions = {
     commit(types.REMOVE_PROFILE_IMAGE_FROM_LIST, {
       profileImage
     });
-  },
+  }
 };
 
 export default actions;

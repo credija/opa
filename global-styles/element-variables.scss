@@ -5,32 +5,32 @@ $--font-path: '../node_modules/element-ui/packages/theme-chalk/src/fonts';
 @import 'element-ui/packages/theme-chalk/src/index.scss';
 
 .el-card {
-    color: #404040;
+  color: #404040;
 }
 
 .el-form-item__label {
-    padding-bottom: 0px !important;
+  padding-bottom: 0px !important;
 }
 
 .el-input__inner {
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    border-radius: 0px;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-radius: 0px;
 }
 
 .el-card__body {
-    padding: 0px;
+  padding: 0px;
 }
 
 .form-label {
-    color: #666666;
+  color: #666666;
 }
 
 .disable-resize textarea {
-    resize: none !important;
+  resize: none !important;
 }
 
 .is-success .el-textarea__inner {
-    border-color: #dcdfe6 !important;
+  border-color: #dcdfe6 !important;
 }

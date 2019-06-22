@@ -1,5 +1,6 @@
 import PresenceEnum from '@/enums/presence-enum';
-
+import FaviconService from '@/services/favicon-service';
+import DocTitleService from '@/services/doc-title-service';
 let XmppService = null;
 
 export default {
@@ -8,7 +9,7 @@ export default {
   data() {
     return {
       profileImgUpload: null,
-      disconnectedMessage: this.$t('chat.isDisconnectedMsg'),
+      disconnectedMessage: this.$t('chat.isDisconnectedMsg')
     };
   },
   computed: {
@@ -21,7 +22,11 @@ export default {
     profileImageSrc() {
       let imgSrc = null;
       if (this.authUser !== undefined && this.authUser.photoBin) {
-        imgSrc = 'data:' + this.authUser.photoType + ';base64,' + this.authUser.photoBin;
+        imgSrc =
+          'data:' +
+          this.authUser.photoType +
+          ';base64,' +
+          this.authUser.photoBin;
       }
       return imgSrc;
     },
@@ -37,7 +42,9 @@ export default {
   },
   beforeCreate() {
     if (process.browser) {
-      XmppService = require('@/services/xmpp-service').default.constructor(this.$store);
+      XmppService = require('@/services/xmpp-service').default.constructor(
+        this.$store
+      );
     }
   },
   methods: {
@@ -47,7 +54,10 @@ export default {
     sendChangePresenceSignal() {
       XmppService.sendChangePresenceSignal(this.authUser.presence.id);
       this.$store.dispatch('chat/updateLastMessageSentStamp', new Date());
-      this.$store.dispatch('chat/updateLastPresence', this.authUser.presence.id);
+      this.$store.dispatch(
+        'chat/updateLastPresence',
+        this.authUser.presence.id
+      );
       this.$store.dispatch('chat/updateIsPresenceAway', false);
     },
     uploadProfileImage() {
@@ -86,11 +96,14 @@ export default {
         {
           confirmButtonText: 'OK',
           cancelButtonText: vueContext.$t('profile.cancelReLogin'),
-          type: 'warning',
-        },
+          type: 'warning'
+        }
       )
         .then(() => {
           this.$store.dispatch('app/updateIsAppLoading', true);
+          this.$store.dispatch('chat/resetChatStore');
+          FaviconService.updateFavicon();
+          DocTitleService.updateTitle();
           this.$router.push('/');
         })
         .catch(() => {});
@@ -104,8 +117,8 @@ export default {
         {
           confirmButtonText: 'OK',
           cancelButtonText: vueContext.$t('profile.cancelDeleteAvatar'),
-          type: 'warning',
-        },
+          type: 'warning'
+        }
       )
         .then(() => {
           return XmppService.deleteProfileImage();
@@ -127,5 +140,5 @@ export default {
 
       return presenceValue;
     }
-  },
+  }
 };

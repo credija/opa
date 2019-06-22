@@ -1,18 +1,22 @@
 import PresenceEnum from '@/enums/presence-enum';
 import ObjectUtils from '@/utils/object-utils';
 import MessageParser from '@/services/message-parser';
+import CacheUtils from '@/utils/cache-utils';
 
-let XmppService, DocTitleService, FaviconService = null;
+let XmppService,
+  DocTitleService,
+  FaviconService = null;
 
 export default {
   name: 'Conversations',
   props: [],
   data() {
-    return {
-
-    };
+    return {};
   },
   computed: {
+    authUser() {
+      return this.$store.state.app.authUser;
+    },
     conversationList() {
       return this.$store.state.chat.conversationList;
     },
@@ -27,49 +31,75 @@ export default {
     },
     appLocale() {
       return this.$store.state.app.appLocale;
-    },
+    }
   },
   beforeCreate() {
     if (process.browser) {
-      XmppService = require('@/services/xmpp-service').default.constructor(this.$store);
-      DocTitleService = require('@/services/doc-title-service').default.constructor(this.$store);
-      FaviconService = require('@/services/favicon-service').default.constructor(this.$store);
+      XmppService = require('@/services/xmpp-service').default.constructor(
+        this.$store
+      );
+      DocTitleService = require('@/services/doc-title-service').default.constructor(
+        this.$store
+      );
+      FaviconService = require('@/services/favicon-service').default.constructor(
+        this.$store
+      );
     }
   },
   methods: {
     onClickConversation(conversation) {
       this.changePresenceUserAction();
-      
+
       if (conversation.numUnreadMsgs !== 0) {
-        const numUnreadConversation = this.$store.state.chat.numUnreadConversation;
-        this.$store.dispatch('chat/updateNumUnreadConversation', numUnreadConversation - 1);
+        const numUnreadConversation = this.$store.state.chat
+          .numUnreadConversation;
+        this.$store.dispatch(
+          'chat/updateNumUnreadConversation',
+          numUnreadConversation - 1
+        );
         FaviconService.updateFavicon();
         DocTitleService.updateTitle();
+        this.$store.dispatch(
+          'chat/clearUnreadCounterConversation',
+          conversation
+        );
+        CacheUtils.saveConversationList(
+          this.authUser.username,
+          this.conversationList
+        );
       }
 
       if (this.activeConversation !== null) {
-        XmppService.sendChatSignal(this.activeConversation.contact.username, 'paused');
+        XmppService.sendChatSignal(
+          this.activeConversation.contact.username,
+          'paused'
+        );
         this.saveChatboxState();
       }
 
-      this.$store.dispatch('chat/clearUnreadCounterConversation', conversation);
-      
       this.$store.dispatch('chat/updateActiveConversation', conversation);
-      setTimeout(function () {
+      setTimeout(function() {
         const coolTextarea = document.getElementById('cool-textarea');
         if (coolTextarea) {
           this.$nuxt.$emit('COOL_TEXTAREA_FOCUS');
         }
       });
-      
+
       this.scrollMessageBoxToBottom();
     },
     getLastMessage(conversation) {
       let lastMessage = {};
       lastMessage.msg = '';
-      lastMessage = JSON.parse(JSON.stringify(conversation.list[conversation.list.length - 1]));
-      lastMessage.stampDate = new Date(lastMessage.stampDate);
-      lastMessage.msg = MessageParser.parseLastMessageConversation(lastMessage.msg); 
+      if (conversation.list.length !== 0) {
+        lastMessage = JSON.parse(
+          JSON.stringify(conversation.list[conversation.list.length - 1])
+        );
+        lastMessage.stampDate = new Date(lastMessage.stampDate);
+        lastMessage.msg = MessageParser.parseLastMessageConversation(
+          lastMessage.msg
+        );
+      }
+
       return lastMessage;
     },
     getPresenceBorderColor(idPresence) {
@@ -77,28 +107,36 @@ export default {
     },
     isConversationActive(conversation) {
       let bolConversationActive = false;
-      if (conversation.contact.username 
-        === ObjectUtils.getValidUsername(() => this.activeConversation.contact.username)) {
+      if (
+        conversation.contact.username ===
+        ObjectUtils.getValidUsername(
+          () => this.activeConversation.contact.username
+        )
+      ) {
         bolConversationActive = true;
       }
       return bolConversationActive;
     },
     profileImageSrc(username) {
       const profileImageList = this.$store.state.app.profileImageList;
-      const profileImageObj = profileImageList.find(profileImage => 
-        profileImage.username.toUpperCase() === username.toUpperCase());
+      const profileImageObj = profileImageList.find(
+        profileImage =>
+          profileImage.username.toUpperCase() === username.toUpperCase()
+      );
       let imgSrc = null;
-      if (profileImageObj !== undefined 
-        && profileImageObj.bin) {
-        imgSrc = 'data:' + profileImageObj.type + ';base64,' + profileImageObj.bin;
+      if (profileImageObj !== undefined && profileImageObj.bin) {
+        imgSrc =
+          'data:' + profileImageObj.type + ';base64,' + profileImageObj.bin;
       }
       return imgSrc;
     },
     isLastOwnMessage(conversation) {
       let bolOwnMessage = false;
 
-      if (conversation.list.length !== 0 
-        && conversation.list[conversation.list.length - 1].ownMessage) {
+      if (
+        conversation.list.length !== 0 &&
+        conversation.list[conversation.list.length - 1].ownMessage
+      ) {
         bolOwnMessage = true;
       }
 
@@ -107,5 +145,5 @@ export default {
     getProfileAvatar(username) {
       XmppService.updateUserAvatar(username);
     }
-  },
+  }
 };

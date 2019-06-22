@@ -3,7 +3,7 @@ import Axios from 'axios';
 export default {
   async getConfigFile() {
     let appConfigPath = null;
-    
+
     if (process.env.isDev) {
       appConfigPath = `${process.env.baseUrl}/config/app-config-dev.json`;
     } else {
@@ -11,7 +11,7 @@ export default {
     }
 
     const appConfig = await Axios.get(appConfigPath)
-      .then((res) => {
+      .then(res => {
         return res.data;
       })
       .catch(() => {

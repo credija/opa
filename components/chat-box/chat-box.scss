@@ -1,58 +1,58 @@
 @media (min-height: 910px) {
-	.size-conversation {
-		max-height: 680px;
-		height: 680px;
-		min-height: 680px;
-		overflow: auto;
-	}
+  .size-conversation {
+    max-height: 680px;
+    height: 680px;
+    min-height: 680px;
+    overflow: auto;
+  }
 }
 
 @media (min-height: 760px) and (max-height: 910px) {
-	.size-conversation {
-		max-height: 540px;
-		height: 540px;
-		min-height: 540px;
-		overflow: auto;
-	}
+  .size-conversation {
+    max-height: 540px;
+    height: 540px;
+    min-height: 540px;
+    overflow: auto;
+  }
 }
 
-@media (min-height: 660px) and (max-height: 760px)  {
-	.size-conversation {
-		max-height: 500px;
-		height: 500px;
-		min-height: 500px;
-		overflow: auto;
-	}
+@media (min-height: 660px) and (max-height: 760px) {
+  .size-conversation {
+    max-height: 500px;
+    height: 500px;
+    min-height: 500px;
+    overflow: auto;
+  }
 }
 
-@media (max-height: 660px)  {
-	.size-conversation {
-		max-height: 470px;
-		height: 470px;
-		min-height: 470px;
-		overflow: auto;
-	}
+@media (max-height: 660px) {
+  .size-conversation {
+    max-height: 470px;
+    height: 470px;
+    min-height: 470px;
+    overflow: auto;
+  }
 }
 
 .message-style {
-	max-width: 60% !important;
-	word-wrap: break-word;
-	white-space: pre-wrap;
+  max-width: 60% !important;
+  word-wrap: break-word;
+  white-space: pre-wrap;
 }
 
 .max-size-header {
-	min-height: 80px;
- 	max-height: 80px;
+  min-height: 80px;
+  max-height: 80px;
 }
 
 .margin-chatbox-btn {
-	margin-top: 13px;
+  margin-top: 13px;
 }
 
 .chatbox-bg {
-	background-color: white;
-	color: #404040;
-	border: 1px solid #ccc;
-	border-radius: 25px;
-	padding: 10px;
+  background-color: white;
+  color: #404040;
+  border: 1px solid #ccc;
+  border-radius: 25px;
+  padding: 10px;
 }

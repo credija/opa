@@ -32,26 +32,44 @@ const mutations = {
   [types.UPDATE_CONVERSATION_LIST](state, { conversationList }) {
     state.conversationList = conversationList;
   },
-  [types.REORDER_CONVERSATION_LIST](state, { conversation }) {
-    conversation.list.sort(function(a, b) {
-      var dateA = new Date(a.stampDate), dateB = new Date(b.stampDate);
-      return dateA - dateB;
-    });
-  },
   [types.REMOVE_CONVERSATION_FROM_LIST](state, { conversation }) {
-    state.conversationList = state.conversationList.filter(conv => 
-      conv.contact.username !== conversation.contact.username);
+    state.conversationList = state.conversationList.filter(
+      conv => conv.contact.username !== conversation.contact.username
+    );
   },
   [types.REORDER_CONVERSATIONS_BY_CONVERSATION](state, { conversation }) {
-    const reorderedConversations = state.conversationList.filter(conv => 
-      conv.contact.username !== conversation.contact.username);
+    const reorderedConversations = state.conversationList.filter(
+      conv => conv.contact.username !== conversation.contact.username
+    );
     reorderedConversations.unshift(conversation);
     state.conversationList = reorderedConversations;
   },
 
+  [types.ADD_MESSAGE_TO_DELAYED_LIST](state, { msg }) {
+    state.delayedMessageList.push(msg);
+  },
+  [types.UPDATE_DELAY_INCOMING_MESSAGES](state, { bool }) {
+    state.delayIncomingMessages = bool;
+  },
+
   // Conversation
   [types.ADD_MESSAGE_TO_CONVERSATION](state, { conversation, messageToAdd }) {
-    conversation.list.push(messageToAdd);
+    const duplicateMessage = conversation.list.find(
+      message =>
+        message.stampDate.getTime() === messageToAdd.stampDate.getTime() &&
+        message.from.toUpperCase() === messageToAdd.from.toUpperCase()
+    );
+
+    if (duplicateMessage === undefined) {
+      const conversationListClone = conversation.list.slice(0);
+      conversationListClone.push(messageToAdd);
+      conversationListClone.sort(function(a, b) {
+        var dateA = new Date(a.stampDate),
+          dateB = new Date(b.stampDate);
+        return dateA - dateB;
+      });
+      Vue.set(conversation, 'list', conversationListClone);
+    }
   },
   [types.CLEAR_UNREAD_COUNTER_CONVERSATION](state, { conversation }) {
     Vue.set(conversation, 'numUnreadMsgs', 0);
@@ -59,7 +77,10 @@ const mutations = {
   [types.PLUS_UNREAD_COUNTER_CONVERSATION](state, { conversation }) {
     Vue.set(conversation, 'numUnreadMsgs', conversation.numUnreadMsgs + 1);
   },
-  [types.SET_CHATBOX_STATE_CONVERSATION](state, { conversation, chatboxState }) {
+  [types.SET_CHATBOX_STATE_CONVERSATION](
+    state,
+    { conversation, chatboxState }
+  ) {
     Vue.set(conversation, 'chatboxState', chatboxState);
   },
   [types.UPDATE_ACTIVE_CONVERSATION](state, { activeConversation }) {
@@ -73,20 +94,26 @@ const mutations = {
   [types.UPDATE_OLD_CONVERSATION](state, { conversation, oldConversation }) {
     Vue.set(conversation, 'oldConversation', oldConversation);
   },
-  [types.UPDATE_OLD_CONVERSATION_LAST_STAMP](state, { oldConversation, lastStamp }) {
+  [types.UPDATE_OLD_CONVERSATION_LAST_STAMP](
+    state,
+    { oldConversation, lastStamp }
+  ) {
     Vue.set(oldConversation, 'lastStamp', lastStamp);
   },
   [types.UPDATE_OLD_CONVERSATION_NO_RESULT](state, { oldConversation, bool }) {
     Vue.set(oldConversation, 'noResult', bool);
   },
-  [types.UPDATE_OLD_CONVERSATION_LAST_RETRIEVED_ID](state, { oldConversation, lastRetrievedId }) {
+  [types.UPDATE_OLD_CONVERSATION_LAST_RETRIEVED_ID](
+    state,
+    { oldConversation, lastRetrievedId }
+  ) {
     Vue.set(oldConversation, 'lastRetrievedId', lastRetrievedId);
   },
-  [types.UPDATE_OLD_CONVERSATION_LAST_MESSAGE_ID](state, { oldConversation, lastMessageId }) {
+  [types.UPDATE_OLD_CONVERSATION_LAST_MESSAGE_ID](
+    state,
+    { oldConversation, lastMessageId }
+  ) {
     Vue.set(oldConversation, 'lastMessageId', lastMessageId);
-  },
-  [types.ADD_MESSAGE_LIST_TO_OLD_CONVERSATION](state, { oldConversation, messageList }) {
-    oldConversation.list = messageList.concat(oldConversation.list);
   },
   [types.UPDATE_LOCK_AUTO_LOAD_OLD_MESSAGES](state, { bool }) {
     state.lockAutoLoadOldMessages = bool;
@@ -99,6 +126,19 @@ const mutations = {
     Vue.set(oldConversation, 'list', []);
     Vue.set(oldConversation, 'noResult', false);
   },
+
+  // Chat State
+  [types.RESET_CHAT_STORE](state) {
+    state.conversationList = [];
+    state.activeConversation = null;
+    state.chatboxEmoji = 'confused';
+    state.lastNotification = new Date();
+    state.numUnreadConversation = 0;
+    state.lastMessageSentStamp = new Date();
+    state.isPresenceAway = false;
+    state.lastPresence = 'off';
+    state.lockAutoLoadOldMessages = false;
+  }
 };
 
 export default mutations;

@@ -3,17 +3,9 @@ export default {
   components: {},
   props: [],
   data() {
-    return {
-
-    };
+    return {};
   },
-  computed: {
-
-  },
-  mounted() {
-
-  },
-  methods: {
-
-  },
+  computed: {},
+  mounted() {},
+  methods: {}
 };

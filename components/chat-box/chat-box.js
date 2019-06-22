@@ -7,33 +7,35 @@ import { CoolPicker } from 'cool-emoji-picker';
 import EmojiData from 'cool-emoji-picker/src/emoji-data/en/emoji-all-groups.json';
 import EmojiGroups from 'cool-emoji-picker/src/emoji-data/emoji-groups.json';
 
+import CacheUtils from '@/utils/cache-utils';
 let XmppService = null;
 
 export default {
   name: 'ChatBox',
-  components: { 
+  components: {
     'contact-details': ContactDetails,
     'cool-textarea': CoolTextarea,
-    'coolpicker': CoolPicker
+    coolpicker: CoolPicker
   },
   data() {
     return {
       isSendingMessage: false,
       chatBoxForm: {
-        message: '',
+        message: ''
       },
       signalTimeout: null,
       isTyping: false,
       showContactDetails: false,
       chatboxHeight: 0,
       chatboxMaxHeight: 0,
+      showAutoloading: false
     };
   },
   created() {
     this.$nuxt.$on('RE_RENDER_CHATBOX', () => {
       let componentHeight = 0;
       const screenHeight = window.innerHeight;
-      
+
       if (screenHeight >= 910) {
         componentHeight = 680;
       } else if (screenHeight >= 760) {
@@ -48,7 +50,7 @@ export default {
 
       this.chatboxMaxHeight = componentHeight;
       this.setMessageBoxHeight(newHeight);
-      
+
       this.scrollMessageBoxToBottom();
     });
   },
@@ -56,13 +58,13 @@ export default {
     this.$nuxt.$off('RE_RENDER_CHATBOX');
   },
   watch: {
-    chatboxHeight: function (newVal, oldVal) {
+    chatboxHeight: function(newVal, oldVal) {
       const messageBox = document.getElementById('message-box');
 
       if (oldVal === 0) {
         this.chatboxMaxHeight = messageBox.offsetHeight;
         if (newVal !== 17) {
-          const newHeight = messageBox.offsetHeight - (newVal / 2);
+          const newHeight = messageBox.offsetHeight - newVal / 2;
           this.setMessageBoxHeight(newHeight);
         }
       } else if (newVal > oldVal && oldVal !== 0) {
@@ -77,10 +79,22 @@ export default {
 
       this.scrollMessageBoxToBottom();
     },
+    activeConversation: function() {
+      this.showAutoloading = false;
+      this.$nextTick().then(() => {
+        const ctx = this;
+        setTimeout(function() {
+          ctx.showAutoloading = true;
+        }, 0);
+      });
+    }
   },
   computed: {
     xmppClient() {
       return this.$store.state.app.xmppClient;
+    },
+    authUser() {
+      return this.$store.state.app.authUser;
     },
     activeContact() {
       if (this.activeConversation !== null) {
@@ -97,12 +111,15 @@ export default {
     profileImageSrc() {
       if (this.activeContact !== null) {
         const profileImageList = this.$store.state.app.profileImageList;
-        const profileImageObj = profileImageList.find(profileImage => 
-          profileImage.username.toUpperCase() === this.activeContact.username.toUpperCase());
+        const profileImageObj = profileImageList.find(
+          profileImage =>
+            profileImage.username.toUpperCase() ===
+            this.activeContact.username.toUpperCase()
+        );
         let imgSrc = null;
-        if (profileImageObj !== undefined 
-          && profileImageObj.bin) {
-          imgSrc = 'data:' + profileImageObj.type + ';base64,' + profileImageObj.bin;
+        if (profileImageObj !== undefined && profileImageObj.bin) {
+          imgSrc =
+            'data:' + profileImageObj.type + ';base64,' + profileImageObj.bin;
         }
         return imgSrc;
       }
@@ -143,11 +160,13 @@ export default {
     },
     emojiGroups() {
       return EmojiGroups;
-    },
+    }
   },
   beforeCreate() {
     if (process.browser) {
-      XmppService = require('@/services/xmpp-service').default.constructor(this.$store);
+      XmppService = require('@/services/xmpp-service').default.constructor(
+        this.$store
+      );
     }
   },
   methods: {
@@ -160,41 +179,57 @@ export default {
       this.changePresenceUserAction();
       const newDate = new Date();
 
-      XmppService
-        .sendMessage(this.chatBoxForm.message, this.activeConversation.contact.username, newDate);
-      
-      const conversation = this.conversationList.find(conversationFind => 
-        conversationFind.contact.username.toUpperCase() === 
-        this.activeConversation.contact.username.toUpperCase());
-      
+      XmppService.sendMessage(
+        this.chatBoxForm.message,
+        this.activeConversation.contact.username,
+        newDate
+      );
+
+      const conversation = this.conversationList.find(
+        conversationFind =>
+          conversationFind.contact.username.toUpperCase() ===
+          this.activeConversation.contact.username.toUpperCase()
+      );
+
       if (this.activeConversation.list.length === 0) {
         newDate.setSeconds(newDate.getSeconds() - 5);
-        this.$store.dispatch('chat/updateOldConversationLastStamp', { 
-          oldConversation: this.activeConversation.oldConversation, 
-          lastStamp: newDate.toISOString() 
+        this.$store.dispatch('chat/updateOldConversationLastStamp', {
+          oldConversation: this.activeConversation.oldConversation,
+          lastStamp: newDate.toISOString()
         });
       }
 
-      const messageToAdd = { 
-        msg: this.chatBoxForm.message, 
-        ownMessage: true, 
-        stampDate: newDate 
+      const messageToAdd = {
+        msg: this.chatBoxForm.message,
+        ownMessage: true,
+        from: this.authUser.username,
+        stampDate: newDate
       };
 
       if (conversation !== undefined) {
-        this.$store.dispatch('chat/addMessageToConversation', { 
-          conversation: conversation, 
-          messageToAdd: messageToAdd 
+        this.$store.dispatch('chat/addMessageToConversation', {
+          conversation: conversation,
+          messageToAdd: messageToAdd
         });
       } else {
         this.$store.dispatch('chat/addMessageToConversation', {
-          conversation: this.activeConversation, 
-          messageToAdd: messageToAdd 
+          conversation: this.activeConversation,
+          messageToAdd: messageToAdd
         });
-        this.$store.dispatch('chat/addConversationToList', this.activeConversation);
+        this.$store.dispatch(
+          'chat/addConversationToList',
+          this.activeConversation
+        );
       }
 
-      this.$store.dispatch('chat/reorderConversationByConversation', this.activeConversation);
+      this.$store.dispatch(
+        'chat/reorderConversationByConversation',
+        this.activeConversation
+      );
+      CacheUtils.saveConversationList(
+        this.authUser.username,
+        this.conversationList
+      );
 
       this.chatBoxForm.message = '';
       this.scrollMessageBoxToBottom();
@@ -208,27 +243,49 @@ export default {
     minimizeActiveConversation() {
       this.saveChatboxState();
       this.changePresenceUserAction();
-      XmppService.sendChatSignal(this.activeConversation.contact.username, 'paused');
-      this.$store.dispatch('chat/clearOldConversation', this.activeConversation.oldConversation);
+      XmppService.sendChatSignal(
+        this.activeConversation.contact.username,
+        'paused'
+      );
+      this.$store.dispatch(
+        'chat/clearOldConversation',
+        this.activeConversation.oldConversation
+      );
       this.$store.dispatch('chat/updateActiveConversation', null);
     },
     closeActiveConversation() {
       this.changePresenceUserAction();
-      XmppService.sendChatSignal(this.activeConversation.contact.username, 'paused');
-      this.$store.dispatch('chat/removeConversationFromList', this.activeConversation);
+      XmppService.sendChatSignal(
+        this.activeConversation.contact.username,
+        'paused'
+      );
+      this.$store.dispatch(
+        'chat/removeConversationFromList',
+        this.activeConversation
+      );
+      CacheUtils.saveConversationList(
+        this.authUser.username,
+        this.conversationList
+      );
       this.$store.dispatch('chat/updateActiveConversation', null);
     },
     sendTypingSignal() {
       const vueContext = this;
       if (this.isTyping === false) {
-        XmppService.sendChatSignal(this.activeConversation.contact.username, 'composing');
+        XmppService.sendChatSignal(
+          this.activeConversation.contact.username,
+          'composing'
+        );
         this.isTyping = true;
       }
 
       clearTimeout(this.signalTimeout);
-      this.signalTimeout = setTimeout(function () {
+      this.signalTimeout = setTimeout(function() {
         if (vueContext.activeConversation !== null) {
-          XmppService.sendChatSignal(vueContext.activeConversation.contact.username, 'paused');
+          XmppService.sendChatSignal(
+            vueContext.activeConversation.contact.username,
+            'paused'
+          );
         }
         vueContext.isTyping = false;
       }, 1000);
@@ -261,12 +318,12 @@ export default {
     autoLoadOldMessages() {
       this.changePresenceUserAction();
       if (this.lockAutoLoadOldMessages === false) {
-        XmppService.getOldMessages(this.activeConversation).then((res) => {
+        XmppService.getOldMessages(this.activeConversation).then(res => {
           if (res.length < 15) {
-            return XmppService.getOldMessages(this.activeConversation);
+            XmppService.getOldMessages(this.activeConversation);
           }
         });
       }
     }
-  },
+  }
 };

@@ -2,13 +2,11 @@ export default {
   name: 'ConfirmTabDialog',
   components: {},
   props: ['showDialog'],
-  computed: {
-  },
-  mounted() {
-  },
+  computed: {},
+  mounted() {},
   methods: {
     refreshPage() {
       location.reload();
     }
-  },
+  }
 };

@@ -1,5 +1,7 @@
 export const state = () => ({
   conversationList: [],
+  delayedMessageList: [],
+  delayIncomingMessages: false,
   activeConversation: null,
   chatboxEmoji: 'confused',
   lastNotification: new Date(),
@@ -8,7 +10,7 @@ export const state = () => ({
   lastMessageSentStamp: new Date(),
   isPresenceAway: false,
   lastPresence: 'off',
-  lockAutoLoadOldMessages: false,
+  lockAutoLoadOldMessages: false
 });
 
 export default state;

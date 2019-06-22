@@ -9,7 +9,7 @@ export default {
     const monthBefore = dateBefore.substring(3, 5);
     const dayBefore = dateBefore.substring(0, 2);
     const dDateBefore = new Date(yearBefore, monthBefore - 1, dayBefore);
-    dDateBefore.setDate(dDateBefore.getDate() + 1); 
+    dDateBefore.setDate(dDateBefore.getDate() + 1);
 
     const yearAfter = dateAfter.substring(6, 10);
     const monthAfter = dateAfter.substring(3, 5);
@@ -20,11 +20,15 @@ export default {
     const yesterdayDate = new Date();
     yesterdayDate.setDate(yesterdayDate.getDate() - 1);
 
-    if (dDateBefore.toDateString() === dDateAfter.toDateString() 
-      && todayDate.toDateString() === dDateAfter.toDateString()) {
+    if (
+      dDateBefore.toDateString() === dDateAfter.toDateString() &&
+      todayDate.toDateString() === dDateAfter.toDateString()
+    ) {
       return 'Hoje';
-    } else if (dDateBefore < dDateAfter
-    && yesterdayDate.toDateString() === dDateAfter.toDateString()) {
+    } else if (
+      dDateBefore < dDateAfter &&
+      yesterdayDate.toDateString() === dDateAfter.toDateString()
+    ) {
       return 'Ontem';
     } else if (dDateBefore.toDateString() === dDateAfter.toDateString()) {
       return 'Dia ' + dateAfter.substring(0, 10);
@@ -34,17 +38,23 @@ export default {
 
   isDateMinutesOlder(minutes, date) {
     const minutesOlder = minutes * 60 * 1000;
-    if (Math.abs((date - new Date())) > minutesOlder) {
+    if (Math.abs(date - new Date()) > minutesOlder) {
       return true;
     }
     return false;
   },
 
   isDateLastNotificationMinutesOlder(minutes) {
-    return this.isDateMinutesOlder(minutes, this.store.state.chat.lastNotification);
+    return this.isDateMinutesOlder(
+      minutes,
+      this.store.state.chat.lastNotification
+    );
   },
 
   isDateLastMessageSentMinutesOlder(minutes) {
-    return this.isDateMinutesOlder(minutes, this.store.state.chat.lastMessageSentStamp);
+    return this.isDateMinutesOlder(
+      minutes,
+      this.store.state.chat.lastMessageSentStamp
+    );
   }
 };

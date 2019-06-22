@@ -5,13 +5,13 @@ export default {
   },
 
   updateTitle() {
-      const numUnreadConversation = this.store.state.chat.numUnreadConversation;
-      const title = this.getTitleById(numUnreadConversation);
-      document.title = title.value;
+    const numUnreadConversation = this.store.state.chat.numUnreadConversation;
+    const title = this.getTitleById(numUnreadConversation);
+    document.title = title.value;
   },
 
   titleArray() {
-    return [ 
+    return [
       { id: 0, value: 'Opa' },
       { id: 1, value: 'Opa (1)' },
       { id: 2, value: 'Opa (2)' },
@@ -22,7 +22,7 @@ export default {
       { id: 7, value: 'Opa (7)' },
       { id: 8, value: 'Opa (8)' },
       { id: 9, value: 'Opa (9)' },
-      { id: 10, value: 'Opa (9+)' },
+      { id: 10, value: 'Opa (9+)' }
     ];
   },
 
@@ -31,5 +31,5 @@ export default {
       return this.titleArray()[10];
     }
     return this.titleArray().find(title => title.id === idTitle);
-  },
+  }
 };

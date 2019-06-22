@@ -7,13 +7,11 @@ export default {
   props: ['showCountryConfig'],
   data() {
     return {
-      chatConfigForm: ObjectUtils.cloneObject(this.$store.state.chat.chatConfig),
+      chatConfigForm: ObjectUtils.cloneObject(
+        this.$store.state.chat.chatConfig
+      ),
       countryConfig: 'en-us',
-      countryArray: [
-        'en-us',
-        'pt-br',
-        'de-de'
-      ]
+      countryArray: ['en-us', 'pt-br', 'de-de']
     };
   },
   computed: {
@@ -35,17 +33,21 @@ export default {
     clickCountry(country) {
       this.countryConfig = country;
     },
-    saveCountryConfig(){
+    saveCountryConfig() {
       const ctx = this;
-      this.chatConfigForm.countryConfig = JSON.parse(JSON.stringify(this.countryConfig));
-      
+      this.chatConfigForm.countryConfig = JSON.parse(
+        JSON.stringify(this.countryConfig)
+      );
+
       this.$store.dispatch('app/updateIsAppLoading', true);
       setTimeout(function() {
         ProfileConfigService.saveConfig(ctx.chatConfigForm);
-        ctx.$i18n.locale = JSON.parse(JSON.stringify(ctx.chatConfigForm.countryConfig));
+        ctx.$i18n.locale = JSON.parse(
+          JSON.stringify(ctx.chatConfigForm.countryConfig)
+        );
         ctx.$store.dispatch('app/updateIsAppLoading', false);
         ctx.handleClose();
       }, 500);
     }
-  },
+  }
 };

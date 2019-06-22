@@ -45,45 +45,18 @@
                 'dark-border': chatConfig.darkMode === true}">
 
             <el-row class="text-center my1" v-if="activeConversation && activeConversation.oldConversation.noResult !== true">
-                <intersect @enter="autoLoadOldMessages()">
+                <intersect @enter="autoLoadOldMessages()" v-if="showAutoloading">
                     <el-button class="unclickable" round plain>
                         <font-awesome-icon icon="sync" class="icon-medium text-primary" spin></font-awesome-icon>
                     </el-button>
                 </intersect>
+                <el-button class="unclickable" round plain v-if="showAutoloading === false">
+                    <font-awesome-icon icon="sync" class="icon-medium text-primary" spin></font-awesome-icon>
+                </el-button>
             </el-row>
 
             <el-row class="text-center my1" v-if="activeConversation && activeConversation.oldConversation.noResult === true">
                 <strong>{{ $t('chatbox.oldMessagesLimit') }}</strong>
-            </el-row>
-
-            <el-row v-if="activeConversation && activeConversation.oldConversation.list.length !== 0">
-                <el-row v-for="(message, key) in activeConversation.oldConversation.list" :key="key">
-                    <div id="oldMessages">
-                        <div class="float-right p1 m1 b-rounded message-style"
-                            :class="{ 'bg-light-teal': chatConfig.darkMode === undefined || chatConfig.darkMode === false, 
-                                'bg-primary': chatConfig.darkMode === true }"
-                            v-if="message.ownMessage">
-                            <p class="m0">
-                                <span v-html="parseMessage(message.msg)"></span>
-                                <small class="float-right text-gray"> 
-                                    {{ message.stampDate | isDateToday(appLocale) }}
-                                </small>
-                            </p>
-                        </div>
-    
-                        <div class="float-left p1 m1 b-rounded message-style"
-                            :class="{ 'bg-light-gray': chatConfig.darkMode === undefined || chatConfig.darkMode === false, 
-                                'bg-dark-light': chatConfig.darkMode === true }"
-                                v-if="message.ownMessage === false">
-                                <p class="m0">
-                                <span v-html="parseMessage(message.msg)"></span>
-                                <small class="float-right text-gray"> 
-                                    {{ message.stampDate | isDateToday(appLocale) }}
-                                </small>
-                            </p>
-                        </div>
-                    </div>
-                </el-row>
             </el-row>
 
             <el-row v-if="activeConversation && activeConversation.list.length !== 0">
@@ -127,6 +100,7 @@
                     recentEmojiStorageName="recent-emojis"
                     :skinsSelection="true"
                     :appendToBody="true"
+                    :pickerWidth="495"
                     @emojiUnicodeAdded="selectEmoji"></coolpicker>
             </el-col>
             <el-col :span="20" class="mt1">
