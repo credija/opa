@@ -105,8 +105,6 @@ docker run --name opa -d --restart=always \
 
 ---
 
-Note: If you want to use a XMPP server in Docker we recommend our Openfire build which is available here: https://github.com/credija/openfire
-
 ## Configuration
 
 To connect to an XMPP server you will need to overwrite the [app-config.json](https://github.com/credija/opa/blob/master/static/config/app-config.json). The options are these:
