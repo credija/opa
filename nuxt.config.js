@@ -15,8 +15,7 @@ if (
   BASE_URL += '/';
 }
 
-// TODO: Create page 404
-// TODO: Compatibity and performance test in browsers (EDGE not working?)
+// TODO: Compatibity and performance test in browsers
 module.exports = {
   mode: 'universal',
   env: {
