@@ -16,7 +16,7 @@ export default {
       DateUtils.constructor(this.store).isDateLastNotificationMinutesOlder(1) &&
       notificationEnabled
     ) {
-      const audio = new Audio('/audio/notification.mp3');
+      const audio = new Audio('audio/notification.mp3');
       audio.play();
     }
   },
