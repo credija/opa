@@ -67,7 +67,10 @@ const actions = {
   },
   setChatboxStateConversation({ commit }, setChatboxStateConversation) {
     const { conversation, chatboxState } = setChatboxStateConversation;
-    commit(types.SET_CHATBOX_STATE_CONVERSATION, { conversation, chatboxState });
+    commit(types.SET_CHATBOX_STATE_CONVERSATION, {
+      conversation,
+      chatboxState
+    });
   },
   updateActiveConversation({ commit }, activeConversation) {
     commit(types.UPDATE_ACTIVE_CONVERSATION, {
@@ -94,19 +97,40 @@ const actions = {
   },
   updateOldConversationLastStamp({ commit }, updateOldConversationLastStamp) {
     const { oldConversation, lastStamp } = updateOldConversationLastStamp;
-    commit(types.UPDATE_OLD_CONVERSATION_LAST_STAMP, { oldConversation, lastStamp });
+    commit(types.UPDATE_OLD_CONVERSATION_LAST_STAMP, {
+      oldConversation,
+      lastStamp
+    });
   },
   updateOldConversationNoResult({ commit }, updateOldConversationNoResult) {
     const { oldConversation, bool } = updateOldConversationNoResult;
     commit(types.UPDATE_OLD_CONVERSATION_NO_RESULT, { oldConversation, bool });
   },
-  updateOldConversationLastRetrievedId({ commit }, updateOldConversationLastRetrievedId) {
-    const { oldConversation, lastRetrievedId } = updateOldConversationLastRetrievedId;
-    commit(types.UPDATE_OLD_CONVERSATION_LAST_RETRIEVED_ID, { oldConversation, lastRetrievedId });
+  updateOldConversationLastRetrievedId(
+    { commit },
+    updateOldConversationLastRetrievedId
+  ) {
+    const {
+      oldConversation,
+      lastRetrievedId
+    } = updateOldConversationLastRetrievedId;
+    commit(types.UPDATE_OLD_CONVERSATION_LAST_RETRIEVED_ID, {
+      oldConversation,
+      lastRetrievedId
+    });
   },
-  updateOldConversationLastMessageId({ commit }, updateOldConversationLastMessageId) {
-    const { oldConversation, lastMessageId } = updateOldConversationLastMessageId;
-    commit(types.UPDATE_OLD_CONVERSATION_LAST_MESSAGE_ID, { oldConversation, lastMessageId });
+  updateOldConversationLastMessageId(
+    { commit },
+    updateOldConversationLastMessageId
+  ) {
+    const {
+      oldConversation,
+      lastMessageId
+    } = updateOldConversationLastMessageId;
+    commit(types.UPDATE_OLD_CONVERSATION_LAST_MESSAGE_ID, {
+      oldConversation,
+      lastMessageId
+    });
   },
   updateLockAutoLoadOldMessages({ commit }, bool) {
     commit(types.UPDATE_LOCK_AUTO_LOAD_OLD_MESSAGES, {
@@ -122,7 +146,7 @@ const actions = {
   // Chat Store
   resetChatStore({ commit }) {
     commit(types.RESET_CHAT_STORE);
-  },
+  }
 };
 
 export default actions;

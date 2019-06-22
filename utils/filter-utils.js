@@ -1,4 +1,3 @@
-
 export default {
   removeAfterHyphen(value) {
     const cutIndex = value.indexOf('-');
@@ -6,8 +5,8 @@ export default {
     return value;
   },
   isDateToday(date, appLocale) {
-    const isToday = (new Date().toDateString() == date.toDateString());
-    
+    const isToday = new Date().toDateString() == date.toDateString();
+
     if (isToday) {
       return date.toLocaleTimeString(appLocale);
     }

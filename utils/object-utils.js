@@ -15,8 +15,8 @@ export default {
   },
   cloneObject(obj) {
     const clone = {};
-    for(let i in obj) {
-      if(obj[i] != null &&  typeof(obj[i]) == 'object') {
+    for (let i in obj) {
+      if (obj[i] != null && typeof obj[i] == 'object') {
         clone[i] = this.cloneObject(obj[i]);
       } else {
         clone[i] = obj[i];

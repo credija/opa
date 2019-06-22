@@ -5,13 +5,16 @@ export default {
   props: ['content'],
   data() {
     return {
-      savedRange: window.getSelection().rangeCount > 0 ? window.getSelection().getRangeAt(0) : null,
-    }
+      savedRange:
+        window.getSelection().rangeCount > 0
+          ? window.getSelection().getRangeAt(0)
+          : null
+    };
   },
   computed: {
     activeConversation() {
       return this.$store.state.chat.activeConversation;
-    },
+    }
   },
   created() {
     this.$nuxt.$on('COOL_TEXTAREA_FOCUS', () => {
@@ -50,7 +53,10 @@ export default {
       event.stopPropagation();
       event.preventDefault();
 
-      if (this.$el.innerHTML === '' || this.$el.innerHTML[this.$el.innerHTML.length -1] !== '\n') {
+      if (
+        this.$el.innerHTML === '' ||
+        this.$el.innerHTML[this.$el.innerHTML.length - 1] !== '\n'
+      ) {
         this.addText('\n');
         this.addText('\n');
       } else {
@@ -80,7 +86,7 @@ export default {
       doc.focus();
 
       if (childNode === undefined) {
-        const textNode = document.createTextNode("");
+        const textNode = document.createTextNode('');
         doc.appendChild(textNode);
         const range = document.createRange();
         const sel = window.getSelection();
@@ -103,29 +109,29 @@ export default {
     cleanText() {
       this.$el.innerHTML = '';
     },
-    saveSelection(){
+    saveSelection() {
       if (window.getSelection) {
         this.savedRange = window.getSelection().getRangeAt(0);
-      } else if (document.selection) { 
-        this.savedRange = document.selection.createRange();  
-      } 
+      } else if (document.selection) {
+        this.savedRange = document.selection.createRange();
+      }
     },
-    restoreSelection(){
+    restoreSelection() {
       const doc = this.$el;
       doc.focus();
       if (this.savedRange != null) {
-        if (window.getSelection)  {
+        if (window.getSelection) {
           const s = window.getSelection();
           if (s.rangeCount > 0) {
             s.removeAllRanges();
           }
           s.addRange(this.savedRange);
-        } else if (document.createRange)  {
+        } else if (document.createRange) {
           window.getSelection().addRange(this.savedRange);
-        } else if (document.selection)  {
+        } else if (document.selection) {
           this.savedRange.select();
         }
       }
-    },
+    }
   }
 };

@@ -10,7 +10,7 @@ export const state = () => ({
   lastMessageSentStamp: new Date(),
   isPresenceAway: false,
   lastPresence: 'off',
-  lockAutoLoadOldMessages: false,
+  lockAutoLoadOldMessages: false
 });
 
 export default state;

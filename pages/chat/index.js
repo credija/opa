@@ -7,25 +7,27 @@ import ScreenUtils from '@/utils/screen-utils';
 import ChatConfig from '@/components/chat-config/chat-config.vue';
 import PresenceEnum from '@/enums/presence-enum';
 
-let XmppService, ProfileConfigService, DateUtils = null;
+let XmppService,
+  ProfileConfigService,
+  DateUtils = null;
 
 export default {
   middleware: 'authenticated',
   name: 'Chat',
-  components: { 
-    'chat-box': ChatBox, 
-    'loading-app': LoadingApp, 
+  components: {
+    'chat-box': ChatBox,
+    'loading-app': LoadingApp,
     'contact-list': ContactList,
     'chat-header': ChatHeader,
     'chat-config': ChatConfig,
-    conversations: Conversations,
+    conversations: Conversations
   },
   props: [],
   data() {
     return {
       showContactList: false,
       intervalAwayPresence: null,
-      sizes: process.browser ? ScreenUtils.getSizeChat() : null,
+      sizes: process.browser ? ScreenUtils.getSizeChat() : null
     };
   },
   computed: {
@@ -49,13 +51,19 @@ export default {
     },
     activeConversation() {
       return this.$store.state.chat.activeConversation;
-    },
+    }
   },
   beforeCreate() {
     if (process.browser) {
-      XmppService = require('@/services/xmpp-service').default.constructor(this.$store);
-      DateUtils = require('@/utils/date-utils').default.constructor(this.$store);
-      ProfileConfigService = require('@/services/profile-config-service').default.constructor(this.$store);
+      XmppService = require('@/services/xmpp-service').default.constructor(
+        this.$store
+      );
+      DateUtils = require('@/utils/date-utils').default.constructor(
+        this.$store
+      );
+      ProfileConfigService = require('@/services/profile-config-service').default.constructor(
+        this.$store
+      );
 
       // Show confirm close message
       const ctx = this;
@@ -88,21 +96,31 @@ export default {
 
       ProfileConfigService.loadConfig();
 
-      if (this.$store.state.chat.chatConfig.countryConfig !== undefined 
-        && this.$store.state.chat.chatConfig.countryConfig !== null) {
+      if (
+        this.$store.state.chat.chatConfig.countryConfig !== undefined &&
+        this.$store.state.chat.chatConfig.countryConfig !== null
+      ) {
         this.$i18n.locale = this.$store.state.chat.chatConfig.countryConfig;
-        this.$store.dispatch('app/updateAppLocale', this.$store.state.chat.chatConfig.countryConfig);
+        this.$store.dispatch(
+          'app/updateAppLocale',
+          this.$store.state.chat.chatConfig.countryConfig
+        );
       }
     }
   },
   mounted() {
     const vueContext = this;
-    this.intervalAwayPresence = setInterval(function() { 
-      if (DateUtils.isDateLastMessageSentMinutesOlder(15) 
-        && vueContext.isPresenceAway === false 
-        && vueContext.authUser.presence.id !== 'away') {
+    this.intervalAwayPresence = setInterval(function() {
+      if (
+        DateUtils.isDateLastMessageSentMinutesOlder(15) &&
+        vueContext.isPresenceAway === false &&
+        vueContext.authUser.presence.id !== 'away'
+      ) {
         XmppService.sendChangePresenceSignal('away');
-        vueContext.$store.dispatch('app/updateAuthUserPresence', PresenceEnum.getPresenceById('away'));
+        vueContext.$store.dispatch(
+          'app/updateAuthUserPresence',
+          PresenceEnum.getPresenceById('away')
+        );
         vueContext.$store.dispatch('chat/updateIsPresenceAway', true);
       }
     }, 1000);
@@ -121,5 +139,5 @@ export default {
         this.showContactList = true;
       }
     }
-  },
+  }
 };

@@ -1,4 +1,3 @@
-
 import Twemoji from 'twemoji';
 
 export default {
@@ -18,5 +17,5 @@ export default {
 
   getEmojiImgFromCodepoint(codepoint) {
     return this.parse(Twemoji.convert.fromCodePoint(codepoint));
-  },
+  }
 };

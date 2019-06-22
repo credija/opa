@@ -1,5 +1,5 @@
-export default function ({ store, redirect }) {
+export default function({ store, redirect }) {
   if (store.state.app.xmppClient === null) {
-    return redirect('/?loginExpired=true')
+    return redirect('/?loginExpired=true');
   }
 }

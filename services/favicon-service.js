@@ -5,27 +5,27 @@ export default {
   },
 
   updateFavicon() {
-      const numUnreadConversation = this.store.state.chat.numUnreadConversation;
-      const faviconObj = this.getFaviconByType(numUnreadConversation);
-      const faviconOldLink = document.getElementById('favicon');
-      const newFaviconLink = document.createElement('link');
-      
-      if (faviconOldLink) {
-        faviconOldLink.id = 'favicon';
-        faviconOldLink.rel = 'icon';
-        faviconOldLink.type = 'image/png';
-        faviconOldLink.href = faviconObj.path;
-      } else {
-        newFaviconLink.id = 'favicon';
-        newFaviconLink.rel = 'icon';
-        newFaviconLink.type = 'image/png';
-        newFaviconLink.href = faviconObj.path;
-        document.getElementsByTagName('head')[0].appendChild(newFaviconLink);
-      }
+    const numUnreadConversation = this.store.state.chat.numUnreadConversation;
+    const faviconObj = this.getFaviconByType(numUnreadConversation);
+    const faviconOldLink = document.getElementById('favicon');
+    const newFaviconLink = document.createElement('link');
+
+    if (faviconOldLink) {
+      faviconOldLink.id = 'favicon';
+      faviconOldLink.rel = 'icon';
+      faviconOldLink.type = 'image/png';
+      faviconOldLink.href = faviconObj.path;
+    } else {
+      newFaviconLink.id = 'favicon';
+      newFaviconLink.rel = 'icon';
+      newFaviconLink.type = 'image/png';
+      newFaviconLink.href = faviconObj.path;
+      document.getElementsByTagName('head')[0].appendChild(newFaviconLink);
+    }
   },
-  
+
   faviconArray() {
-    return [ 
+    return [
       { id: 0, path: `${process.env.baseUrl}/favicon/favicon-normal.png` },
       { id: 1, path: `${process.env.baseUrl}/favicon/favicon-1.png` },
       { id: 2, path: `${process.env.baseUrl}/favicon/favicon-2.png` },
@@ -46,5 +46,5 @@ export default {
       return this.faviconArray()[11];
     }
     return this.faviconArray()[0];
-  },
+  }
 };
