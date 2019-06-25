@@ -194,6 +194,7 @@ export default {
     const type = msg.getAttribute('type');
     const body = msg.getElementsByTagName('body')[0];
     const stamp = msg.getElementsByTagName('stamp')[0];
+    const delay = msg.getElementsByTagName('delay')[0];
     const composing = msg.getElementsByTagName('composing')[0];
     const paused = msg.getElementsByTagName('paused')[0];
 
@@ -212,6 +213,7 @@ export default {
       let newDate = new Date();
 
       if (stamp !== undefined) newDate = new Date(stamp.textContent);
+      else if (delay !== undefined) newDate = new Date(delay.getAttribute('stamp'));
 
       MessageBox.alert(
         `${newDate.toLocaleString(locale)}:<br> ` +
@@ -228,6 +230,7 @@ export default {
       const msgContent = body.textContent;
       let newDate = new Date();
       if (stamp !== undefined) newDate = new Date(stamp.textContent);
+      else if (delay !== undefined) newDate = new Date(delay.getAttribute('stamp'));
 
       if (conversation !== undefined) {
         if (
