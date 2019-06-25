@@ -86,7 +86,7 @@ export default {
     if (setAppLoading) {
       setTimeout(function() {
         ctx.store.dispatch('app/updateIsAppLoading', false);
-      }, 1000);
+      }, 3000);
     }
   },
 
@@ -327,14 +327,21 @@ export default {
           const resultId = message
             .getElementsByTagName('result')[0]
             .getAttribute('id');
-          const stamp = message.getElementsByTagName('stamp')[0].textContent;
+          const stamp = message.getElementsByTagName('stamp')[0];
+          const delay = message.getElementsByTagName('delay')[0];
+
           const messageBody = message.getElementsByTagName('body')[0]
             .textContent;
           const from = StringUtils.removeAfterInclChar(
             message.getElementsByTagName('message')[0].getAttribute('from'),
             '@'
           );
-          const unformattedDate = new Date(stamp);
+
+          let unformattedDate;
+
+          if (stamp !== undefined) unformattedDate = new Date(stamp.textContent);
+          else if (delay !== undefined) unformattedDate = new Date(delay.getAttribute('stamp'));
+         
           let ownMessage = false;
           if (from === authUser.username) {
             ownMessage = true;

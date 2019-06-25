@@ -75,7 +75,7 @@ export default {
               store.state.app.authUser.username,
               store.state.chat.conversationList
             );
-          }, 500);
+          }, 3000);
           return;
         }
 
@@ -111,18 +111,20 @@ export default {
           });
       };
 
-      recGetOldMessages(0);
+      const recOldMessages = recGetOldMessages(0);
     } else {
-      store.dispatch('chat/updateDelayIncomingMessages', false);
-      store.dispatch('app/updateIsAppLoading', false);
-      const delayedMessageList = store.state.chat.delayedMessageList;
-      delayedMessageList.forEach(function(msg) {
-        XmppUtils.messageHandler(msg);
-      });
-      this.saveConversationList(
-        store.state.app.authUser.username,
-        store.state.chat.conversationList
-      );
+      setTimeout(() => {
+        store.dispatch('chat/updateDelayIncomingMessages', false);
+        store.dispatch('app/updateIsAppLoading', false);
+        const delayedMessageList = store.state.chat.delayedMessageList;
+        delayedMessageList.forEach(function(msg) {
+          XmppUtils.messageHandler(msg);
+        });
+        this.saveConversationList(
+          store.state.app.authUser.username,
+          store.state.chat.conversationList
+        );
+      }, 3000);
     }
   }
 };
