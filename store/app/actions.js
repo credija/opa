@@ -37,7 +37,7 @@ const actions = {
       chatTimestamp
     });
   },
-  
+
   // Auth User
   updateAuthUser({ commit }, authUser) {
     commit(types.UPDATE_AUTH_USER, {
@@ -60,17 +60,26 @@ const actions = {
       rosterList
     });
   },
+  updateRosterObj({ commit }, rosterObjects) {
+    const { oldRosterObj, newRosterObj } = rosterObjects;
+    commit(types.UPDATE_ROSTER_OBJ, { oldRosterObj, newRosterObj });
+  },
   updatePresenceRosterContact({ commit }, updatePresenceRosterContact) {
     const { rosterObj, presence } = updatePresenceRosterContact;
-    commit(types.UPDATE_PRESENCE_ROSTER_CONTACT, {
-      rosterObj, presence
-    });
+    commit(types.UPDATE_PRESENCE_ROSTER_CONTACT, { rosterObj, presence });
   },
   updateStatusRosterContact({ commit }, updateStatusRosterContact) {
     const { rosterObj, status } = updateStatusRosterContact;
     commit(types.UPDATE_STATUS_ROSTER_CONTACT, {
-      rosterObj, status
+      rosterObj,
+      status
     });
+  },
+  addToRosterList({ commit }, rosterObj) {
+    commit(types.ADD_TO_ROSTER_LIST, rosterObj);
+  },
+  updateIsLoadingRoster({ commit }, bol) {
+    commit(types.UPDATE_IS_LOADING_ROSTER, bol);
   },
 
   // Profile Image
@@ -90,6 +99,11 @@ const actions = {
   addProfileImageToList({ commit }, profileImage) {
     commit(types.ADD_PROFILE_IMAGE_TO_LIST, { profileImage });
   },
+  removeProfileImageFromList({ commit }, profileImage) {
+    commit(types.REMOVE_PROFILE_IMAGE_FROM_LIST, {
+      profileImage
+    });
+  }
 };
 
 export default actions;

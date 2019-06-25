@@ -3,6 +3,6 @@ export default {
   computed: {
     isAppLoading() {
       return this.$store.state.app.isAppLoading;
-    },
-  },
+    }
+  }
 };

@@ -2,16 +2,16 @@ import PresenceEnum from '@/enums/presence-enum';
 import ArrayUtils from '@/utils/array-utils';
 import includes from 'lodash.includes';
 import RemoveAccents from 'remove-accents';
-import MessageParser from '@/services/message-parser';
 
-let XmppService, DocTitleService, FaviconService = null;
+let XmppService,
+  DocTitleService,
+  FaviconService = null;
 
 export default {
   name: 'ContactList',
-  components: {},
   props: ['showContactList'],
   watch: {
-    showContactList: function (newVal) {
+    showContactList: function(newVal) {
       if (newVal === false) {
         this.searchTerm = '';
       } else {
@@ -23,7 +23,7 @@ export default {
     return {
       activeAccordion: -1,
       searchTerm: '',
-      searchedRosterList: [],
+      searchedRosterList: []
     };
   },
   computed: {
@@ -32,6 +32,9 @@ export default {
     },
     rosterList() {
       return this.$store.state.app.rosterList;
+    },
+    isLoadingRoster() {
+      return this.$store.state.app.isLoadingRoster;
     },
     conversationList() {
       return this.$store.state.chat.conversationList;
@@ -48,13 +51,19 @@ export default {
     },
     chatConfig() {
       return this.$store.state.chat.chatConfig;
-    },
+    }
   },
   beforeCreate() {
     if (process.browser) {
-      XmppService = require('@/services/xmpp-service').default.constructor(this.$store);
-      DocTitleService = require('@/services/doc-title-service').default.constructor(this.$store);
-      FaviconService = require('@/services/favicon-service').default.constructor(this.$store);
+      XmppService = require('@/services/xmpp-service').default.constructor(
+        this.$store
+      );
+      DocTitleService = require('@/services/doc-title-service').default.constructor(
+        this.$store
+      );
+      FaviconService = require('@/services/favicon-service').default.constructor(
+        this.$store
+      );
     }
   },
   mounted() {
@@ -66,15 +75,17 @@ export default {
     },
     openConversation(contact) {
       this.changePresenceUserAction();
-      let conversation = this.conversationList.find(conversationFind => 
-        conversationFind.contact.username.toUpperCase() === 
-        contact.username.toUpperCase());
+      let conversation = this.conversationList.find(
+        conversationFind =>
+          conversationFind.contact.username.toUpperCase() ===
+          contact.username.toUpperCase()
+      );
 
       if (conversation === undefined) {
-        conversation = { 
-          contact, 
-          list: [], 
-          numUnreadMsgs: 0, 
+        conversation = {
+          contact,
+          list: [],
+          numUnreadMsgs: 0,
           isTyping: false,
           chatboxState: '',
           oldConversation: {
@@ -85,37 +96,71 @@ export default {
             list: []
           }
         };
-        XmppService.setLastMessageId(conversation);
+        this.$store.dispatch('chat/updateLockAutoLoadOldMessages', true);
+        this.setNewConversation(conversation);
+
+        // Lock autoload feature as a workaround for setLastMessageId and getOldMessages concurrently
+        XmppService.setLastMessageId(conversation)
+          .then(() => {
+            return XmppService.getOldMessages(conversation, true);
+          })
+          .then(res => {
+            if (res.length < 15) {
+              XmppService.getOldMessages(conversation);
+            }
+            return Promise.resolve(true);
+          })
+          .then(() => {
+            this.emitCoolTextareaFocus();
+            this.$store.dispatch('chat/updateLockAutoLoadOldMessages', false);
+          });
       } else {
         if (conversation.numUnreadMsgs !== 0) {
-          const numUnreadConversation = this.$store.state.chat.numUnreadConversation;
-          this.$store.dispatch('chat/updateNumUnreadConversation', numUnreadConversation - 1);
+          const numUnreadConversation = this.$store.state.chat
+            .numUnreadConversation;
+          this.$store.dispatch(
+            'chat/updateNumUnreadConversation',
+            numUnreadConversation - 1
+          );
           FaviconService.updateFavicon();
           DocTitleService.updateTitle();
         }
-        this.$store.dispatch('chat/clearUnreadCounterConversation', conversation);
+        this.$store.dispatch(
+          'chat/clearUnreadCounterConversation',
+          conversation
+        );
+        this.$store.dispatch('chat/updateLockAutoLoadOldMessages', false);
+        this.setNewConversation(conversation);
+        this.emitCoolTextareaFocus();
       }
-
-      this.saveChatboxState();
+    },
+    setNewConversation(conversation) {
+      if (this.activeConversation !== null) {
+        this.saveChatboxState();
+      }
 
       this.$store.dispatch('chat/updateActiveConversation', conversation);
       this.$emit('switchActiveMenu');
 
-      setTimeout(function () {
+      this.scrollMessageBoxToBottom();
+    },
+    emitCoolTextareaFocus() {
+      setTimeout(function() {
         const coolTextarea = document.getElementById('cool-textarea');
         if (coolTextarea) {
           this.$nuxt.$emit('COOL_TEXTAREA_FOCUS');
         }
       });
-      this.scrollMessageBoxToBottom();
     },
     searchContactByName() {
       if (this.searchTerm.length > 2) {
-        this.searchedRosterList = this.rosterList
-          .filter(obj => includes(
-            RemoveAccents.remove(obj.name.toUpperCase()), 
-            RemoveAccents.remove(this.searchTerm.toUpperCase())
-          ));
+        this.searchedRosterList = this.rosterList.filter(
+          obj =>
+            includes(
+              RemoveAccents.remove(obj.name.toUpperCase()),
+              RemoveAccents.remove(this.searchTerm.toUpperCase())
+            ) && obj.group !== 'UNKNOWN'
+        );
       } else {
         this.searchedRosterList = [];
       }
@@ -128,20 +173,26 @@ export default {
     },
     profileImageSrc(username) {
       const profileImageList = this.$store.state.app.profileImageList;
-      const profileImageObj = profileImageList.find(profileImage => 
-        profileImage.username.toUpperCase() === username.toUpperCase());
+      const profileImageObj = profileImageList.find(
+        profileImage =>
+          profileImage.username.toUpperCase() === username.toUpperCase()
+      );
       let imgSrc = null;
-      if (profileImageObj !== undefined 
-        && profileImageObj.bin) {
-        imgSrc = 'data:' + profileImageObj.type + ';base64,' + profileImageObj.bin;
+      if (profileImageObj !== undefined && profileImageObj.bin) {
+        imgSrc =
+          'data:' + profileImageObj.type + ';base64,' + profileImageObj.bin;
       }
       return imgSrc;
     },
     focusContactSearch() {
-      setTimeout(function () {
+      setTimeout(function() {
         const contactSearchInput = document.getElementById('contact-search');
         if (contactSearchInput) contactSearchInput.focus();
       });
+    },
+
+    getProfileAvatar(username) {
+      XmppService.updateUserAvatar(username);
     }
-  },
+  }
 };

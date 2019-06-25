@@ -41,13 +41,25 @@ const mutations = {
   [types.UPDATE_ROSTER_LIST](state, { rosterList }) {
     state.rosterList = rosterList;
   },
+  [types.UPDATE_ROSTER_OBJ](state, { oldRosterObj, newRosterObj }) {
+    Vue.set(oldRosterObj, 'username', newRosterObj.username);
+    Vue.set(oldRosterObj, 'name', newRosterObj.name);
+    Vue.set(oldRosterObj, 'status', newRosterObj.status);
+    Vue.set(oldRosterObj, 'group', newRosterObj.group);
+  },
   [types.UPDATE_PRESENCE_ROSTER_CONTACT](state, { rosterObj, presence }) {
     Vue.set(rosterObj, 'presence', presence);
   },
   [types.UPDATE_STATUS_ROSTER_CONTACT](state, { rosterObj, status }) {
     Vue.set(rosterObj, 'status', status);
   },
-  
+  [types.ADD_TO_ROSTER_LIST](state, rosterObj) {
+    state.rosterList.push(rosterObj);
+  },
+  [types.UPDATE_IS_LOADING_ROSTER](state, bol) {
+    state.isLoadingRoster = bol;
+  },
+
   // Profile Image
   [types.UPDATE_PROFILE_IMAGE_LIST](state, { profileImageList }) {
     state.profileImageList = profileImageList;
@@ -62,6 +74,15 @@ const mutations = {
   [types.ADD_PROFILE_IMAGE_TO_LIST](state, { profileImage }) {
     state.profileImageList.push(profileImage);
   },
+  [types.REMOVE_PROFILE_IMAGE_FROM_LIST](state, { profileImage }) {
+    const objIndex = state.profileImageList.findIndex(
+      o => o.username === profileImage.username
+    );
+
+    if (objIndex > -1) {
+      state.profileImageList = state.profileImageList.slice(objIndex, 1);
+    }
+  }
 };
 
 export default mutations;

@@ -6,12 +6,18 @@
   :close-on-click-modal="false"
   :close-on-press-escape="false"
   :center="true"
-  :class="{ 'dark-theme': chatConfigForm.darkMode === true}">
-
-  
-  <el-row class="text-center my1" v-for="country in countryArray" :key="country">
-    <el-button :type="countryConfig === country ? 'primary' : ''" @click="clickCountry(country)">
-      <img :src="'flags/' + country + '.png'" width="80" height="48"/>
+  :class="{ 'dark-theme': chatConfigForm.darkMode === true}"
+>
+  <el-row
+    class="text-center my1"
+    v-for="country in countryArray"
+    :key="country"
+  >
+    <el-button
+      :type="countryConfig === country ? 'primary' : ''"
+      @click="clickCountry(country)"
+    >
+      <img :src="'flags/' + country + '.png'" width="80" height="48" />
     </el-button>
   </el-row>
 
@@ -24,4 +30,3 @@
     </el-button>
   </div>
 </el-dialog>
-

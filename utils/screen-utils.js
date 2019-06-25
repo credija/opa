@@ -10,7 +10,7 @@ export default {
         sizeSideMenu: 6,
 
         offsetChatbox: 0,
-        sizeChatbox: 14,
+        sizeChatbox: 14
       };
     } else if (screenWidth >= 1400) {
       return {
@@ -21,7 +21,7 @@ export default {
         sizeSideMenu: 7,
 
         offsetChatbox: 0,
-        sizeChatbox: 15,
+        sizeChatbox: 15
       };
     } else if (screenWidth < 1400) {
       return {
@@ -32,9 +32,9 @@ export default {
         sizeSideMenu: 8,
 
         offsetChatbox: 0,
-        sizeChatbox: 16,
+        sizeChatbox: 16
       };
     }
     return window.innerWidth;
-  },
+  }
 };

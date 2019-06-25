@@ -1,5 +1,5 @@
 <div class="chat-box">
-    <div v-if="activeConversation !== null">
+    <div v-show="activeConversation !== null">
         <el-row class="pl1 py2 bb1 v-align" :class="{ 'dark-border': chatConfig.darkMode === true}">
             <el-col :span="3" class="max-size-header mr1">
                 <img v-if="profileImageSrc !== null" class="b-full-circle img-fit b1 clickable" 
@@ -12,17 +12,21 @@
             </el-col>
             <el-col :span="16">
                 <el-row>
-                    <strong class="clickable" @click="clickContactDetails()">{{ activeConversation.contact.name }}</strong>
+                    <strong class="clickable" @click="clickContactDetails()" v-if="activeConversation">
+                        {{ activeConversation.contact.name }}
+                    </strong>
                 </el-row>
                 <el-row class="pb1" v-if="!isDisconnected">
                     <font-awesome-icon icon="circle"
                         class="text-label" 
-                        :class="getPresenceColor(activeConversation.contact.presence.id)"
-                        v-if="!activeConversation.isTyping"/>
-                    <span v-if="!activeConversation.isTyping">
+                        :class="getPresenceColor(activeConversation.contact.presence.id)" 
+                        v-if="activeConversation && !activeConversation.isTyping"/>
+                    <span v-if="activeConversation && !activeConversation.isTyping">
                         {{ presenceValue }}
                     </span>
-                    <span class="text-teal-clean text-bold" v-if="activeConversation.isTyping">{{ $t('chatbox.typingLabel') }}</span>
+                    <span class="text-teal-clean text-bold" v-if="activeConversation && activeConversation.isTyping">
+                        {{ $t('chatbox.typingLabel') }}
+                    </span>
                 </el-row>
             </el-col>
             <el-col :span="6">
@@ -35,77 +39,56 @@
             </el-col>
         </el-row>
         
-        <el-row class="by1 size-conversation px3" id="message-box" 
+        <el-row class="by1 size-conversation px3 z-index-1" id="message-box" 
             :class="{ 'bg-white': chatConfig.darkMode === undefined || chatConfig.darkMode === false, 
                 'dark-theme': chatConfig.darkMode === true,
                 'dark-border': chatConfig.darkMode === true}">
-            <el-row class="text-center my1" v-if="activeConversation.oldConversation.noResult !== true">
-                <el-button @click="loadOldMessages()"
-                    :disabled="isDisconnected"
-                    v-if="activeConversation.oldConversation.isLoading !== true">{{ $t('chatbox.loadOldMessages') }}</el-button>
-                <el-button @click="loadOldMessages()"
-                    v-if="activeConversation.oldConversation.isLoading === true" 
-                    :disabled="true">{{ $t('chatbox.loadingOldMessages') }}</el-button>
+
+            <el-row class="text-center my1" v-if="activeConversation && activeConversation.oldConversation.noResult !== true">
+                <intersect @enter="autoLoadOldMessages()" v-if="showAutoloading">
+                    <el-button class="unclickable" round plain>
+                        <font-awesome-icon icon="sync" class="icon-medium text-primary" spin></font-awesome-icon>
+                    </el-button>
+                </intersect>
+                <el-button class="unclickable" round plain v-if="showAutoloading === false">
+                    <font-awesome-icon icon="sync" class="icon-medium text-primary" spin></font-awesome-icon>
+                </el-button>
             </el-row>
 
-            <el-row class="text-center my1" v-if="activeConversation.oldConversation.noResult === true">
+            <el-row class="text-center my1" v-if="activeConversation && activeConversation.oldConversation.noResult === true">
                 <strong>{{ $t('chatbox.oldMessagesLimit') }}</strong>
             </el-row>
 
-            <el-row v-if="activeConversation.oldConversation.list.length !== 0">
-                <el-row v-for="(message, key) in activeConversation.oldConversation.list" :key="key">
-                    <div class="float-right p1 m1 b-rounded message-style"
-                        :class="{ 'bg-light-teal': chatConfig.darkMode === undefined || chatConfig.darkMode === false, 
-                            'bg-primary': chatConfig.darkMode === true }"
-                        v-if="message.ownMessage">
-                        <p class="m0">
-                            <span v-html="parseMessage(message.msg)"></span>
-                            <small class="float-right text-gray"> 
-                                {{ message.stampDate | isDateToday(appLocale) }}
-                            </small>
-                        </p>
-                    </div>
+            <el-row v-if="activeConversation && activeConversation.list.length !== 0">
+                <el-row v-for="(message, key) in activeConversation.list" :key="key">
+                    <div id="newMessages">
+                        <div class="float-right p1 m1 b-rounded message-style" 
+                            :class="{ 'bg-light-teal': chatConfig.darkMode === undefined || chatConfig.darkMode === false, 
+                                'bg-primary': chatConfig.darkMode === true }"
+                            v-if="message.ownMessage">
+                            <p class="m0">
+                                <span v-html="parseMessage(message.msg)"></span>
+                                <small class="float-right text-gray"> 
+                                    {{ message.stampDate | isDateToday(appLocale) }}
+                                </small>
+                            </p>
+                        </div>
 
-                    <div class="float-left p1 m1 b-rounded message-style"
-                        :class="{ 'bg-light-gray': chatConfig.darkMode === undefined || chatConfig.darkMode === false, 
-                            'bg-dark-light': chatConfig.darkMode === true }"
-                         v-if="message.ownMessage === false">
-                         <p class="m0">
-                            <span v-html="parseMessage(message.msg)"></span>
-                            <small class="float-right text-gray"> 
-                                {{ message.stampDate | isDateToday(appLocale) }}
-                            </small>
-                        </p>
+                        <div class="float-left p1 m1 b-rounded message-style" 
+                            :class="{ 'bg-light-gray': chatConfig.darkMode === undefined || chatConfig.darkMode === false, 
+                                'bg-dark-light': chatConfig.darkMode === true }"    
+                            v-if="message.ownMessage === false">
+                            <p class="m0">
+                                <span v-html="parseMessage(message.msg)"></span>
+                                <small class="float-right text-gray"> 
+                                    {{ message.stampDate | isDateToday(appLocale) }}
+                                </small>
+                            </p>
+                        </div>
                     </div>
                 </el-row>
-                <el-row class="middle-text bb1 mt1 mb3 mx7"><span class="text-bold">{{ $t('chatbox.oldMessagesLabel') }}</span></el-row>
             </el-row>
-
-            <el-row v-for="(message, key) in activeConversation.list" :key="key">
-                <div class="float-right p1 m1 b-rounded message-style" 
-                    :class="{ 'bg-light-teal': chatConfig.darkMode === undefined || chatConfig.darkMode === false, 
-                        'bg-primary': chatConfig.darkMode === true }"
-                    v-if="message.ownMessage">
-                    <p class="m0">
-                        <span v-html="parseMessage(message.msg)"></span>
-                        <small class="float-right text-gray"> 
-                            {{ message.stampDate | isDateToday(appLocale) }}
-                        </small>
-                    </p>
-                </div>
-
-                <div class="float-left p1 m1 b-rounded message-style" 
-                    :class="{ 'bg-light-gray': chatConfig.darkMode === undefined || chatConfig.darkMode === false, 
-                        'bg-dark-light': chatConfig.darkMode === true }"    
-                    v-if="message.ownMessage === false">
-                    <p class="m0">
-                        <span v-html="parseMessage(message.msg)"></span>
-                        <small class="float-right text-gray"> 
-                            {{ message.stampDate | isDateToday(appLocale) }}
-                        </small>
-                    </p>
-                </div>
-            </el-row>
+            
         </el-row>
         <el-row>
             <el-col :span="2" class="text-center">
@@ -114,9 +97,10 @@
                     :emojiGroups="emojiGroups"
                     :recentEmojisFeat="true"
                     recentEmojisStorage="local"
-                    recentEmojiStorageName="opa-recent-emojis"
-                    :skinToneSelection="true"
+                    recentEmojiStorageName="recent-emojis"
+                    :skinsSelection="true"
                     :appendToBody="true"
+                    :pickerWidth="495"
                     @emojiUnicodeAdded="selectEmoji"></coolpicker>
             </el-col>
             <el-col :span="20" class="mt1">
@@ -137,7 +121,7 @@
             </el-col>
         </el-row>
     </div>
-    <div v-if="activeConversation === null">
+    <div v-show="activeConversation === null">
         <el-row class="text-center mt7">
             <img src="svg-emoji/pensive-emoji.svg" height="180px" width="180px" alt="Pensive Face" v-if="chatboxEmoji === 'pensive'"/>
             <img src="svg-emoji/thinking-emoji.svg" height="180px" width="180px" alt="Thinking Face" v-if="chatboxEmoji === 'thinking'"/>
@@ -151,7 +135,7 @@
             <span>{{ $t('chat.tipNewConversation') }}  <font-awesome-icon icon="comment" class="icon-medium"/></span>
         </el-row>
     </div>
-    <contact-details :activeContact="activeContact" 
+    <contact-details class="z-index-3" :activeContact="activeContact" 
         :showContactDetails="showContactDetails" 
         @closeContactDetails="closeContactDetails"></contact-details>
 </div>

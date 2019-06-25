@@ -1,5 +1,3 @@
-
-
 import EmojiService from '@/services/emoji-service';
 
 export default {
@@ -52,10 +50,12 @@ export default {
   convertUrlToAnchorTag(msg) {
     const urlRegex = /\bwww(?!\S+(?:jpe?g|png|bmp|gif|webp|svg))\S+|https?:\/\/(?!\S+(?:jpe?g|png|bmp|gif|webp|svg))\S+/g;
     msg = msg.replace(urlRegex, function(url) {
-      let anchorElement = '<a href="' + url + '" target="_blank">' + url + '</a>';
+      let anchorElement =
+        '<a href="' + url + '" target="_blank">' + url + '</a>';
       if (url.substring(0, 3) === 'www') {
         const urlWithPrefix = 'http://' + url;
-        anchorElement = '<a href="' + urlWithPrefix + '" target="_blank">' + url + '</a>';
+        anchorElement =
+          '<a href="' + urlWithPrefix + '" target="_blank">' + url + '</a>';
       }
       return anchorElement;
     });
@@ -66,26 +66,39 @@ export default {
     let imageElement = '';
     msg = msg.replace(urlRegex, function(url) {
       let urlWithPrefix = url;
-      
+
       if (url.substring(0, 3) === 'www') {
         urlWithPrefix = 'http://' + url;
       }
 
-      imageElement = 
-      '</br>' +
-      '<small>Pré-visualização:</small>' +
-      '</br>' +
-        '<a href="' + urlWithPrefix + '" target="_blank"> ' + 
-          '<img class="b-rounded max-size-chat-image img-opacity" src="' + urlWithPrefix + '"/>' +
+      imageElement =
+        '</br>' +
+        '<small>Pré-visualização:</small>' +
+        '</br>' +
+        '<a href="' +
+        urlWithPrefix +
+        '" target="_blank"> ' +
+        '<img class="b-rounded max-size-chat-image img-opacity" src="' +
+        urlWithPrefix +
+        '"/>' +
         '</a>' +
-      '</br>';
+        '</br>';
 
-      return '<a href="' + urlWithPrefix + '" target="_blank">' + url + '</a>' + imageElement;
+      return (
+        '<a href="' +
+        urlWithPrefix +
+        '" target="_blank">' +
+        url +
+        '</a>' +
+        imageElement
+      );
     });
     return msg;
   },
   escapeHTML(msg) {
-    return document.createElement('div').appendChild(document.createTextNode(msg)).parentNode.innerHTML;
+    return document
+      .createElement('div')
+      .appendChild(document.createTextNode(msg)).parentNode.innerHTML;
   },
   convertUnicodeToTwemoji(msg) {
     return EmojiService.twemoji().parse(msg);
@@ -99,7 +112,7 @@ export default {
       .replace(/&lt;/g, '<')
       .replace(/&gt;/g, '>')
       .replace(/&quot;/g, '"')
-      .replace(/&#039;/g, '\'');
+      .replace(/&#039;/g, "'");
   },
 
   // TODO: Twitter Embed
@@ -108,6 +121,6 @@ export default {
     msg = msg.replace(twitterRegex, function(twitterMatch) {
       return `<iframe border=0 frameborder=0 height=250 width=550 src="${twitterMatch}"></iframe>`;
     });
-    return msg; 
-  },
+    return msg;
+  }
 };

@@ -1,66 +1,78 @@
-{ 
-    "login": {
-        "usernamePlaceholder": "Usuário",
-        "passwordPlaceholder": "Senha",
-        "loginButton": "Login",
-        "isLoginExpired": "Sua sessão expirou, favor efetuar login novamente.",
-        "isCredentialsInvalid": "O nome de usuário e/ou senha está incorreta.",
-        "isLogout": "Sessão encerrada com sucesso!"
-    },
-    "chat": {
-        "isDisconnectedMsg": "Você foi desconectado do chat por problemas de conexão.",
-        "noOpenConversation": "Não há nenhuma conversa aberta.",
-        "tipNewConversation": "Você pode abrir uma nova conversa clicando no botão",
-        "noConversation": "Você ainda não possui conversas.",
-        "openNewConversation": "Abrir Nova Conversa",
-        "back": "Voltar",
-        "searchPlaceholder": "Pesquisar Contato",
-        "min3Characters": "Digite no mínimo 3 caracteres.",
-        "noContactFound": "Nenhum contato encontrado.",
-        "adminMessageTitle": "Mensagem do Administrador"
-    },
-    "chatbox": {
-        "messageRequired": "Você precisa digitar uma mensagem.",
-        "chatboxPlaceholder": "Digite sua mensagem.",
-        "typingLabel": "Digitando...",
-        "loadOldMessages": "Carregar mensagens antigas...",
-        "loadingOldMessages": "Carregando mensagens antigas...",
-        "oldMessagesLimit": "Você atingiu o limite de pesquisa de mensagens antigas",
-        "oldMessagesLabel": "Mensagens Antigas"
-    },
-    "contactDetails": {
-        "modalTitle": "Detalhes do Contato",
-        "nameLabel": "Nome",
-        "groupLabel": "Grupo"
-    },
-    "profile": {
-        "changePhoto": "Trocar",
-        "onlinePresence": "Online",
-        "busyPresence": "Ocupado",
-        "awayPresence": "Ausente",
-        "offlinePresence": "Offline",
-        "deleteAvatarTitle": "Tem certeza?",
-        "deleteAvatarBody": "Ao confirmar a exclusão da foto você passará a utilizar a foto padrão.",
-        "cancelDeleteAvatar": "Cancelar",
-        "avatarExtensionInvalid": "A imagem precisa ser da extensão .PNG ou .JPG!",
-        "avatarSizeInvalid": "A imagem precisa ser menor que 2MBs!",
-        "reLoginButton": "Efetuar Login Novamente",
-        "reLoginTitle": "Tem certeza?",
-        "reLoginBody": "Ao fazer o login novamente você perderá o acesso às conversas ativas!",
-        "cancelReLogin": "Cancelar"
-    },
-    "config": {
-        "desktopNotifications": "Notificações na Área de Trabalho",
-        "enableSoundNotification": "Ativar Notificações por Som",
-        "disableSoundNotification": "Desativar Notificações por Som",
-        "enableOfflineContacts": "Mostrar Contatos Offline",
-        "disableOfflineContacts": "Esconder Contatos Offline",
-        "enableDarkMode": "Ativar Modo Noturno",
-        "disableDarkMode": "Desativar Modo Noturno",
-        "selectCountry": "Selecione seu país"
-    },
-    "dialogs": {
-        "save": "Salvar",
-        "cancel": "Cancelar"
-    }
+{
+  "login": {
+    "usernamePlaceholder": "Usuário",
+    "passwordPlaceholder": "Senha",
+    "loginButton": "Login",
+    "isLoginExpired": "Sua sessão expirou, favor efetuar login novamente.",
+    "isCredentialsInvalid": "O nome de usuário e/ou senha está incorreta.",
+    "isLogout": "Sessão encerrada com sucesso!"
+  },
+  "chat": {
+    "isDisconnectedMsg": "Você foi desconectado do chat por problemas de conexão.",
+    "noOpenConversation": "Não há nenhuma conversa aberta.",
+    "tipNewConversation": "Você pode abrir uma nova conversa clicando no botão",
+    "noConversation": "Você ainda não possui conversas.",
+    "openNewConversation": "Abrir Nova Conversa",
+    "back": "Voltar",
+    "adminMessageTitle": "Mensagem do Administrador"
+  },
+  "chatbox": {
+    "messageRequired": "Você precisa digitar uma mensagem.",
+    "chatboxPlaceholder": "Digite sua mensagem.",
+    "typingLabel": "Digitando...",
+    "loadOldMessages": "Carregar mensagens antigas...",
+    "loadingOldMessages": "Carregando mensagens antigas...",
+    "oldMessagesLimit": "Você atingiu o limite de pesquisa de mensagens antigas",
+    "oldMessagesLabel": "Mensagens Antigas",
+    "loadingMessages": "Carregando mensagens..."
+  },
+  "contacts": {
+    "searchPlaceholder": "Pesquisar Contato",
+    "min3Characters": "Digite no mínimo 3 caracteres.",
+    "noContactFound": "Nenhum contato encontrado.",
+    "loadingContacts": "Carregando contatos...",
+    "noAvailableContacts": "Você não possui contatos."
+  },
+  "contactDetails": {
+    "modalTitle": "Detalhes do Contato",
+    "nameLabel": "Nome",
+    "groupLabel": "Grupo"
+  },
+  "profile": {
+    "changePhoto": "Trocar",
+    "onlinePresence": "Online",
+    "busyPresence": "Ocupado",
+    "awayPresence": "Ausente",
+    "offlinePresence": "Offline",
+    "deleteAvatarTitle": "Tem certeza?",
+    "deleteAvatarBody": "Ao confirmar a exclusão da foto você passará a utilizar a foto padrão.",
+    "cancelDeleteAvatar": "Cancelar",
+    "avatarExtensionInvalid": "A imagem precisa ser da extensão .PNG ou .JPG!",
+    "avatarSizeInvalid": "A imagem precisa ser menor que 2MBs!",
+    "reLoginButton": "Efetuar Login Novamente",
+    "reLoginTitle": "Tem certeza?",
+    "reLoginBody": "Ao fazer o login novamente você perderá o acesso às conversas ativas!",
+    "cancelReLogin": "Cancelar"
+  },
+  "config": {
+    "desktopNotifications": "Notificações na Área de Trabalho",
+    "enableSoundNotification": "Ativar Notificações por Som",
+    "disableSoundNotification": "Desativar Notificações por Som",
+    "enableOfflineContacts": "Mostrar Contatos Offline",
+    "disableOfflineContacts": "Esconder Contatos Offline",
+    "enableDarkMode": "Ativar Modo Noturno",
+    "disableDarkMode": "Desativar Modo Noturno",
+    "selectCountry": "Selecione seu país"
+  },
+  "dialogs": {
+    "save": "Salvar",
+    "cancel": "Cancelar"
+  },
+  "date": {
+    "today": "Hoje",
+    "yesterday": "Ontem"
+  },
+  "page404": {
+    "button": "Oops! Clique aqui para voltar a página inicial."
+  }
 }

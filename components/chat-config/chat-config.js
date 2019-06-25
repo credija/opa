@@ -11,7 +11,7 @@ export default {
     return {
       chatConfigForm: {},
       showErrorMessage: false,
-      showCountryConfig: false,
+      showCountryConfig: false
     };
   },
   computed: {
@@ -19,22 +19,28 @@ export default {
       return this.$store.state.chat.chatConfig;
     },
     soundNotificationMsg() {
-      if (this.chatConfigForm.soundNotification === undefined 
-        || this.chatConfigForm.soundNotification === false) {
+      if (
+        this.chatConfigForm.soundNotification === undefined ||
+        this.chatConfigForm.soundNotification === false
+      ) {
         return this.$t('config.enableSoundNotification');
       }
       return this.$t('config.disableSoundNotification');
     },
     showOfflineMsg() {
-      if (this.chatConfigForm.showOffline === undefined 
-        || this.chatConfigForm.showOffline === false) {
+      if (
+        this.chatConfigForm.showOffline === undefined ||
+        this.chatConfigForm.showOffline === false
+      ) {
         return this.$t('config.enableOfflineContacts');
       }
       return this.$t('config.disableOfflineContacts');
     },
     darkModeMsg() {
-      if (this.chatConfigForm.darkMode === undefined 
-        || this.chatConfigForm.darkMode === false) {
+      if (
+        this.chatConfigForm.darkMode === undefined ||
+        this.chatConfigForm.darkMode === false
+      ) {
         return this.$t('config.enableDarkMode');
       }
       return this.$t('config.disableDarkMode');
@@ -52,8 +58,10 @@ export default {
     },
     changeSoundNotification() {
       this.changePresenceUserAction();
-      if (this.chatConfigForm.soundNotification === undefined 
-        || this.chatConfigForm.soundNotification === false) {
+      if (
+        this.chatConfigForm.soundNotification === undefined ||
+        this.chatConfigForm.soundNotification === false
+      ) {
         this.chatConfigForm.soundNotification = true;
       } else {
         this.chatConfigForm.soundNotification = false;
@@ -62,8 +70,10 @@ export default {
     },
     changeShowOffline() {
       this.changePresenceUserAction();
-      if (this.chatConfigForm.showOffline === undefined 
-        || this.chatConfigForm.showOffline === false) {
+      if (
+        this.chatConfigForm.showOffline === undefined ||
+        this.chatConfigForm.showOffline === false
+      ) {
         this.chatConfigForm.showOffline = true;
       } else {
         this.chatConfigForm.showOffline = false;
@@ -72,8 +82,10 @@ export default {
     },
     changeDarkTheme() {
       this.changePresenceUserAction();
-      if (this.chatConfigForm.darkMode === undefined 
-        || this.chatConfigForm.darkMode === false) {
+      if (
+        this.chatConfigForm.darkMode === undefined ||
+        this.chatConfigForm.darkMode === false
+      ) {
         this.chatConfigForm.darkMode = true;
       } else {
         this.chatConfigForm.darkMode = false;
@@ -82,14 +94,17 @@ export default {
     },
     requestNotificationPermission() {
       this.changePresenceUserAction();
-      Push.Permission.request(() => {
-        this.showErrorMessage = false;
-      }, () => {
-        this.showErrorMessage = true;
-      });
+      Push.Permission.request(
+        () => {
+          this.showErrorMessage = false;
+        },
+        () => {
+          this.showErrorMessage = true;
+        }
+      );
     },
     openCountryDialog() {
       this.showCountryConfig = true;
     }
-  },
+  }
 };
