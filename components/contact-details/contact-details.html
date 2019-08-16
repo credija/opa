@@ -25,6 +25,7 @@
     Status: {{ activeContact.status }}
   </p>
   <p class="text-bold text-center" v-if="activeContact.group !== 'UNKNOWN'">
-    {{ $t('contactDetails.groupLabel') }}: {{ activeContact.group }}
+    {{ $t('contactDetails.groupLabel') }}:
+    {{ activeContact.group === 'Others' ? $t('contacts.groupOthers') : activeContact.group }}
   </p>
 </el-dialog>

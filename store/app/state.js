@@ -2,6 +2,7 @@ export const state = () => ({
   isAppLoading: true,
   appConfig: null,
   appLocale: 'en-us',
+  showUsersWithoutGroups: true,
   isLogging: false,
   isDisconnected: false,
   xmppClient: null,

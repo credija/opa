@@ -65,7 +65,10 @@ export default {
       const staticBase = this.$nuxt._router.options.base;
       ConfigService.getConfigFile(staticBase).then(appConfig => {
         this.$store.dispatch('app/updateAppConfig', appConfig);
-        this.$store.dispatch('app/updateAppLocale', appConfig.APP_LOCALE);
+        this.$store.dispatch(
+          'app/updateShowUsersWithoutGroups',
+          appConfig.SHOW_USERS_WITHOUT_GROUPS
+        );
 
         if (
           typeof navigator.language === 'string' &&

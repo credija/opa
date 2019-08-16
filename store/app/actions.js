@@ -17,6 +17,12 @@ const actions = {
       appLocale
     });
   },
+  updateShowUsersWithoutGroups({ commit }, showUsersWithoutGroups) {
+    commit(types.UPDATE_SHOW_USERS_WITHOUT_GROUPS, {
+      showUsersWithoutGroups
+    });
+  },
+
   updateIsLogging({ commit }, isLogging) {
     commit(types.UPDATE_IS_LOGGING, {
       isLogging
