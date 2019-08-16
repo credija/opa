@@ -31,7 +31,8 @@
     "min3Characters": "Digite no mínimo 3 caracteres.",
     "noContactFound": "Nenhum contato encontrado.",
     "loadingContacts": "Carregando contatos...",
-    "noAvailableContacts": "Você não possui contatos."
+    "noAvailableContacts": "Você não possui contatos.",
+    "groupOthers": "Outros"
   },
   "contactDetails": {
     "modalTitle": "Detalhes do Contato",

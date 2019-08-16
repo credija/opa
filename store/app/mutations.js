@@ -9,6 +9,9 @@ const mutations = {
   [types.UPDATE_APP_LOCALE](state, { appLocale }) {
     state.appLocale = appLocale;
   },
+  [types.UPDATE_SHOW_USERS_WITHOUT_GROUPS](state, { showUsersWithoutGroups }) {
+    state.showUsersWithoutGroups = showUsersWithoutGroups;
+  },
   [types.UPDATE_APP_CONFIG](state, { appConfig }) {
     state.appConfig = appConfig;
   },

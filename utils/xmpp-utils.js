@@ -55,6 +55,7 @@ export default {
   },
   rosterCallback(iq) {
     let rosterList = this.store.state.app.rosterList;
+    const showUsersWithoutGroups = this.store.state.app.showUsersWithoutGroups;
 
     const rosterContacts = iq.getElementsByTagName('item');
     if (iq.query !== null) {
@@ -79,7 +80,14 @@ export default {
               : rosterObj.username;
           rosterObj.status = '';
           rosterObj.presence = { id: 'off', value: 'Offline' };
-          rosterObj.group = group.childNodes[0].nodeValue;
+          if (group) {
+            rosterObj.group = group.childNodes[0].nodeValue;
+          } else {
+            rosterObj.group = 'Others';
+            if (!showUsersWithoutGroups) {
+              continue;
+            }
+          }
 
           if (cachedRosterObj !== undefined) {
             this.store.dispatch('app/updateRosterObj', {
@@ -213,7 +221,8 @@ export default {
       let newDate = new Date();
 
       if (stamp !== undefined) newDate = new Date(stamp.textContent);
-      else if (delay !== undefined) newDate = new Date(delay.getAttribute('stamp'));
+      else if (delay !== undefined)
+        newDate = new Date(delay.getAttribute('stamp'));
 
       MessageBox.alert(
         `${newDate.toLocaleString(locale)}:<br> ` +
@@ -230,7 +239,8 @@ export default {
       const msgContent = body.textContent;
       let newDate = new Date();
       if (stamp !== undefined) newDate = new Date(stamp.textContent);
-      else if (delay !== undefined) newDate = new Date(delay.getAttribute('stamp'));
+      else if (delay !== undefined)
+        newDate = new Date(delay.getAttribute('stamp'));
 
       if (conversation !== undefined) {
         if (

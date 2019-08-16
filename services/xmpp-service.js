@@ -68,9 +68,10 @@ export default {
       xmlns: 'jabber:iq:roster'
     });
 
+    this.translation = this.i18n;
+
     client.sendIQ(iq, XmppUtils.rosterCallback.bind(this));
     client.addHandler(XmppUtils.presenceHandler.bind(this), null, 'presence');
-    this.translation = this.i18n;
     client.addHandler(
       XmppUtils.messageHandler.bind(this),
       null,
@@ -339,9 +340,11 @@ export default {
 
           let unformattedDate;
 
-          if (stamp !== undefined) unformattedDate = new Date(stamp.textContent);
-          else if (delay !== undefined) unformattedDate = new Date(delay.getAttribute('stamp'));
-         
+          if (stamp !== undefined)
+            unformattedDate = new Date(stamp.textContent);
+          else if (delay !== undefined)
+            unformattedDate = new Date(delay.getAttribute('stamp'));
+
           let ownMessage = false;
           if (from === authUser.username) {
             ownMessage = true;

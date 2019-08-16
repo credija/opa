@@ -112,6 +112,7 @@ To connect to an XMPP server you will need to overwrite the [app-config.json](ht
 - **XMPP_SERVER_ADDRESS**: The address for the HTTP/S BOSH or WSS WebSocket connection.
 - **XMPP_SERVER_DOMAIN**: Your chat domain.
 - **APP_LOCALE**: The locale needs to be set in the format "language-country", like "en-us", "pt-br", etc since this value will be used to format date through the app.
+- **SHOW_USERS_WITHOUT_GROUPS**: A boolean. True for showing users which don't have groups (will be put in a 'Others' group), and false for hiding these users.
 
 ## Internationalization
 

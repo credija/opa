@@ -36,7 +36,8 @@
     "min3Characters": "Bitte gebe mindestens 3 Zeichen ein.",
     "noContactFound": "Keine Kontakte gefunden",
     "loadingContacts": "Kontakte werden geladen...",
-    "noAvailableContacts": "Sie haben keine Kontakte."
+    "noAvailableContacts": "Sie haben keine Kontakte.",
+    "groupOthers": "Andere"
   },
   "profile": {
     "changePhoto": "Bearbeiten",
