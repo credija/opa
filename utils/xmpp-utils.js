@@ -137,6 +137,10 @@ export default {
     const rosterObj = rosterList.find(
       roster => roster.username.toUpperCase() === from.toUpperCase()
     );
+    
+    if (rosterObj === undefined) {
+      return true;
+    }
 
     if (rosterList.length === 0 || from === authUser) {
       return true;
